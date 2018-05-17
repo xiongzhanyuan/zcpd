@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>报废查询</title>
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .tabsB2,.tabs2{display: none;}
+    </style>
+</head>
+<body>
+<nav>
+    <a class="back centery tabsB1" href="javascript:history.go(-1)">返回</a> 
+    <a class="back centery tabsB2" href="javascript:;">返回</a> 
+    <p class="navCon">报废查询</p>
+</nav> 
+<div class="content destoryC formEntry tabs1">
+        <ul class="nav nav-tabs tabs-two" id="myTab">
+            <li  class="active desTab1"  hid="tab1"><a href="javascript:;"> 报废单据</a></li>
+            <li   hid="tab2" ><a href="javascript:;" >单据明细</a></li> 
+        </ul> 
+    <div class="searchBox">
+        <p>
+            单据编号:
+            <input type="text" id="invoiceNumber" /> 
+        </p>
+        <p> 
+            审批进度:
+            <select  value="0"  id="invoiceStatus">
+                <option value="0">全部</option>
+                <option value="1">新建</option>
+                <option value="2">驳回</option>
+                <option value="3">待审批</option> 
+                <option value="4">审批中</option>
+                <option value="5">审批完成</option>
+            </select>
+        </p>
+    </div>
+    <div class="content">
+        <ul class="cardList" id="list1">
+
+        </ul>
+    </div>
+</div>
+<div class="content destoryC formEntry tabs2"> 
+        <ul class="nav nav-tabs tabs-two" id="myTab">
+            <li hid="tab1" class="desTab1"><a href="javascript:;"> 报废单据</a></li>
+            <li  class="active"  hid="tab2"><a href="javascript:;" >单据明细</a></li> 
+        </ul>
+        <div class="content">
+            <ul class="cardList" id="list2">
+    
+            </ul>
+        </div>
+</div> 
+<bottom class="bottomFixed">
+        <div class="center clearfix" style="position: absolute;"> 
+            <i id="searchBtn" > 搜索</i>
+        </div>
+    </bottom>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/fancySelect.js"></script> 
+<script src="../js/main.js"></script>
+<script type="template" id="tml1">  
+    {{~it.data :value:index}}
+        <li class="clearfix" data-index={{=index}} data-ph={{= value.invoiceNumber}} onclick="enterInfo(this)">   
+            <span class="listInfo"> 
+                <b>单据编号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>           
+               {{? value.invoiceStatus ==1}} 
+                    <b>单据状态 ：<i>新建</i></b>  
+                {{?? value.invoiceStatus ==2}}
+                    <b>单据状态 ：<i>驳回</i></b>  
+                {{?? value.invoiceStatus ==3}}
+                    <b>单据状态 ：<i>待审批</i></b>  
+                {{?? value.invoiceStatus ==4}}
+                    <b>单据状态 ：<i>审批中</i></b>  
+                {{?? value.invoiceStatus ==5}}
+                    <b>单据状态 ：<i>审批完成</i></b>   
+                {{??}}
+                <b>单据状态 ：<i>全部</i></b> 
+                {{?}}         
+                 <b>制单单位 ：<i>{{= value.departCode}}</i></b>                
+                <b>制单日期 ：<i>{{= value.auditDate}}</i></b>                
+                <b> 制单人 ：<i>{{= value.auditUser}}</i></b>               
+                <b> 原值合计 ：<i>{{= value.originalValueSum}}</i></b>               
+                <b> 数量 ：<i>{{= value.detailAmountSum}}</i></b>               
+                <b>净值合计 ：<i>{{= value.nowValueSum}}</i></b>               
+                <b> 累计折旧合计 ：<i>{{= value.addDepreciateValueSum}}</i></b> 
+                <b> 减值准备合计 ：<i>{{= value.devalueValueSum}}</i></b> 
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script type="template" id="tml2">  
+        {{~it.data :value:index}}
+            <li class="clearfix" data-index={{=index}} data-ph={{= value.invoiceNumber}}>   
+                <span class="listInfo"> 
+                    <b>单据编号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>                          
+                    <b>资产类型 ：<i>{{= value.assetsTypeName}}</i></b>   
+                    <b> 资产编码 ：<i>{{= value.assetsCode}}</i></b>  
+                    <b> 规格型号  ：<i>{{= value.assetsStandard}}</i></b>   
+                    <b>原资产编码 ：<i>{{= value.assetsCode}}</i></b>                
+                    <b>所属单位 ：<i>{{= value.departCode}}</i></b>                
+                    <b> 资产名称 ：<i>{{= value.assetsName}}</i></b>   
+                    <b> 原值合计 ：<i>{{= value.originalValue}}</i></b>                  
+                    <b>净值合计 ：<i>{{= value.nowValue}}</i></b>               
+                    <b> 累计折旧合计 ：<i>{{= value.addDepreciate}}</i></b> 
+                    <b> 减值准备合计 ：<i>{{= value.devalueValue}}</i></b> 
+                    <b> 资产类别编码 ：<i>{{= value.contentAssetsCode}}</i></b> 
+                    <b> 报废原因 ：<i>{{= value.discardReasonName}}</i></b> 
+                    <b> 技术部门 ：<i>{{= value.technicalDepartName}}</i></b> 
+                    <b> 停产日期 ：<i>{{= value.stopDate}}</i></b>  
+                </span> 
+            </li>
+        {{~}}
+    </script>
+<script>
+    var departList = $.cookie('departList');
+    var userInfo = $.cookie('userinfo');   
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo);  
+    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?getInvoice';
+    var getDetailUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?getDetail';
+    $(".nav-tabs li").unbind('click');
+    if (window.JsCallback) { 
+	        $('#invoiceStatus').fancySelect(); 
+        }
+    //搜索/盘点
+    $("#searchBtn").click();
+    $("#searchBtn").click(function(){
+        var jsons={
+                userCode: userInfo.usercode,
+                departCode: userInfo.departcode,
+                invoiceStatus:$("#invoiceStatus").val(),
+                invoiceNumber:$("#invoiceNumber").val(),
+        }
+        sendPost(getListUrl,jsons,ListA)
+        function ListA(data){  
+            var tmpl = doT.template($("#tml1").text());   
+            $("#list1").html(tmpl(data));
+        }   
+    }) 
+function enterInfo(event){
+    var that = $(event);
+    var invoiceNumber = that.attr("data-ph");
+    var jsons={ 
+            departCode: userInfo.departcode, 
+            invoiceNumber:that.attr("data-ph"),
+    }
+    sendPost(getDetailUrl,jsons,function(data){
+        var tmpl = doT.template($("#tml2").text());  
+        var res ={};
+        res.data=data.data[0].detailList
+        $("#list2").html(tmpl(res));
+        $(".tabsB1").hide();
+        $(".tabs1").hide(); 
+        $(".tabsB2").show();
+        $(".tabs2").show(); 
+    })
+}
+$(".tabsB2").click(function(){
+    $(".tabsB1").show();
+    $(".tabs1").show(); 
+    $(".tabsB2").hide();
+    $(".tabs2").hide(); 
+})
+$(".desTab1").click(function(){
+    $(".tabsB1").show();
+    $(".tabs1").show(); 
+    $(".tabsB2").hide();
+    $(".tabs2").hide(); 
+})
+</script>
+
+</html>

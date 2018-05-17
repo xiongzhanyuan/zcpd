@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>在线审批</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">在线审批</p>
+	</nav>
+	<div class="content">
+       <div id="approDetail">
+
+       </div>
+	</div>
+     <bottom class="bottomFixed">
+         <div class="center clearfix">
+             <button id="cancelBtn"><a href="javascript:history.go(-1)">返回</a> </button>
+             <button id="approved" style="float:right;">审批</button>
+         </div>
+     </bottom>
+     
+     <div class="bomb bombS ">
+         <div class="bombCon">
+            <form action="" class="formEntry" id="approvedForm">
+                 <textarea name="" id="" ></textarea>
+            </form>
+            <p>
+                <button class="orange" id="pass">通过</button>
+                 <button class="orange" id="oppose">驳回</button>
+                <button class="closebtn orange">关闭</button>
+            </p>
+         </div>
+     </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>
+ <script type="template" id="dwtTmpl">   
+          <div>
+              <p>资产编码:{{=it.value}}</p>
+              <p>资产名称:{{=it.value}}</p>
+              <p>所属单位:{{=it.value}}</p>
+              <p>原值:{{=it.value}}</p>
+              <p>累计折旧:{{=it.value}}</p>
+              <p>净值:{{=it.value}}</p>
+              <p>保管人:{{=it.value}}</p>
+              <p>备注:{{=it.value}}</p>
+              <p>技术状况:{{=it.value}}</p>
+              <p>使用状态:{{=it.value}}</p>
+              <p>备注:{{=it.value}}</p>              
+          </div>
+</script> 
+<!-- 将类型设置为template，标识为doT.JS -->  
+     
+<script> 
+
+
+var qustString = "http://lhsm.weiapp.pw:3575/AssetsDataPhone/mobile/appController.do";
+//?findAllByJhsbh&jhsbh=PD-201709000023
+var  data = {
+      userCode:'',
+      depart:''
+  }
+sendPost(qustString+"?findJhsByUserAndDate",data,callbackFunA(data));
+function  callbackFunA(data){
+    var resData =data;
+    // 通过dot.template调用你所写的dot.JS。  
+    var tmpl = doT.template($("#dwtTmpl").text());  
+    // 将数据扔进templ中。并在DIV中显示出来  
+    $("#approDetail").html(tmpl(resData));  
+} 
+$("#approved").click(function(){
+    $(".bomb").addClass("active")
+})
+$("#approved").click(function(){
+     $(this).closest('.bomb').removeClass("active")
+    //数据重新渲染
+    sendPost(qustString+"?findJhsByUserAndDate",data,callbackFunA(data));
+})
+//跳转
+
+</script>
+</html>
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>调拨查询</title>
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css"> 
+	<link rel="stylesheet" href="../css/dialog.css"> 
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+    .cardList li{height:auto;}
+    </style>
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">调拨查询</p>
+	</nav>
+	<div class="content destoryC formEntry"> 
+        <div class="cardList">
+
+       <ul id="List1">
+
+       </ul>
+       <ul id="List2">
+
+         </ul>
+        </div>
+	</div> 
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>   
+<script type="template" id="listCon1">  
+    {{~it.data :value:index}}
+        <li class="clearfix"   data-ph={{=value.invoiceNumber}} data-index={{=index}} onclick='detail(this)'>   
+            <span class="listInfo">
+                <b>单位 ：<i >{{= value.departName }}</i></b>
+                <b>	调入单位 ：<i>{{= value.inDepartname}}</i></b>   
+                <b>	调出单位 ：<i>{{= value.outDepartname}}</i></b>   
+                <b>	调拨原因 ：<i>{{= value.reason}}</i></b>   
+                <b>	auditUser ：<i>{{= value.auditUser}}</i></b>         
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script type="template" id="listCon2">  
+    {{~it.data :value:index}}
+        <li class="clearfix"  data-ph={{=value.invoiceNumber}} data-index={{=index}} onlick='detail(this)'>   
+            <span class="listInfo">
+                <b>单位 ：<i >{{= value.departName }}</i></b>
+                <b>	调入单位 ：<i>{{= value.inDepartname}}</i></b>   
+                <b>	调出单位 ：<i>{{= value.outDepartname}}</i></b>   
+                <b>	调拨原因 ：<i>{{= value.reason}}</i></b>   
+                <b>	auditUser ：<i>{{= value.auditUser}}</i></b>         
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script> 
+var departList = $.cookie('departList');
+var userInfo = $.cookie('userinfo');  
+departList = JSON.parse(departList)[0];
+userInfo = JSON.parse(userInfo);
+var ListUrl= getURL()+"/AssetsDataPhone/mobile/allotController.do?getAllotInvoices" 
+var jsons = {   
+    departCode: userInfo.departcode,
+    userCode: userInfo.usercode,  
+} 
+sendPost(ListUrl, jsons, resA);
+function resA(data){
+    var res = {};
+    res.data=data.data;
+    var tmpl = doT.template($("#listCon1").text());  
+    $("#List1").html(tmpl(res));    
+}
+function detail(event){
+    var that = $(event)
+    var phon = that.attr("data-ph");
+    var jsons = {
+            phoneInvoiceNumber: phon,
+            departCode: userInfo.departcode 
+        } 
+    var inforUrl=getURL()+'/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber'
+    sendPost(inforUrl, jsons, function(data){ 
+        var tmpl = doT.template($("#listCon2").text());  
+        var res ={}; 
+        res.data=data.data;
+        $("#list2").html(tmpl(res));  
+    });
+}
+</script>

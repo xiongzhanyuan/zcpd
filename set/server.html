@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>服务器设置</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1);">返回</a>
+        <p class="navCon">服务器设置</p>
+    </nav>
+    <div class="content">
+        <!--需求：用户对资产信息进行确认、修改和补录-->
+        <form action="" method='post' class="serverForm formEntry" id="serverForm" enctype="multipart/form-data">
+            <p>
+                <label for="server1">服务器协议:</label>
+                <input type="text" id="server1" name="server1">
+            </p>
+            <p>
+                <label for="server2">服务器地址:</label>
+                <input type="text" name="server2" id="server2">
+            </p>
+            <p>
+                <label for="server3">服务器端口:</label>
+                <input type="text" name="server3" id="server3">
+            </p>
+        </form>
+
+        <button class="orange server_save">保存</button>
+    </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script> 
+<script src="../js/cookie.js"></script> 
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script> 
+<script>  
+    //请求数据
+    if (window.JsCallback) {
+        //安卓            
+        callbackGetServerConfig(window.JsCallback.onGetServerConfig());
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('getCurrentServerConfig', callbackGetServerConfig)
+        })
+    }
+
+    function callbackGetServerConfig(result) { 
+        if (result!= null&&result!= "") {            
+            formData($("#serverForm"), JSON.parse(result));
+        }else{
+            result=['http','lhsm.weiapp.pw','3575'];
+            formData($("#serverForm"), result);
+        }
+    }
+    function formData(dom, array) {
+        $.each(dom.find("input"), function (index, value) {
+            $(this).val(array[index]);
+        })
+    }
+
+    $(".server_save").click(function () { 
+        var dataArray = [];
+        $.each($("#serverForm input"), function () {
+            dataArray.push($(this).val());
+        })
+        dataArray = JSON.stringify(dataArray);
+        if (window.JsCallback) {
+            //安卓
+            var res = window.JsCallback.onChangeServerConfig(dataArray);
+            callbackChangeServerConfig(res);
+        } else {
+            //IOS 
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('changeServerConfig', dataArray, callbackChangeServerConfig)
+            });
+        }
+    })
+
+    function callbackChangeServerConfig(responseData) {
+        if (responseData) {
+            var pUrl =  $("#server1").val()+"://" + $("#server2").val() + ":" + $("#server3").val();
+            sessionStorage.setItem('postUrl',pUrl)
+            $.cookie('postUrl', pUrl, { expires: 7, path: '/', secure: false });
+            postUrl=pUrl; 
+            alert("保存成功"); 
+        }
+    }
+</script>
+
+</html>

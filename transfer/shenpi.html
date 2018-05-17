@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>调拨审批</title> 
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/dialog.css">
+	 <link rel="stylesheet" href="../css/bootstrap.css"> 
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body> 
+    
+	<nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a> 
+        <a class="back back1 centery" style="display: none;" href="javascript:;">返回</a> 
+        <p class="navCon">调拨审批</p>
+    </nav>
+    <div class="content destoryC formEntry">
+        <div class="cardList updataList">   
+            <ul id="list1">
+
+            </ul> 
+            <form action="" id="approveResult">
+                <label><input class="radio" checked name="approveResult" type="radio" value="0" />同意 </label> 
+                <label><input class='radio' name="approveResult" type="radio" value="1" />驳回 </label>  
+                <textarea class="Markarea" name="opinion" id="opinion" cols="30" rows="10"></textarea>
+            </form>
+            <bottom class=" bottomFixed BtnCurrent"> 
+                <button id="submitBtn1" class="bottomBtn center  iconfont icon-tijiao"></button> 
+            </bottom>
+        </div>
+        <div class="destory-updata cardList">  
+            
+            <ul id="list2">
+          
+            </ul>
+            <div class="searchRes DesSearchRes borderFBox" id="dataBox">  
+                <p name="assetsCode">资产编码：<span></span></p>   
+                <p name="assetsName">资产名称：<span></span></p>
+                <p name="departName">所属单位<span></span></p> 
+                <p name="remark">备注<span></span></p> 
+                <p name="storePlace">存放地点<span></span></p>
+                <p name="assetsStandard">规格型号<span></span></p>  
+                <p name="licenceNumber">车牌井号<span></span></p>       
+                <p name="makeFactory">制造厂家<span></span></p>    
+                <p name="departCode"> 所属单位编码<span></span></p>    
+                <p name="userPerson">保管人<span></span></p>
+                <p name="barCode">编码：<span></span></p> 
+                <p name="planNumber">出厂编号：<span></span></p>  
+                <p name="originalValue">原值:<span></span></p>  
+                <p name="nowValue">净值:<span></span></p>  
+                <p name="addDepreciate">累计折旧:<span></span></p>  
+                <p name="devalueValue">减值准备:<span></span></p>  
+                <p name="usedState">使用状态编码:<span></span></p>    
+                <p name="usedStateName">使用状态:<span></span></p>     
+            </div>
+        </div>
+    </div>  
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>   
+<script type="template" id="listCon1">  
+    {{~it.data :value:index}}
+    <li class="clearfix getListINfo"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}">   
+        <span class="listInfo">
+            <b>单据号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>
+            <b>申请人 ：<i>{{= value.auditUser}}</i></b>         
+        </span> 
+        <div class=" chose bottomBtn iconfont icon-tijiao"></div> 
+    </li>
+{{~}}
+</script>
+<script type="template" id="listCon2">  
+    {{~it.data :value:index}}
+        <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}} onclick="getInfo(this)">   
+            <span class="listInfo"> 
+                <b>资产编码 ：<i class="">{{?value.assetsCode==null}} -- {{??}} {{= value.assetsCode}}{{? }}</i></b>
+                <b>资产名称：<i>{{?value.assetsName==null}} -- {{??}} {{= value.assetsName}}{{? }}</i></b>  
+                <b>所属单位<i>{{?value.departName==null}} -- {{??}} {{= value.departName}}{{? }}</i></b>  
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script>
+    //待审批单据查询
+    var listUrl = getURL()+"/AssetsDataPhone/mobile/allotController.do?queryApproveInvoice" 
+    var departList = $.cookie('departList');
+    var userInfo = $.cookie('userinfo'); 
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo);  
+    var shenpiL=[],data_ph='';
+    getINfo();
+    function getINfo(){
+        if (userInfo == "" || !userInfo || departList == "" || !departList) {
+        alert("登录过期");
+    } else {                
+        var jsons = {
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode 
+        } 
+        sendPost(listUrl, jsons, ListA);
+    }
+    function ListA(responce) {  
+        if(responce.data.length>0){
+            var tmpl = doT.template($("#listCon1").text());  
+           var res ={};
+            shenpiL=responce.data;
+            res.data=responce.data;
+            $("#list1").html(tmpl(res));    
+            $(".chose").click(function(e){ 
+                $("#list1 .chose").removeClass("active"); 
+                $(this).toggleClass("active");
+                e.stopPropagation(); 
+            }) 
+            $(".getListINfo").click(function(e){ 
+                var that = $(this);
+                var phon = that.attr("data-ph");
+                var jsons = {
+                        phoneInvoiceNumber: phon,
+                        departCode: userInfo.departcode 
+                    } 
+                var inforUrl=getURL()+'/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber'
+                sendPost(inforUrl, jsons, function(data){ 
+                    var tmpl = doT.template($("#listCon2").text());  
+                    var res ={}; 
+                    res.data=data.data;
+                    $("#list2").html(tmpl(res));  
+                    $(".destory-updata").show();
+                    $(".updataList").hide(); 
+                    $(".back").hide();
+                    $(".back1").show();
+                    $(".back1").click(function(){ 
+                        $(".destory-updata").hide();
+                        $(".updataList").show(); 
+                        $(".back").show();
+                        $(".back1").hide();
+                    })
+                }); 
+                e.stopPropagation(); 
+            }) 
+        }else{
+            $("#list1").html("<li class='nodate center'>暂无数据</li>")
+        } 
+    }
+    }
+
+function getInfo(event){
+    var that =$(event);
+    var Purl =  getURL()+"/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber";
+    var jsons={
+        phoneInvoiceNumber:that.attr("data-ph"),
+        departCode: userInfo.departcode ,
+    }
+    sendPost(Purl, jsons, function(data){  
+        var list =$("#dataBox p"); 
+        $.each(list,function(){ 
+            var target = $(this);
+            var key = target.attr("name");
+            var val = data.data[0][key];            
+            target.find("span").text(val==""||val==null?"--":val);
+        })
+    }) 
+}
+
+$("#submitBtn1").click(function(){
+   var URL =  getURL()+"/AssetsDataPhone/mobile/allotController.do?allotAudit";
+   var jsons={
+        userCode: userInfo.usercode,
+        departCode: userInfo.departcode , 
+        userName:userInfo.username,
+        phoneInvoiceNumber:$(".chose.active").closest('li').attr("data-ph"),
+        approveResult:$('input[type="radio"][name="approveResult"]:checked').val(),
+        opinion:$("#opinion").val(),
+   };
+   
+   sendPost(URL, jsons, function(data){
+       if(data.success=='true'){
+           alert(data.msg); 
+           getINfo();
+           $("#opinion").val("");
+       }else{
+        alert(data.msg)
+       }
+   })
+}) 
+ 
+</script>
+</html>

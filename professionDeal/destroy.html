@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>报废申请</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">报废申请</p>
+	</nav>
+	<div class="content">
+        
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"  hid="unAudit"><a href="javascript:;">未送审</a></li>
+        <li hid="audit"><a href="javascript:;" >已送审</a></li>
+    </ul>
+    <div class="tab-content">
+        <ul class="cardList tab-pane active" id="unAudit">
+        
+            </ul>
+        <ul class="cardList tab-pane" id="audit">
+        
+            </ul>
+    </div>  
+         
+	</div>
+     <bottom class="bottomFixed">
+         <div class="center clearfix">
+             <button id="cancelBtn"><a href="javascript:history.go(-1)">返回</a> </button>
+              <button id="search" class="centerx">查询</button>
+             <button id="apply">申请</button>
+         </div>
+     </bottom>
+     <div class="bomb">
+         <div class="bombCon">
+            
+         </div>
+     </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>
+<script type="template" id="detailTmpl">  
+    <i class="close" onclick="closeClick()">X</i>
+     <div class="inquire border_box">
+        <p class="labelForm">
+            <label>资产条码：</label>
+            <input type="text">
+        </p>
+        <p class="labelForm">
+            <label>资产编码：</label>
+            <input type="text">
+        </p>
+        <p  class="botton">
+            <button class="orange" id="scanning">扫描</button>
+            <button class="orange">查询</button>
+            <button class="orange">刷新</button>
+        </p>
+    </div>
+    <div class="itemDetail">
+    <p class="labelForm">
+            <label>停用日期：</label>
+            <select name="" id="">
+                <option value=""></option>
+            </select>
+        </p>
+        <p class="labelForm">
+            <label>报废类别：</label>
+            <select name="" id="">
+                <option value=""></option>
+            </select>
+        </p>
+         <p class="labelForm">
+            <label>报废原因：</label>
+            <select name="" id="">
+                <option value=""></option>
+            </select>
+        </p>
+         <p class="labelForm">
+            <label>详细报废原因：</label>
+            <input type="text">
+        </p>
+        <p class="labelForm">
+            <label>资产简历：</label>
+            <input type="text">
+        </p>
+        <p class="labelForm">
+            <label>资产名称：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>所属单位名称：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>规格型号:</label>
+            <span>123</span>
+        </p>
+        <p class="labelForm">
+            <label>原值:</label>
+            <span>123</span>
+        </p>
+        <p class="labelForm">
+            <label>净值:</label>
+            <span>123</span>
+        </p>
+        <p class="labelForm">
+            <label>累计折旧:</label>
+            <span>123</span>
+        </p>
+    </div>
+    <div class="btnList">
+        <button class="orange">返回</button>
+        <button class="orange">保存</button>
+        <button class="orange">删除</button>
+        <button class="orange">送审</button>
+        <button class="orange">撤销</button>
+    </div>
+</script>
+<script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+         <li class="clearfix" id={{= value.id }}> 
+                <span class="listImg">
+                    <b class="centery">{{= value.name}}</b>
+                </span>
+                <span class="listInfo">
+                    <b>资产编号 ：{{= value.code }}</b>
+                    <b>规格型号 ：{{= value.type}}</b>
+                </span> 
+            </li>
+   {{~}}
+</script> 
+<script type="template" id="searchDetail">
+
+</script>
+<script type="template" id="itemDetails">
+    <i class="close" onclick="closeClick()">X</i>
+    <ul>
+        <li>
+            <span>资产名称:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>资产编码:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>规格型号:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>所属单位名称:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>调入单位:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>调拨原因:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>车牌井号:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>技术状况:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>使用状态:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>原值:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>净值:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>累计折旧:</span>
+            <b>123</b>
+        </li>
+        <li>
+            <span>减值准备:</span>
+            <b>123</b>
+        </li>
+    </ul>
+    <div>
+        <button class="orange" onclick="closeClick()">返回</button>
+        <button class="orange">删除</button>
+        <button class="orange">撤销</button>
+    </div>
+</script>
+<!-- 将类型设置为template，标识为doT.JS -->  
+     
+<script>  
+//查询列表
+var qustString =postUrl+"/AssetsDataPhone/mobile/testController.do?queryDiscardInvoice";
+var jsons={
+    userCode:"01281098",
+    departCode:"1339300010001",
+    djType:"0"//为送审 
+}
+//sendPost(qustString,jsons,ListA)
+function ListA(data){ 
+     
+    if(data.success==true){
+        if(window.JsCallback){
+            //安卓
+            window.JsCallback.onRequestAlert(data.msg);
+        }else{
+            //IOS 
+        }  
+    }else{
+
+    } 
+     var resData =data.data; 
+        // 通过dot.template调用你所写的dot.JS。  
+        var tmpl = doT.template($("#dwtTmpl").text());  
+        // 将数据扔进templ中。并在DIV中显示出来  
+        if(resData.length<=0){            
+            $("#audit").html("暂无数据");  
+        }else{            
+            $("#audit").html(tmpl(resData));  
+        }
+}
+jsons.djType="1"
+//sendPost(qustString,jsons,ListB)
+function ListB(data){ 
+    console.log(data)
+    if(data.success==true){
+        if(window.JsCallback){
+            //安卓
+            window.JsCallback.onRequestAlert(data.msg);
+        }else{
+            //IOS 
+        }  
+    }else{
+
+    } 
+     var resData =data.data; 
+        // 通过dot.template调用你所写的dot.JS。  
+        var tmpl = doT.template($("#dwtTmpl").text());  
+        // 将数据扔进templ中。并在DIV中显示出来  
+        if(resData.length<=0){            
+            $("#unAudit").html("暂无数据");  
+        }else{            
+            $("#unAudit").html(tmpl(resData));  
+        }
+}
+ 
+ $(".tab-pane li").click(function(e){
+         var itemDetailsTmpl = doT.template($("#itemDetails").text());  
+          $(".bombCon").html('');
+        $(".bombCon").append(itemDetailsTmpl());        
+        $(".bomb").addClass("active");        
+        e.stopPropagation();
+    })
+
+ $("#search").click(function(e){
+         var detailTmpl = doT.template($("#detailTmpl").text());  
+          $(".bombCon").html('');
+        $(".bombCon").append(detailTmpl());        
+        $(".bomb").addClass("active");        
+        e.stopPropagation();
+    })
+    
+ $("#apply").click(function(e){
+         var detailTmpl = doT.template($("#detailTmpl").text());  
+          $(".bombCon").html('');
+        $(".bombCon").append(detailTmpl());        
+        $(".bomb").addClass("active");        
+        e.stopPropagation();
+    })
+
+    
+function closeClick(){
+     $(".bomb").removeClass("active");
+}
+</script>
+</html>
+

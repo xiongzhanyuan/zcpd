@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>调出确认</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">调出确认</p>
+	</nav>
+	<div class="content">
+        <ul class="cardList tab-pane active" id="recalList"></ul>
+         
+	</div>
+     <bottom class="bottomFixed">
+         <div class="center clearfix">
+             <button id="cancelBtn"><a href="javascript:history.go(-1)">返回</a> </button>
+              <button id="confirm" class="centerx">确认</button>
+             <button id="search" style="float:right;">查询</button>
+         </div>
+     </bottom>
+     <div class="bomb">
+         <div class="bombCon">
+            
+         </div>
+     </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>
+<script type="template" id="detailTmpl">  
+    <i class="close" onclick="closeClick()">X</i>
+     <div class="inquire border_box">
+        <p class="labelForm">
+            <label>资产条码：</label>
+            <input type="text">
+        </p>
+        <p class="labelForm">
+            <label>资产编码：</label>
+            <input type="text">
+        </p>
+        <p  class="botton">
+            <button class="orange">扫描</button>
+            <button class="orange">查询</button>
+            <button class="orange">刷新</button>
+        </p>
+    </div>
+    <div class="itemDetail">
+    <p class="labelForm">
+            <label>调入单位：</label>
+            <input type="text">
+        </p>
+        <p class="labelForm">
+            <label>调拨原因：</label>
+            <input type="text">
+        </p>
+        <p class="labelForm">
+            <label>资产名称：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>规格型号：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>所属单位名称：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>车牌井号：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>制造厂家：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>出厂编号：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+            <label>技术状况：</label>
+            <span>XXXXX</span>
+        </p>
+        <p class="labelForm">
+        <label>使用状态:</label>
+        <span>123</span>
+    </p>
+    <p class="labelForm">
+        <label>原值:</label>
+        <span>123</span>
+    </p>
+    <p class="labelForm">
+        <label>净值:</label>
+        <span>123</span>
+    </p>
+    <p class="labelForm">
+        <label>累计折旧:</label>
+        <span>123</span>
+    </p>
+    <p class="labelForm">
+        <label>减值准备:</label>
+        <span>123</span>
+    </p>
+        <p class="labelForm">
+        <label>图片:</label>
+        <span>123</span>
+    </p>
+    </div>
+    <div class="btnList">
+        <button class="orange" onclick="closeClick()">返回</button>
+        <button class="orange">保存</button>
+        <button class="orange">删除</button>
+        <button class="orange">送审</button>
+        <button class="orange">撤销</button>
+    </div>
+</script>
+<script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+         <li class="clearfix" id={{= value.id }}> 
+                <span class="listImg">
+                    <b class="centery">{{= value.name}}</b>
+                </span>
+                <span class="listInfo">
+                    <b>资产编号 ：{{= value.code }}</b>
+                    <b>规格型号 ：{{= value.type}}</b>
+                </span> 
+            </li>
+   {{~}}
+</script> 
+<script type="template" id="searchDetail">
+
+</script>
+<!-- 将类型设置为template，标识为doT.JS -->  
+     
+<script>  
+var qustString = "http://lhsm.weiapp.pw:3575/AssetsDataPhone/mobile/appController.do";
+//?findAllByJhsbh&jhsbh=PD-201709000023
+$.ajax({
+  type: 'POST',
+  url: qustString+"?findJhsByUserAndDate", 
+  async: false, 
+  data:{
+      userCode:'',
+      depart:''
+  },
+  success: function(data){ 
+        var resData =data;
+        // 通过dot.template调用你所写的dot.JS。  
+        var tmpl = doT.template($("#dwtTmpl").text());  
+        // 将数据扔进templ中。并在DIV中显示出来  
+        //假数据
+        resData={"data":[
+                {
+                    'id':'1',
+                    'code':'123',
+                    'name':'静态数据1',
+                    'type':'111'
+                },
+                {
+                    'id':'2',
+                    'code':'123',
+                    'name':'静态数据1',
+                    'type':'111'
+                },
+                {
+                    'id':'3',
+                    'code':'123',
+                    'name':'静态数据1',
+                    'type':'111'
+                }
+            ]
+        };
+         
+        $("#recalList").html(tmpl(resData));   
+  }
+});  
+
+ $("#search").click(function(e){
+         var detailTmpl = doT.template($("#detailTmpl").text());  
+          $(".bombCon").html('');
+        $(".bombCon").append(detailTmpl());        
+        $(".bomb").addClass("active");        
+        e.stopPropagation();
+    }) 
+
+    
+function closeClick(){
+     $(".bomb").removeClass("active");
+}
+</script>
+</html>
+

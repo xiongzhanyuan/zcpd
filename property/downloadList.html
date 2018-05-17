@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>数据下载</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/index.css"> 
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/hotcss.js"></script> 
+    <script src="../js/dialog.js"></script> 
+    <script src="../js/doT.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script src="../js/main.js"></script> 
+</head> 
+<body>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a>
+        <p class="navCon">数据下载</p>
+    </nav>
+    <div class="content">
+        <ul class="cardList" id="dowCard">
+
+        </ul> 
+    </div> 
+	<div id="dialog-confirm" class="center" >
+            <p class=""><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>已存在下载盘点数据,再次下载会覆盖当前数据,是否下载?</p>
+            <div class="bottom">
+                <p id="sure">确定</p>
+                <p id="cancle">取消</p>
+            </div>    
+    </div>
+</body>
+<!-- 20200921 -->
+<script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+         <li class="clearfix" stopdata={{= value.stopDate}}>  
+                <span class="listImg"> 
+                    <img class="center" src="../images/static.png" alt=""> 
+                </span> 
+                <span class="listInfo">
+                    <b>盘点计划编码 ：<i class="planNumber">{{= value.planNumber }}</i></b>
+                    <b>盘点计划名称 ：<i>{{= value.planName}}</i></b> 
+                </span> 
+                {{? value.dowStatus==true }}  
+                <span class="listBtn current">                    
+                    已下载 
+                </span>         
+                {{??}}
+                    <span class="listBtn">  
+                        <b class="downBtn" onclick="dowCard(this)"></b>    
+                    </span>                  
+                {{?}}
+                
+            </li>
+   {{~}}
+</script>
+<!-- 将类型设置为template，标识为doT.JS -->
+
+<script>       
+    var qustString = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?phonecheckplandownload";
+    var dowStr = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?phonecheckplandetail" 
+    var departList = $.cookie('departList');
+    var userInfo = $.cookie('userinfo'); 
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo); 
+    var Pagelist =[];
+    if (userInfo == "" || !userInfo || departList == "" || !departList) {
+        alert("登录过期");
+    } else {         
+        var jsons = {
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode 
+        } ;  
+        
+        if (window.JsCallback) {
+            sendPost(qustString, jsons, ListA) 
+        }else{
+            sendPost2(qustString, jsons, function(responce){
+                //  判断是否在本地已经下载 
+                if(responce.success=='false'){ 
+                    alert(responce.msg);
+                    return false;
+                }
+                Pagelist=responce.data;
+                this.setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('fileNamesArray', function (resdata) {
+                        template(resdata, responce); 
+                    })
+                })
+                $('.dialog-open').remove();
+            })
+        }
+    }
+    function ListA(responce) { 
+        //  判断是否在本地已经下载 
+        if(responce.success=='false'){ 
+            alert(responce.msg);
+            return false;
+        }
+        Pagelist=responce.data;
+      //安卓
+      var data=window.JsCallback.onGetFileList();  
+            if(data==undefined){
+                template(null, responce);
+            }else{
+                template( JSON.parse(data), responce);
+            }
+        $('.dialog-open').remove();
+    } 
+    function template(data, resData) {  
+        if (data == null||typeof data==undefined||data==undefined) {
+            var tmpl = doT.template($("#dwtTmpl").text());
+            $("#dowCard").html(tmpl(resData)); 
+        } else { 
+            var res = callArr(data, resData.data);  
+            resData.data = res; 
+            var tmpl = doT.template($("#dwtTmpl").text());
+            $("#dowCard").html(tmpl(resData)); 
+        }
+    }
+    function dowCard(event) {  
+        var that = $(event);
+        var pNumber = that.closest("li").find(".planNumber").text();
+        var judge = that.closest('li').siblings().find(".listBtn.current");
+        var dep = Pagelist.filter(function(index) {
+                    return  index.planNumber==pNumber;
+                })[0];               
+        if(judge.length>0){
+            $("#dialog-confirm").show(); 
+            $("#sure").click(function(){
+                $("#dialog-confirm").hide()
+
+                var dowmJsons = { 
+                    userCode: userInfo.usercode,
+                    departCode: userInfo.departcode,                
+                    departCodeList: userInfo.departcode,
+                    planNumber: pNumber 
+                } 
+                sendPost(dowStr, dowmJsons, function (data) { 
+                    if(data.success=='false'){
+                            alert(data.msg)
+                            return false;
+                        }
+                    if (window.JsCallback) {
+                        //安卓  
+                        var res =JSON.stringify(data.data);
+                        var dowStatus = window.JsCallback.onDownloadData(res); 
+                        if (dowStatus) {
+                            localStorage.setItem("stopDate",that.closest("li").attr("stopdata").replaceAll("-",''))
+                            localStorage.setItem("plnum",that.closest("li").find(".planNumber").text()); 
+                            that.removeClass("downBtn").html("已下载"); 
+                            that.closest(".listBtn").addClass("current")
+                            $(".scan2").hide();
+                            $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                        }
+                    } else { 
+                        //IOS  
+                        this.setupWebViewJavascriptBridge(function (bridge) {
+                            bridge.callHandler('saveDetailJSON', data.data, function responseCallback(responseData) {
+                                if (responseData == 1) {
+                                    that.removeClass("downBtn").html("已下载");
+                                    that.closest(".listBtn").addClass("current")
+                                    localStorage.setItem("stopDate",that.closest("li").attr("stopdata").replaceAll("-",''))
+                                    localStorage.setItem("plnum",that.closest("li").find(".planNumber").text());
+                                    $(".scan2").hide();
+                                    $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                                }
+                            })
+                        });
+                    } 
+                })
+            })  
+            $("#cancle").click(function(){
+                $("#dialog-confirm").hide()
+                return false
+            })  
+        }else{ 
+            var dowmJsons = { 
+                userCode: userInfo.usercode,
+                departCode: userInfo.departcode,                
+                departCodeList: userInfo.departcode,
+                planNumber: pNumber 
+            } 
+            sendPost(dowStr, dowmJsons, function (data) { 
+                if(data.success=='false'){
+                        alert(data.msg)
+                        return false;
+                    } 
+                if (window.JsCallback) {
+                    //安卓 
+                    var res =JSON.stringify(data.data);
+                    var dowStatus = window.JsCallback.onDownloadData(res); 
+                    if (dowStatus) {
+                        localStorage.setItem("stopDate",that.closest("li").attr("stopdata").replaceAll("-",''))
+                         
+                        localStorage.setItem("plnum",that.closest("li").find(".planNumber").text()); 
+                        that.removeClass("downBtn").html("已下载"); 
+                        that.closest(".listBtn").addClass("current")
+                        $(".scan2").hide();
+                        $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                    }
+                } else { 
+                    //IOS  
+                    this.setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('saveDetailJSON', data.data, function responseCallback(responseData) {
+                            if (responseData == 1) {
+                                that.removeClass("downBtn").html("已下载");
+                                that.closest(".listBtn").addClass("current")
+                                localStorage.setItem("stopDate",that.closest("li").attr("stopdata").replaceAll("-",''))
+                                localStorage.setItem("plnum",that.closest("li").find(".planNumber").text());
+                                $(".scan2").hide();
+                                $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                            }
+                        })
+                    });
+                }
+                $('.dialog-open').remove();
+            }) 
+    }
+}
+//下载
+// 过滤选中
+function callArr(arr1,arr2){ 
+    $.each(arr1,function(){  
+        var that=this;
+        $.each(arr2,function(val,index){  
+            var _that=this;
+            if(_that.planNumber==that){
+                _that.dowStatus=true;
+                return false;
+            }                    
+        }) 
+    })
+    return  arr2;
+} 
+
+</script>
+
+</html>

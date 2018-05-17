@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>       
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/icon.css">
+	<link rel="stylesheet" href="css/lCalendar.css">
+	 <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.min.js"></script> 
+    <script src="js/dialog.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/hotcss.js"></script> 
+    <script src="js/cookie.js"></script>
+    
+    <script src="js/main.js"></script>
+    <script> 
+    </script>
+    <style>
+        
+    body {
+    margin: 0;  
+    padding-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    background:  #fff;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!--  Header  -->
+<header class="section header">
+    <div class="trapezoid"></div>
+    
+    <div class="header__text">
+    <h1>盘点</h1>
+    <p>资产盘点</p>
+    </div>
+</header> 
+    <!--  Sign Up  -->
+    <section class="section sign-up"> 
+    <div class="trapezoid"></div>
+    <form  class="loginform" id="register"> 
+        <!-- userCode      ？？？     -->        
+        <input type="text" name="userCode" placeholder="userCode" required>
+        <input type="text" name="userNmae" placeholder="用户名" required>
+        <select name="sex" id="Sex" value="男">
+            <option value="1">男</option>
+            <option value="0">女</option>
+        </select>
+        <input type="text" name="mail" placeholder="邮箱" required>
+        <input type="password" id="password" name="password" placeholder="密码" required>
+        <input type="password"id="password_again" name="password_again" placeholder="确认密码" required>
+        <input type="text" name="remark" placeholder="备注，非必填">
+        <div class="button" id="registBtn">注册</div>
+        <p class="opposite-btn2">已有账户，点击登录</p>
+    </form>
+    </section>
+    
+    <!--  Sign In  -->
+    <section class="section sign-in">
+    <form class="loginform" id="login">
+        <input type="text" class="" name="usercode" placeholder="用户名/邮箱" required>
+        <input type="password" class="" name="password" placeholder="密码" required>
+        <div  class="button" id="loginBtn">登录</div>
+        <div class="bottomLogin clearfix"> 
+                <p class="opposite-btn1 centery le">没有账户?</p>
+                <a href="set/server.html" class="serverLink">
+                    <i class="appNav  iconfont icon-iconfonticonfontjixieqimo"></i>
+                    <i>服务器设置</i>
+                </a>
+        </div>
+    </form>
+    </section>
+    <div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+</div>
+</body>
+<script> 
+$(function () {  
+    $.cookie('userinfo', '', { expires: 30, path: '/', secure: false });
+    $.cookie('departList', '', { expires: 30, path: '/', secure: false }); 
+  var isPageHide = false;   
+  window.addEventListener('pageshow', function () {   
+    if (isPageHide) {   
+      window.location.reload();   
+    }   
+  });   
+  window.addEventListener('pagehide', function () {   
+    isPageHide = true;   
+  });   
+})   
+$(document).ready(function() { 
+    $( "#register" ).validate({
+    rules: { 
+        password: "required",
+        password_again: {
+        equalTo: "#password"
+        },
+        mail: {
+        required: true,
+        email: true
+      },
+    }
+    });
+});
+const signUp = document.querySelector('.sign-up');
+const signIn = document.querySelector('.sign-in');
+
+// Switch btns: there are two only because I was in a hurry a didn't want to write all the javascript immediately. In a production environment, a better solution would be implemented.
+const btn1 = document.querySelector('.opposite-btn1');
+const btn2 = document.querySelector('.opposite-btn2');
+
+
+// Switches to 'Create Account'
+btn1.addEventListener('click', () => {
+  signUp.style.display = 'block';
+  signIn.style.display = 'none'; 
+});
+
+// Switches to 'Sign In'
+btn2.addEventListener('click', () => {
+  signUp.style.display = 'none';
+  signIn.style.display = 'block';
+});  
+// 注册 
+$("#registBtn").click(function(){ 
+    $(".scan1").show(); 
+    if(!$("#register").validate()){
+        return false;
+    }
+    var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?register";
+    var json={
+        "userCode":$("#register input[name=userCode]").val(),
+        "userNmae":$("#register input[name=userNmae]").val(),
+        "passWord":$("#register input[name=password]").val(),
+        "mail":$("#register input[name=mail]").val(),
+        "sex":$("#Sex").val(),
+        "remark":$("#register input[name=remark]").val(),
+    } 
+    sendPost(registUrl,json,callbackA);
+    function callbackA(d ,ata){ 
+        if(data.success=="true"){     
+            alert(data.msg);      
+            setTimeout(function(){history.go(0);},2500); 
+        }else{
+            alert(data.msg);    
+        }
+
+    }
+})
+// 登陆
+$("#loginBtn").click(function(){   
+    if(!$("#login").validate()){
+        return false;
+    }     
+    var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?login";   
+    var json={
+        "usercode":$("#login input[name=usercode]").val(), 
+        "mail":$("#login input[name=mail]").val(),
+        "password":$("#login input[name=password]").val(), 
+    }  
+    sendPost(registUrl,json,callbackB);
+    function callbackB(data){     
+        if(data.success!="true"){           
+            alert(data.msg);   
+            return;
+        }else{
+            // 存cookie
+            var  user = data.data[0].user;
+            var departs = data.data[1].depart;
+            var func = data.data[2].func;
+            
+            var user_info = {
+                "account":user.account,
+                "mail":user.mail,
+                "usercode":user.usercode,
+                "userid":user.userid,                
+                "username":user.username,
+            } ;
+            // 公司
+            var departList=[];
+            $.each(departs,function(){
+                var lis={
+                    "departname":this.departname,
+                    "shortname":this.shortname,
+                    "departcode":this.departcode,
+                    "usabledate":this.usabledate,
+                    "creatorid":this.creatorid,
+                    "departid":this.departid,
+                }
+                departList.push(lis);
+            }) 
+            departList= JSON.stringify(departList); 
+            user_info= JSON.stringify(user_info);  
+            $.cookie('userinfo', user_info, { expires: 30, path: '/', secure: false });
+            $.cookie('departList', departList, { expires: 30, path: '/', secure: false });
+            localStorage.setItem("userinfo",user_info);
+            localStorage.setItem("departList",departList);
+            // 给客户端传数据
+           if (window.JsCallback) {
+                window.JsCallback.onHideProgress()
+                self.location='unit.html';
+             }else{
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onHideProgress') 
+                    self.location='unit.html';
+                })
+            }
+             // 先跳转
+        　  
+        }
+    }
+
+
+    
+    
+})
+</script>
+</html>

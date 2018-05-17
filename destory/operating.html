@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>报废申请</title>
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css"> 
+	<link rel="stylesheet" href="../css/dialog.css"> 
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+    .cardList li{height:auto;}
+    </style>
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">报废申请</p>
+	</nav>
+	<div class="content destoryC formEntry">
+        
+        <ul class="nav nav-tabs tabs-three" id="myTab">
+            <li class="active"  hid="tab1"><a href="javascript:;">本地单据</a></li>
+            <li hid="tab2"><a href="javascript:;" >单据确认</a></li>
+            <li hid="tab3"><a href="javascript:;" >带上报单据</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="cardList tab-pane active" id="tab1"> 
+                <ul id="List1">
+
+                </ul> 
+                <bottom class=" bottomFixed BtnCurrent"> 
+                        <button id="submitBtn1" class="bottomBtn center  iconfont icon-tijiao"></button> 
+                    </bottom>
+            </div>
+            <div class="cardList tab-pane" id="tab2"> 
+                <ul id="List2">
+
+                </ul>
+                <bottom class=" bottomFixed BtnCurrent"> 
+                    <button id="submitBtn2" class="bottomBtn center  iconfont icon-tijiao"></button> 
+                </bottom>
+            </div>
+            <div class="cardList tab-pane" id="tab3"> 
+                <ul id="List3">
+
+                </ul>
+                <bottom class=" bottomFixed BtnCurrent BtnFont"> 
+                    <button id="submitBtn3" class="bottomBtn center">送审</button> 
+                </bottom>
+            </div>
+        </div>  
+         
+	</div>
+     <div class="bomb">
+         <div class="bombCon">
+            
+         </div>
+     </div>
+     <div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>   
+<script type="template" id="listCon1">  
+    {{~it.data :value:index}}
+        <li class="clearfix" data-index={{=index}}>  
+           <i class='assetsCode' style='display:none;'>{{= value.assetsCode }}</i> 
+           <span class="listInfo">
+                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
+                <b>申请人 ：<i>{{= value.userName}}</i></b>       
+            </span> 
+            <div class=" chose bottomBtn iconfont icon-tijiao" onclick='check(this)'></div> 
+        </li>
+    {{~}}
+</script>
+  
+<script type="template" id="listCon2">  
+        {{~it.data :value:index}}
+            <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}>   
+                <span class="listInfo">
+                    <b>单据号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>
+                    <b>申请人 ：<i>{{= value.userName}}</i></b>         
+                </span> 
+                <div class=" chose bottomBtn iconfont icon-tijiao" onclick='check(this)'></div> 
+            </li>
+        {{~}}
+    </script>
+<script>    
+var departList = $.cookie('departList');
+var userInfo = $.cookie('userinfo');  
+departList = JSON.parse(departList)[0];
+userInfo = JSON.parse(userInfo); 
+var ScrapList=[],ScrapD=[] ,ScrapDI=[],delateA=[] ;
+getDateTab2();
+getDateTab3();
+ if (window.JsCallback) {
+     var data = window.JsCallback.onGetScrapList();  
+     if(data){
+        template(data) 
+     } else{
+        $("#List1").append("<li class='nodate center'>暂无数据</li>")
+     }
+ }else{
+     setupWebViewJavascriptBridge(function (bridge) {
+        bridge.callHandler('onGetScrapList',function responseCallback(data) {  
+            if(data){
+                template(data) 
+            } else{
+                $("#List1").append("<li class='nodate center'>暂无数据</li>")
+            }
+        }) 
+     })
+ }
+ function template(data){ 
+     data = JSON.parse(data); 
+     ScrapList = data; 
+    $.each(data,function(){
+        ScrapD.push(this.eamDiscardDetails);
+        ScrapDI.push(this.eamDiscardInvoices);
+    })
+     var resData={};
+     resData.data=ScrapDI; 
+     if(resData.data.length>0){ 
+        var tmpl = doT.template($("#listCon1").text());  
+        $("#List1").html(tmpl(resData));  
+     }else{
+        $("#List1").append("<li class='nodate center'>暂无数据</li>")
+     }
+ } 
+var addUrl =getURL()+'/AssetsDataPhone/mobile/testController.do?add'; 
+$("#submitBtn1").click(function(){   
+    if($("#List1 .chose.active").length<=0){
+        alert("请选择单据");
+        return false;
+    }
+    $('#scan1').show();
+    var active = $(".chose.active").closest('li');
+    var eamD = [],eamDI=[];
+    $.each(active,function(){
+        var target =$(this).find(".phoneNumber").text(); 
+        var res1 = ScrapD.filter(function(index) {
+            return  index.phoneInvoiceNumber==target;
+        })   
+        delateA.push(target);
+        var res2 =ScrapDI.filter(function(index) {
+            return  index.phoneInvoiceNumber==target;
+        })  
+        eamD = $.merge(eamD,res1);
+        eamDI = $.merge(eamDI,res2); 
+    }) 
+   var jsons = {   
+        departCode: userInfo.departcode,
+        userCode: userInfo.usercode, 
+        eamDiscardInvoices: JSON.stringify(eamDI) , 
+        eamDiscardDetails: JSON.stringify(eamD),
+    } 
+    sendPost(addUrl, jsons, resA);
+    function  resA(res){
+        $('#scan1').hide();
+        if(res.success=='true'){
+            alert(res.msg);
+            $("#List1 .chose.active").closest('li').remove();
+            getDateTab2();
+            if (window.JsCallback) {
+                var data = window.JsCallback.onRemoveItemOfScrapList(JSON.stringify(delateA)); 
+                if(data){
+                    delateA=[];
+                }  
+            }else{
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onRemoveItemOfScrapList',JSON.stringify(delateA),function responseCallback(data) {  
+                        if(data){
+                            delateA=[];
+                        }  
+                    }) 
+                })
+            }
+        }else{
+            alert(res.msg);
+        }
+
+    }
+})  
+//提交
+$("#submitBtn2").click(function(){ 
+    $('#scan1').show();
+    if($("#List2 .chose.active").length<=0){
+        alert("请选择单据");
+        return false;
+    }
+    var updataUrl=getURL()+'/AssetsDataPhone/mobile/testController.do?confirm';
+    var paArr=[];
+    var arr =$("#List2 .chose.active").closest("li");
+    $.each(arr,function(){
+        paArr+=$(this).attr("data-ph")+',';
+    })
+    var jsons = {  
+            departCode: userInfo.departcode,
+            phoneInvoiceNumber: paArr,
+        }   
+    sendPost(updataUrl, jsons, res); 
+    function res(res){
+        $('#scan1').hide();
+        if(res.success=='true'){
+            alert(res.msg);
+            arr.remove()
+            getDateTab3();
+        }else{
+            alert(res.msg);
+        }
+    }
+})
+$("#submitBtn3").click(function(){ 
+    $('#scan1').show();
+    if($("#List3 .chose.active").length<=0){
+        alert("请选择单据");
+        return false;
+    }
+    var updataUrl=getURL()+'/AssetsDataPhone/mobile/testController.do?send';
+    var paArr='';
+    var arr =$("#List3 .chose.active").closest("li");
+    $.each(arr,function(){
+        paArr+=$(this).attr("data-ph")+',' 
+    })
+    var jsons = {  
+            departCode: userInfo.departcode,
+            userCode:userInfo.usercode,
+            phoneInvoiceNumber: paArr,
+        }   
+    sendPost(updataUrl, jsons, res); 
+    function res(res){
+        $('#scan1').hide();
+        if(res.success=='true'){
+            alert(res.msg);
+            arr.remove() 
+        }else{
+            alert(res.msg);
+        }
+    }
+})
+function check(event){
+    $(event).toggleClass("active");
+}
+   
+//获取待送审数据 
+function getDateTab2(){
+
+    var updataUrl =getURL()+'/AssetsDataPhone/mobile/testController.do?queryToConfirmInvoice';
+
+    var jsons = {  
+        departCode: userInfo.departcode,
+        userCode: userInfo.usercode,
+    }    
+    sendPost(updataUrl, jsons, tab2F); 
+    function tab2F(data){  
+        var resData={};
+        resData.data=data.data; 
+        var tmpl = doT.template($("#listCon2").text());  
+        if(data.data.length>0){   
+            //userName
+            $("#List2").html(tmpl(resData));   
+        }else{
+            $("#List2").append("<li class='nodate center'>暂无数据</li>"); 
+        } 
+    }  
+}
+function getDateTab3(){
+
+    var updataUrl =getURL()+'/AssetsDataPhone/mobile/testController.do?queryDiscardInvoice';
+
+    var jsons = {  
+        departCode: userInfo.departcode,
+        userCode: userInfo.usercode,
+    }    
+    sendPost(updataUrl, jsons, tab3F); 
+    function tab3F(data){  
+        var resData={};
+        resData.data=data.data; 
+        var tmpl = doT.template($("#listCon2").text());  
+        if(data.data.length>0){   
+            //userName
+            $("#List3").html(tmpl(resData));   
+        }else{
+            $("#List3").append("<li class='nodate center'>暂无数据</li>"); 
+        } 
+    }  
+}
+</script>
+</html>
+

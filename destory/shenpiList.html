@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>报废申请</title> 
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/dialog.css">
+	 <link rel="stylesheet" href="../css/bootstrap.css"> 
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    
+	<nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a> 
+        <p class="navCon">报废审批</p>
+    </nav>
+    <div class="content destoryC formEntry">
+        <div class="cardList updataList">  
+            <ul id="list1">
+
+            </ul>
+            <bottom class=" bottomFixed BtnCurrent"> 
+                <button id="submitBtn1" class="bottomBtn center  iconfont icon-tijiao"></button> 
+            </bottom>
+        </div>
+        <div class="destory-updata cardList">  
+                <div class="userTop clearfix">
+                    <div class="userImg">
+                        <i class="appNav iconfont"></i>
+                    </div>
+                    <div class="userInfo">
+                        <p class="UserName"></p>
+                        <p class="DepartName"></p>
+                    </div>
+                </div> 
+            <ul id="list2">
+          
+            </ul>
+            <form action="" id="approveResult">
+                <label><input class="radio" checked name="approveResult" type="radio" value="0" />同意 </label> 
+                <label><input class='radio' name="approveResult" type="radio" value="1" />驳回 </label>  
+                <textarea class="Markarea" name="opinion" id="opinion" cols="30" rows="10"></textarea>
+            </form>
+            <bottom class=" bottomFixed BtnCurrent"> 
+                <button id="submitBtn2" class="bottomBtn center  iconfont icon-tijiao"></button> 
+            </bottom>
+        </div>
+    </div> 
+    <div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>   
+<script type="template" id="listCon1">  
+    {{~it.data :value:index}}
+    <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}>   
+        <span class="listInfo">
+            <b>单据号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>
+            <b>申请人 ：<i>{{= value.userName}}</i></b>         
+        </span> 
+        <div class=" chose bottomBtn iconfont icon-tijiao" onclick='check(this)'></div> 
+    </li>
+{{~}}
+</script>
+<script type="template" id="listCon2">  
+    {{~it.data :value:index}}
+        <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}>   
+            <span class="listInfo">
+                <b>资产编码 ：<i class="invoiceNumber">{{= value.assetsCode}}</i></b>
+                <b>条码 ：<i>{{= value.barCode}}</i></b>         
+                <b>报废类别 ：<i>{{= value.discardTypeName}}</i></b>
+                <b>报废原因 ：<i>{{= value.discardReasonName}}</i></b>  
+                <b>创建时间 ：<i>{{= value.createdate}}</i></b>      
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script>
+    //待审批单据查询
+    var listUrl = getURL()+"/AssetsDataPhone/mobile/testController.do?queryApproveInvoice" 
+    var departList = $.cookie('departList');
+    var userInfo = $.cookie('userinfo'); 
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo);   
+    $(".userTop .DepartName").text(userInfo.departname)
+    $(".userTop .UserName").text(userInfo.username) 
+    var shenpiL=[],data_ph='';
+    getINfo();
+    function getINfo(){
+        if (userInfo == "" || !userInfo || departList == "" || !departList) {
+        alert("登录过期");
+    } else {                
+        var jsons = {
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode 
+        } 
+        sendPost(listUrl, jsons, ListA);
+    }
+    function ListA(responce) {  
+        if(responce.data.length>0){
+            var tmpl = doT.template($("#listCon1").text());  
+           var res ={};
+            shenpiL=responce.data;
+            res.data=responce.data;
+            $("#list1").html(tmpl(res));   
+        }else{
+            $("#list1").append("<li class='nodate center'>暂无数据</li>")
+        } 
+    }
+    }
+function check(event){
+    $("#list1 .chose").removeClass("active"); 
+    $(event).toggleClass("active");
+}
+$("#submitBtn1").click(function(){
+    if($("#list1 .chose.active").length<=0){
+        alert("请选择单据");
+        return false;
+    }
+    $(".destory-updata").show();
+    $(".updataList").hide(); 
+    data_ph =  $("#list1 .chose.active").closest("li").attr("data-ph"); 
+    var jsons={
+        phoneInvoiceNumber:data_ph,
+        departCode: userInfo.departcode ,
+    };
+    var getInfoUrl=getURL()+"/AssetsDataPhone/mobile/testController.do?getInvoiceDetail";
+    sendPost(getInfoUrl, jsons, function(data){ 
+        if(data.data.length<=0){
+            alert("暂无明细");
+            return false;
+        }
+        var tmpl = doT.template($("#listCon2").text());  
+        var res ={}; 
+        res.data=data.data;
+        $("#list2").html(tmpl(res));  
+    });  
+})
+$("#submitBtn2").click(function(){  
+    var appR = $('input[type="radio"][name="approveResult"]:checked').val();
+    if(appR==1 && $("#opinion").val().trim()==''){
+        alert("请填写驳回原因");
+        return false;
+    }
+    var approveUrl=getURL()+"/AssetsDataPhone/mobile/discardController.do?approve"
+    var jsons = {
+        userCode: userInfo.usercode,
+        departCode: userInfo.departcode,
+        phoneInvoiceNumber:$("#list2 li").attr("data-ph"),
+        approveResult:appR,
+        opinion:$("#opinion").val()
+    } 
+    sendPost(approveUrl, jsons, responce); 
+})
+function responce(data){  
+    if(data.success='true'){ 
+        alert(data.msg) 
+        getINfo();
+        $(".destory-updata").hide();
+        $(".updataList").show(); 
+    }else{
+        alert(data.msg)
+    }
+}
+</script>
+</html>

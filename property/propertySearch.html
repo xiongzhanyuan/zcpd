@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>本地下载查询</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">本地下载查询</p>
+	</nav>
+	<div class="content">
+        <ul class="cardList" id="dowCard">
+           
+        </ul>
+        
+         <div id="dowList"></div> 
+         <div id="dowList2"></div> 
+	</div>
+     
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/cookie.js"></script> 
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script> 
+<script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+        <li class="clearfix" onclick="enterList(this)">  
+            <span class="listImg"> 
+                <img class="center" src="../images/static.png" alt=""> 
+            </span> 
+            <span class="listInfo">
+                <b>盘点计划编码 ：<i class="planNumber">{{= value.planNumber }}</i></b>
+                <b>盘点计划名称 ：<i>{{= value.planName}}</i></b> 
+            </span> 
+        </li>
+   {{~}}
+</script> 
+<!-- 将类型设置为template，标识为doT.JS -->  
+     
+<script>  
+ var departList = $.cookie('departList');
+var userInfo = $.cookie('userinfo');   
+    //  取出本地已经下载
+if (window.JsCallback) { 
+    var az_res = window.JsCallback.onGetNecessaryJSON();
+    resD(az_res);
+} else {
+    this.setupWebViewJavascriptBridge(function (bridge) { 
+        bridge.callHandler('onGetNecessaryJSON',function(data){
+            resD(data)
+        }) 
+    })
+}  
+function resD(data){
+    var resData={}; 
+    if(data==null){return false;}
+    var az_res=JSON.parse(data); 
+    resData.data=az_res;
+    var tmpl = doT.template($("#dwtTmpl").text());  
+    $("#dowCard").html(tmpl(resData));
+}
+function enterList(event){
+    var target = $(event);
+    var pdNumber = target.find(".planNumber").text(); 
+    $.cookie('pdNumber', pdNumber,{ expires: 30, path: '/', secure: false });    
+    self.location="localList.html";
+} 
+</script>
+</html>
+

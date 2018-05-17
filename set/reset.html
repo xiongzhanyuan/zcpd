@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>       
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        
+    body {
+    margin: 0;  
+    padding-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    background:  #fff;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!--  Header  -->
+<header class="section header">
+    <div class="trapezoid"></div>
+    
+    <div class="header__text">
+    <h1>盘点</h1>
+    <p>重置密码</p>
+    </div>
+</header>
+
+    <!--  Sign Up  -->
+    <section class="section sign-in"> 
+    <form  class="loginform" id="resetForm"> 
+        <input type="password" id="password" name="password" placeholder="原密码" required>
+        <input type="password"id="password_again" name="passwordAgain" placeholder="确认密码" required> 
+        <input type="text" name="passwordNew" placeholder="新密码" required>
+        <div class="button" id="resetBtn">重置密码</div> 
+    </form>
+    <a class="resetBack" href="javascript:history.go(-1)">返回</a> 
+    </section> 
+</div>
+<script src="../js/jquery.min.js"></script> 
+<script src="../js/validate.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/main.js"></script> 
+</body>
+<script>
+   
+$(document).ready(function() {
+    $( "#resetForm" ).validate({
+    rules: { 
+        password: "required",
+        password_again: {
+        equalTo: "#password"
+        },
+        mail: {
+        required: true,
+        email: true
+      },
+    }
+    });
+});
+
+// 修改密码
+$("#resetBtn").click(function(){ 
+    if(!$("#resetForm").validate()){
+        return false;
+    } 
+    var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?modifyPassword";
+    var userInfo=$.cookie('userinfo');
+    userInfo= JSON.parse(userInfo);
+    console.log(userInfo);
+    var json={
+        "userid":userInfo.userid, 
+        "password":$("#resetForm input[name=password]").val(),
+        "passwordAgain":$("#resetForm input[name=passwordAgain]").val(), 
+        "passwordNew":$("#resetForm input[name=passwordNew]").val(),
+    } 
+    console.log(json)
+    sendPost(registUrl,json,callbackA);
+    function callbackA(data){ 
+        if(data.success=="true"){            
+            alert(data.msg)  
+            // $("#resetForm").reset();
+            // setTimeout(function(){history.go(0);},2500);
+            self.location='../index.html';            
+        }else{
+            alert(data.msg) 
+        }
+
+    }
+}) 
+</script>
+</html>

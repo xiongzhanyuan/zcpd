@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>      
+    <link rel="stylesheet" href="css/fancySelect.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        
+    body {
+    margin: 0;  
+    padding-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    background:  #fff;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!--  Header  -->
+<header class="section header">
+    <div class="trapezoid"></div>
+    
+    <div class="header__text">
+    <h1>盘点</h1>
+    <p>资产盘点</p>
+    </div>
+</header>
+
+    <!--  Sign Up  -->
+    <section class="section sign-in">
+    <div class="trapezoid"></div>
+    <form  class="loginform" id="register"> 
+        <p>选择单位</p>
+        <select name="unit" id="unit" value="请选择"> 
+
+        </select> 
+        <div class="button" id="registBtn">进入系统</div> 
+    </form>
+    </section> 
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/mbox.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/fancySelect.js"></script>
+<script src="js/hotcss.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/main.js"></script>
+</body>
+<script> 
+//取cookie 
+$("#unit").html("")
+var departList = $.cookie('departList');
+var userInfo = $.cookie('userinfo');   
+var selectData = getURL()+"/AssetsDataPhone/mobile/allotController.do?getDeparts";
+departList = JSON.parse(departList);
+userInfo = JSON.parse(userInfo); 
+var str="";  
+$.each(departList,function(){ 
+    str+="<option value="+this.departcode+">"+this.shortname+"</option>"
+})
+$("#unit").html(str); 
+if (window.JsCallback) { 
+$('#unit').fancySelect();
+}
+$("#registBtn").click(function(){     
+    var departData=$("#unit").val();  
+    userInfo.departcode=departData;
+    userInfo.departname=$("#unit").find("option:selected").text();
+    var userInfoS=JSON.stringify(userInfo);   
+    $.cookie('userinfo', userInfoS, { expires: 30, path: '/', secure: false }); 
+    localStorage.setItem("userinfo",userInfoS);
+    //获取全部下拉字典
+    var seljsons={ 
+        userCode: userInfo.usercode,
+    }
+    if (window.JsCallback) { 
+		var res = window.JsCallback.onGetSetInDeparts(userInfo.departcode);
+        //sendPost(selectData,seljsons,function(data){
+        //var selList = data.data;
+        //var res = selList.filter(function(index) {
+        //        return  index.marktail=='1';
+        //    })    
+            localStorage.setItem('selIn',JSON.stringify(res))
+    //})
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function(bridge) { 
+            bridge.callHandler('onGetSetInDeparts',userInfo.departcode, function responseCallback(responseData) {
+            	localStorage.setItem('selIn',JSON.stringify(responseData))
+            })
+        });
+    }
+    
+    //获取个人下拉字典
+    var seljsons2={
+        departCode:departData ,
+        userCode: userInfo.usercode,
+    }
+    if (window.JsCallback) { 
+		var res = window.JsCallback.onGetSetOutDeparts();
+     	 //sendPost(selectData,seljsons2,function(data){
+       	 //var selList = data.data;
+       	 //var res = selList.filter(function(index) {
+       	 //    return  index.marktail=='1';
+      	 // })  
+      	  localStorage.setItem('selOut',JSON.stringify(res))
+    	//})
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function(bridge) { 
+            bridge.callHandler('onGetSetOutDeparts', function responseCallback(responseData) {
+      	 		 localStorage.setItem('selOut',JSON.stringify(responseData))
+            })
+        });
+    }
+    
+    if (window.JsCallback) { 
+        window.JsCallback.onLoginInfo(userInfoS);  
+        window.JsCallback.onHideProgress()          
+        self.location='index.html';
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function(bridge) { 
+            bridge.callHandler('onLoginInfo', userInfoS, function responseCallback(responseData) {                
+                bridge.callHandler('onHideProgress') 
+                self.location='index.html';
+            })
+        });
+    }
+})
+</script>
+</html>

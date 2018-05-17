@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>盘点数据上传</title>
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <style> 
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a>
+        <p class="navCon">盘点数据上传</p>
+    </nav>
+    <div class="content">
+        <ul class="cardList" id="TobeArray">
+        </ul>
+    </div>
+    <bottom class="bottomFixed">
+        <div class="center clearfix"> 
+            <i id="submitBtn" class="iconfont icon-tijiao rightBtn"></i>
+        </div>
+    </bottom>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script> 
+<script src="../js/cookie.js"></script> 
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script> 
+<script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+            <li class="clearfix">  
+                <span class="listImg"> 
+                    <img class="center" src="../images/static.png" alt=""> 
+                </span>  
+                <span class="listInfo"> 
+                    <b>资产编号 ：<i class="assetsCode">{{= value.assetsCode }}</i></b>
+                    <b>资产名称 ：<i>{{= value.assetsName}}</i></b>
+                </span> 
+            </li>
+    {{~}}
+</script>
+<script>  
+    var departList = $.cookie('departList');
+    var userInfo = $.cookie('userinfo');   
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo);  
+    if (window.JsCallback) {
+        callbackRes(window.JsCallback.onGetStashedDeviceInfoList());
+    } else {
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('getTobesubmitArray', callbackRes)
+        })
+    }
+    function callbackRes(result) {
+      
+        if (result == null || !result) {            
+            alert("暂无数据");   
+            return;
+        }
+        var sendData = JSON.parse(result);
+        var newDate = [];
+        for (i = 0; i < sendData.length; i++) {
+            var data = JSON.parse(sendData[i]); 
+            newDate.push(data);
+        }
+        var res = {
+            data: newDate
+        }
+        var tmpl = doT.template($("#dwtTmpl").text());
+        $("#TobeArray").html(tmpl(res));
+        $("#submitBtn").click(function () { 
+
+            if (window.JsCallback) {   
+             saveData(newDate,JSON.parse(sendData[0]).keyCode);
+            }else{ 
+                var a = window.confirm("数据上传为覆盖上传模式，是否确认上传"); 
+                if(!a){
+                    return false;
+                }else{ 
+                    saveData(newDate,JSON.parse(sendData[0]).keyCode);
+                }
+            }
+        })
+    }
+
+    function saveData(data,keycode) {   
+        var time =new Date().Format('yyyy-MM-dd').replaceAll("-",''), 
+        time2 = localStorage.getItem("stopDate");
+        if(Number(time)>Number(time2)){
+            alert("当前盘点已结束，禁止上传盘点");
+            return false;
+        }
+        var uploadUrl = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?uploadcheckplan" 
+        var json = { 
+            userCode: userInfo.usercode,
+            uploadType: 0,
+            uploadFile: '', 
+            data:JSON.stringify(data)
+        }
+        sendPost(uploadUrl, json, callbackA);
+    }
+
+    function callbackA(data) { 
+        var status = false;
+        if (data.success == "true") {
+            status = true;
+            alert(data.msg);   
+            $("#TobeArray").html("");
+            // 给客户端传
+            if (window.JsCallback) {
+                var responseData = window.JsCallback.onUnStashDeviceList();
+                callbackUploadResult(responseData);
+            } else {
+                //cleanTobesubmit
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onUnStashDeviceList', status, callbackUploadResult)
+                });
+            }
+        }else{
+            alert(data.msg);   
+        }
+
+    }
+
+    function callbackUploadResult(responseData) {
+
+    }
+</script>
+
+</html>

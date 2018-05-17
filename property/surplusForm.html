@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>盘盈录入</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">盘盈录入</p>
+	</nav>
+	<div class="content">
+         <form action="" method='post' class="formEntry" id="formEntry" enctype="multipart/form-data">
+              <p>
+                 <label for="inventoryCode">盘点计划编号:</label>
+                 <span>系统自动录入</span>
+             </p>
+             <p>
+                 <label for="inventoryUnit">盘点单位名称:</label>
+                 <select name="inventoryUnit" id="inventoryUnit">
+                     <option value="0">111</option>
+                      <option value="0">111</option>
+                 </select>
+             </p>
+             <p>
+                 <label for="propertyCode">资产条码:</label>
+                 <input type="text" id="propertyCode" name="propertyCode" placeholder="
+                 盘点扫描\录入编码">
+             </p>
+             <p>
+                 <label for="propertyStatus">资产编码:</label>
+                 <select name="propertyStatus" id="propertyStatus">
+                     <option value="0">111</option>
+                      <option value="0">111</option>
+                 </select>
+             </p>
+            
+             <p>
+                 <label for="propertyName">资产名称:</label>
+                 <input type="text" name="propertyName" id="propertyName">
+             </p>
+            <p>
+                 <label for="propertyStatus">计量单位:</label>
+                 <select name="propertyStatus" id="propertyStatus">
+                     <option value="0">111</option>
+                      <option value="0">111</option>
+                 </select>
+             </p>
+             <p>
+                 <label for="propertyStatus">技术状况:</label>
+                 <select name="propertyStatus" id="propertyStatus" value="1">
+                     <option value="0">在用-完好</option>
+                      <option value="1">1111</option>
+                 </select>
+             </p>
+             <p>
+                 <label for="propertyStatus">使用状态:</label>
+                 <select name="propertyStatus" id="propertyStatus" value="1">
+                     <option value="0">000</option>
+                      <option value="1">111</option>
+                 </select>
+             </p>
+             <p>
+                 <label for="assetsStandard">规格型号:</label>
+                 <input type="text" id="assetsStandard" name="assetsStandard">
+             </p>
+             <p>
+                 <label for="specification">评估价值:</label>
+                 <input type="text" id="specification" name="specification">
+             </p>
+             <p>
+                 <label for="specification">盘盈原因:</label>
+                 <input type="text" id="specification" name="specification">
+             </p>
+             <p>
+                 <label for="specification">备注:</label>
+                 <input type="text" id="specification" name="specification">
+             </p>
+             <p>
+                 <label for="specification">地理坐标:</label>
+                 <span>系统获取</span>
+              <p>
+                 <label for="propertyImage">资产图片:</label>
+                 <input type="file"  id="propertyImage" name="propertyImage" accept="image/*">
+                 <span class="fileImg"></span>
+             </p>
+             <!--<p><input type="submit" value="提交" /></p>-->
+         </form>
+	</div>
+     <bottom class="bottomFixed">
+         <div class="center clearfix">
+             <button id="cancelBtn">取消</button>
+              <button id="scanning" class="centerx">扫描</button>
+             <button id="submitBtn">保存</button>
+         </div>
+     </bottom>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>   
+<script src="../js/cookie.js"></script>
+<script src="../js/main.js"></script>  
+<script> 
+ //扫描
+ var scanData = "";
+$("#scanning").click(function () {
+    if (window.JsCallback) {
+        //安卓
+        // window.JsCallback.onRequestQR(); 
+        rnSetQRRequest("200000012");
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+                scanData = responseData;
+            })
+
+        }) 
+    }
+}) 
+//此方法用于给Android系统调用
+function rnSetQRRequest(result) {
+    scanData = result;
+}
+scanData=eval(scanData);
+//scanData=eval(scanData);
+//填充数据 
+$.each($("#formEntry input[name]"),function(){  
+    var that=$(this);
+    var nameData =$(this).attr('name'); 
+    var jValue=""
+    for(var item in scanData){  
+        if(item==nameData){  //item 表示Json串中的属性，如'name'  
+            jValue=scanData[item];//key所对应的value  
+            that.val(jValue==""?"":jValue);
+            return;
+        }  
+    }  
+    
+})
+
+
+
+
+//保存数据
+var uploadUrl = getURL()+"/AssetsDataPhone/mobile/testController.do?addAsset"
+$("#submitBtn").click(function(){
+    var formdata =$("#formEntry").serializeArray();
+    var json={
+        userCode:'01281098',
+        uploadType:0,
+        uploadFile:'',
+        keyCode:'bc72fee1-719c-4ec4-83eb-7c527a3e60a8',
+        data:String(formdata)
+        //如果是个json会报错？？目前先转换成字符串传递
+        
+    }
+    sendPost(uploadUrl,json,callbackA);
+    function callbackA(data){ 
+        if(window.JsCallback){
+            //安卓
+            window.JsCallback.onRequestAlert(data.msg);
+        }else{
+            //IOS 
+        } 
+        if(data.success=="true"){
+            $("#formEntry").reset();
+        }
+        
+    } 
+})
+ 
+</script>
+</html>
+

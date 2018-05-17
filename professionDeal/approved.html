@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>在线审批</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">在线审批</p>
+	</nav>
+	<div class="content">
+        <ul class="cardList" id="approCard">
+           
+        </ul>
+		 <!--<div id="dowList"></div>-->
+	</div>
+     
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+ <script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+         <li class="clearfix" dataId={{= value.id}}> 
+                <span class="listImg">
+                    <img class="center" src="../images/static.png" alt="">
+                </span>
+                <span class="listInfo">
+                    <b>待办业务 ：{{= value.name }}</b>
+                    <b>待办数量 ：{{= value.count}}项</b>
+                </span>
+            </li>
+   {{~}}
+</script> 
+<!-- 将类型设置为template，标识为doT.JS -->  
+     
+<script> 
+
+
+var qustString = "http://lhsm.weiapp.pw:3575/AssetsDataPhone/mobile/appController.do";
+//?findAllByJhsbh&jhsbh=PD-201709000023
+$.ajax({
+  type: 'POST',
+  url: qustString+"?findJhsByUserAndDate", 
+  async:false,
+  data:{
+      userCode:'',
+      depart:''
+  },
+  success: function(data){ 
+        var resData =data;
+        // 通过dot.template调用你所写的dot.JS。  
+        var tmpl = doT.template($("#dwtTmpl").text());  
+        // 将数据扔进templ中。并在DIV中显示出来  
+        //假数据
+        resData={"data":[
+                {
+                    'id':'1',
+                    'code':'123',
+                    'name':'调拨审批',
+                    'count':12
+                },
+                {
+                    'id':'2',
+                    'code':'123',
+                    'name':'报废审批',
+                    'count':12
+                }
+            ]
+        }
+        $("#approCard").html(tmpl(resData));  
+  }
+}); 
+//数据待确定
+$("#approCard li").click(function(){
+    var pageId=$(this).attr("dataId");
+     window.location.href="approvedCon.html?pageId="+pageId; 
+})
+
+</script>
+</html>
+

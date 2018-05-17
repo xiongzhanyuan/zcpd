@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>本地下载查询列表详情</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/index.css"> 
+    <style>
+        .cardList li {height:auto;} 
+    </style>
+</head>
+<body> 
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">本地下载详情</p>
+	</nav>
+	<div class="content"> 
+        <div id="dataBox">
+            <p name="assetsCode"><i>资产编码:</i><span></span></p>
+            <p name="assetsName"><i>资产名称：</i><span></span></p>   
+            <p name="assetsStandard"><i>规格型号:</i><span></span></p>
+            <p name="assetsStatus"><i>资产状态:</i><span></span></p>
+            <p name="assetsStatusName"><i>资产状态名称:</i><span></span></p>
+            <p name="barCode"><i>条码:</i><span></span></p>
+            <p name="checkResult"><i>盘点结果:</i><span></span></p>
+            <p name="departCode"><i>单位编码:</i><span></span></p>
+            <!-- <p name="keyCode"><i>keyCode:</i><span></span></p> -->
+            <p name="licenceNumber"><i>井号:</i><span></span></p>   
+            <p name="lossReason"><i>盈亏原因:</i><span></span></p>  
+            <p name="makeFactory"><i>制造厂家:</i><span></span></p>   
+            <p name="managerDepart"><i>盘点单位:</i><span></span></p>  
+            <p name="managerDepartName"><i>盘点单位名称:</i><span></span></p> 
+            <p name="nowValue"><i>净值:</i><span></span></p>    
+            <p name="operateDate"><i>投产日期:</i><span></span></p>  
+            <p name="originalValue"><i>原值:</i><span></span></p>
+            <p name="planName"><i>盘点计划名称:</i><span></span></p> 
+            <p name="planNumber"><i>盘点计划编码:</i><span></span></p>
+            <p name="operateDate"><i>投产日期:</i><span></span></p>
+            <p name="operateDate"><i>投产日期:</i><span></span></p>   
+            <p name="userPerson"><i>保管人：<span></span></p>
+            <p name="remark"><i>备注:</i><span></span></p>
+            <p name="storePlace"><i>存放地点编码:</i><span></span></p>
+            <p name="storePlaceName"><i>存放地点:</i><span></span></p> 
+            <p name="barCode"><i>编码:</i><span></span></p> 
+            <p name="partDepartCode"><i>出厂编号:</i><span></span></p>      
+        </div>
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/main.js"></script>  
+<script>
+    var barCode = $.cookie('barCode'); 
+    if (window.JsCallback) {
+        var data=window.JsCallback.onGetDeviceById(barCode);  
+            dataInfo(data)
+    }else{
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onGetDeviceById',barCode,function responseCallback(data) {  
+            dataInfo(data)
+            }) 
+        })
+    } 
+    function dataInfo(data){
+        data = JSON.parse(data);
+        var list =$("#dataBox p"); 
+        $.each(list,function(){ 
+            var target = $(this);
+            var key = target.attr("name");
+            var val = data[key];            
+            target.find("span").text(val==""||val==null?"--":val);
+        })
+    } 
+</script>
+</html>

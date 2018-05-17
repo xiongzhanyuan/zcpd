@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>在线审批</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">在线审批</p>
+	</nav>
+	<div class="content">
+        <ul class="cardList cardListV" id="approConCard">
+           
+        </ul>
+	</div>
+     <bottom class="bottomFixed">
+         <div class="center clearfix">
+             <button id="cancelBtn"><a href="javascript:history.go(-1)">返回</a> </button>
+             <button id="filter" style="float:right;">筛选</button>
+         </div>
+     </bottom>
+     
+     <div class="bomb bombS ">
+         <div class="bombCon">
+            <form action="" class="formEntry" id="filterForm">
+                <p>
+                    <label for="">单据编号：</label>
+                    <input type="text" >
+                </p><p>
+                    <label for="">单据状态：</label>
+                    <input type="text" >
+                </p>
+                <p>
+                    <label for="">调出单位：</label>
+                    <input type="text" >
+                </p>
+                 <p>
+                    <label for="">调入单位：</label>
+                    <input type="text" >
+                </p>
+            </form>
+            <p>
+                <button class="orange" id="filterResult">查询</button>
+                <button class="closebtn orange">关闭</button>
+            </p>
+         </div>
+     </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>
+ <script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+         <li class="clearfix" dataId={{= value.id}}>
+                <span class="listInfo">
+                    <b>单据编号 ：{{= value.name }}</b>
+                    <b>单据状态 ：{{= value.count}}项</b>
+                    <b>申请单位 ：{{= value.name }}</b>
+                    <b>调拨数量 ：{{= value.count}}项</b>
+                </span>
+            </li>
+   {{~}}
+</script> 
+<!-- 将类型设置为template，标识为doT.JS -->  
+     
+<script> 
+
+
+var qustString = "http://lhsm.weiapp.pw:3575/AssetsDataPhone/mobile/appController.do";
+//?findAllByJhsbh&jhsbh=PD-201709000023
+var  data = {
+      userCode:'',
+      depart:''
+  }
+sendPost(qustString+"?findJhsByUserAndDate",data,callbackFunA(data));
+function  callbackFunA(data){
+    var resData =data;
+    // 通过dot.template调用你所写的dot.JS。  
+    var tmpl = doT.template($("#dwtTmpl").text());  
+    // 将数据扔进templ中。并在DIV中显示出来  
+    //假数据
+    resData={"data":[
+            {
+                'id':'1',
+                'code':'123',
+                'name':'调拨审批12',
+                'count':12
+            },
+            {
+                'id':'2',
+                'code':'123',
+                'name':'报废审批12',
+                'count':12
+            }
+        ]
+    }
+    $("#approConCard").html(tmpl(resData));  
+    $("#approConCard li").click(function(){
+    var pageId=$(this).attr("dataId");
+     window.location.href="approvedDefin.html?pageId="+pageId; 
+})
+} 
+$("#filter").click(function(){
+    $(".bomb").addClass("active")
+})
+$("#filterResult").click(function(){
+     $(this).closest('.bomb').removeClass("active")
+    //数据重新渲染
+    sendPost(qustString+"?findJhsByUserAndDate",data,callbackFunA(data));
+})
+//跳转
+
+</script>
+</html>
+

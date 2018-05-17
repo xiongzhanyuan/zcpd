@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>调拨申请</title> 
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">   
+    <link rel="stylesheet" href="../css/dialog.css">  
+    <link href="../css/select2.css" rel="stylesheet" /> 
+    <link rel="stylesheet" href="../css/lCalendar.css">   
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+    .cardList li{height:auto;}
+    </style>
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">调拨申请</p>
+	</nav>
+	<div class="content destoryC formEntry ">
+        
+        <ul class="nav nav-tabs tabs-two" id="myTab">
+            <li class="active"  hid="tab1"><a href="javascript:;">调拨单据</a></li>
+            <li hid="tab2"><a href="javascript:;" >单据明细</a></li> 
+        </ul>
+        <div class="tab-content">
+            <div class="cardList tab-pane active" id="tab1">
+                <div class="userTop clearfix">
+                    <div class="userImg">
+                        <i class="appNav iconfont"></i>
+                    </div>
+                    <div class="userInfo">
+                        <p class="UserName"></p>
+                        <p class="DepartName"></p>
+                    </div>
+                </div>
+                <form action="" id="form1">
+                    <p>
+                        <label for="invoiceType">单据类型</label> 
+                        <select class="select" name="invoiceType" value="1401" id="Invoice">
+                            <option value="1401">有形</option>
+                            <option value="1402">无形</option>
+                            <option value="1403">长(待)摊费用</option>
+                            <option value="1404">整体</option> 
+                        </select>
+                    </p>
+                    <p>
+                        <label for="outDepartcode">调出单位</label> 
+                        <select name="outDepartcode" value="" id="Outvoice">
+                            
+                        </select>
+                    </p>
+                    <p>
+                        <label for="inDepartcode">调入单位</label> 
+                        <select name="inDepartcode" value="" id="DInvoice">
+                            
+                        </select>
+                    </p> 
+                    <p>
+                        <label for="reason">调拨原因</label> 
+                        <input type="text" name='reason' placeholder="调拨原因">
+                    </p>
+                    <p>
+                        <label for="bz">备注</label>
+                        <input type="text" name="bz"  placeholder="备注"> 
+                    </p>
+                    <p>
+                        <label for=" sl">数量</label>
+                        <input type="text" id="slNum" name="sl" value='0'  placeholder="数量"> 
+                    </p> 
+                    <p>
+                        <label for="originalValue">原值</label>
+                        <input type="text" name="originalValue"  value='0' placeholder="原值"> 
+                    </p>
+                    <p>
+                        <label for="nowValue">净值</label>
+                        <input type="text" name="nowValue"  value='0' placeholder="净值"> 
+                    </p>
+                    <p>
+                        <label for="addDepreciate">累计折旧 </label>
+                        <input type="text" name="addDepreciate" value='0'  placeholder="累计折旧 "> 
+                    </p>  
+                    <p>
+                        <label for="createUserid">制单人</label>
+                        <input type="text" name="createUserid" readonly="readonly"  placeholder="制单人"> 
+                    </p>
+
+                    <p>
+                        <label for="createTime">制单时间</label>
+                        <input type="text" name="createTime" readonly="readonly" placeholder="制单时间"> 
+                    </p>
+
+                    <p>
+                        <label for="createDepart">申请单位</label>
+                        <input type="text" name="createDepart" readonly="readonly" placeholder="制单时间"> 
+                    </p>
+
+
+                    <!-- <p>
+                        <label for="createDepartcode">申请单位</label>
+                        <select name="createDepartcode" id="createDepartcode"> 
+                        </select>
+                    </p> -->
+                </form> 
+            </div>
+            <div class="cardList tab-pane" id="tab2">
+                    <div class="userTop clearfix">
+                            <div class="userImg">
+                                <i class="appNav iconfont"></i>
+                            </div>
+                            <div class="userInfo">
+                                <p class="UserName"></p>
+                                <p class="DepartName"></p>
+                            </div>
+                        </div>
+                <div class="searchHeader"> 
+                    <p class="clearfix">
+                       <div class="checkTop">
+                            <label class="checkB "><input type="radio" data-name='barCode' class='radio' checked /><span>资产条码:</span></label>
+                            <label class="checkB "><input type="radio"  data-name='assetsCode'  class='radio' /><span>资产编码:</span></label>
+                       </div>
+                       <div class='checkSear'>
+                            <input class="check1" type="text" placeholder="条形码 " name='barCode' required=""> 
+                            <input class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required=""> 
+                       </div>
+                        <i   id="search" class="checkSearch iconfont icon-chaxunxiazai"></i> 
+                    </p>
+                </div>
+
+                <ul id="list1">
+
+                </ul>
+                <div class="searchRes DesSearchRes borderFBox" id="dataBox">  
+                    <p name="assetsCode">资产编码：<span></span></p>   
+                    <p name="assetsName">资产名称：<span></span></p>
+                    <p name="departName">所属单位<span></span></p> 
+                    <p name="remark">备注<span></span></p> 
+                    <p name="storePlace">存放地点<span></span></p>
+                    <p name="assetsStandard">规格型号<span></span></p>  
+                    <p name="licenceNumber">车牌井号<span></span></p>       
+                    <p name="makeFactory">制造厂家<span></span></p>    
+                    <p name="departCode"> 所属单位编码<span></span></p>    
+                    <p name="userPerson">保管人<span></span></p>
+                    <p name="barCode">编码：<span></span></p> 
+                    <p name="planNumber">出厂编号：<span></span></p>  
+                    <p name="originalValue">原值:<span></span></p>  
+                    <p name="nowValue">净值:<span></span></p>  
+                    <p name="addDepreciate">累计折旧:<span></span></p>  
+                    <p name="devalueValue">减值准备:<span></span></p>  
+                    <p name="usedState">使用状态编码:<span></span></p>    
+                    <p name="usedStateName">使用状态:<span></span></p>     
+                </div>
+                <bottom class=" bottomFixed BtnCurrent DBbottomm"> 
+                    <div class="bottomBtn_boxTwo">
+                        <button id="scanning" class="bottomBtn iconfont icon-icon-"></button> 
+                    </div>
+                    <div class="bottomBtn_boxTwo">
+                         <button id="submitBtn" class="bottomBtn  iconfont icon-tijiao"></button>
+                    </div>
+                     </bottom>
+            </div> 
+        </div>  
+         
+	</div>
+   
+     <div class="bomb">
+         <div class="bombCon">
+            
+         </div>
+     </div> 
+	<div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script> 
+<script src="../js/lCalendar.js"></script> 
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>    
+<script src="../js/fancySelect.js"></script> 
+<script src="../js/select2.js"></script>
+<script src="../js/main.js"></script>   
+<script type="template" id="listCon1">  
+        {{~it.data :value:index}}
+        <li class="clearfix" data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}}   keyCode={{=value.keyCode}}  data-assetsCode={{=value.assetsCode}}  data-barCode={{=value.barCode}}  data-index={{=index}}  data-index={{=index}} onclick="enterInfo(this,'dataBox')">  
+            <p class="barCode" style='display:none;'>{{= value.barCode }}</p>
+            <span class="listInfo">
+                <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
+                <b>资产名称 ：<i>{{= value.assetsName}}</i></b>           
+            </span> 
+            <div class=" chose bottomBtn iconfont icon-tijiao" ></div>
+        </li>
+    {{~}}
+</script> 
+<script>
+    var qustString = getURL()+"/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber"; 
+    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+    var userInfo = $.cookie('userinfo'); 
+    var listAarray=[];
+    var list2Aarray=[]; 
+    userInfo = JSON.parse(userInfo);  
+    $("input[name='createDepart']").val(userInfo.departname);
+    $("input[name='createUserid']").val(userInfo.usercode); 
+    $(".userInfo .DepartName").text(userInfo.departname);
+    $(".userInfo .UserName").text(userInfo.username);  
+   
+    // 调出
+    var strOUT="";  
+    $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){   
+        strOUT+="<option value="+this.departcode+">"+this.departname+"</option>"
+    })    
+    //调入
+    var strIN="",strINList='';    
+    $.each(JSON.parse(localStorage.getItem('selIn')),function(index,i){  
+        // if(index==0){
+        //     $("#createDepartcode").val(this.departcode)
+        // }
+        strIN+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
+    })   
+    
+    $("#DInvoice").html(strIN);
+    $("#Outvoice").html(strOUT);
+    $("#DInvoice").select2();
+    $("#Outvoice").select2();
+    if (window.JsCallback) {  
+        //$('.select').fancySelect();  
+    }
+    $("input[name='createTime']").val(new Date().Format('yyyy/mm/dd')); 
+    $(".checkTop input").click(function(){ 
+        $(".checkSear input").val('');
+        $(this).parent().siblings(".checkB").find('input').attr("checked",false);
+       var name =$(this).attr("data-name"); 
+       $('.checkSear input').hide(); 
+       $('.checkSear input[name='+name+']').show(); 
+    })  
+    //搜索
+    $("#search").click(function(){ 
+        $('#scan1').show();
+        if($("input[name='assetsCode']").val().trim()==''&&$("input[name='barCode']").val().trim()==''){
+            return false;
+        }
+        var jsons={
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode,
+            assetsCode:$("input[name='assetsCode']").val(),
+            barCode:$("input[name='barCode']").val(),
+        } 
+    sendPost(getListUrl,jsons,ListA)
+    })
+    function ListA(data){   
+        $('#scan1').hide();
+        if(data.success=='true'){ 
+            var OutDepart = $("#Outvoice").val();
+            if(OutDepart != data.data.departCode){
+                alert("该数据不属于此单位");
+                return false;
+            }
+            listAarray.push(data.data);
+            var reslistAarray = listAarray.unique('assetsCode');
+            sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
+            template(reslistAarray) 
+        }else{
+            alert(data.msg)
+        }
+    } 
+    function template(data){ 
+       var res={};
+       res.data = data;
+        var tmpl = doT.template($("#listCon1").text());  
+        $("#list1").html(tmpl(res));  
+    }
+    function enterInfo(even,id){  
+        var target = $(even);
+        var barCode = target.find(".barCode").text();    
+        var list  =  sessionStorage.getItem("form1"); 
+        list = JSON.parse(list);
+        var res = list.filter(function(index) {
+                return  index.barCode==barCode;
+            })  
+        dataInfo(res[0],id);
+        var num1=target.attr("data-num1");
+        var num2=target.attr("data-num2");
+        var num3=target.attr("data-num3");
+        var num4=target.attr("data-num4");
+        $("#slNum").val(1);
+        $("input[name=originalValue]").val(1);
+        $("input[name=nowValue]").val(num1);
+        $("input[name=addDepreciate]").val(num2);
+        $("input[name=originalValue]").val(num3);
+        check(target.find(".chose"),res[0]) 
+    }  
+    function dataInfo(data,id){ 
+        var list =$("#"+id+" p"); 
+        $.each(list,function(){ 
+            var target = $(this);
+            var key = target.attr("name");
+            var val = data[key];            
+            target.find("span").text(val==""||val==null?"--":val);
+        })
+    } 
+    function check(event,res){ 
+        $(".chose").removeClass("active");
+        event.toggleClass("active");
+        if( event.hasClass("active")){   
+            list2Aarray.push(res)
+        }  else{
+            list2Aarray = list2Aarray.filter(function(index) {
+                return  index.assetsCode!= res.assetsCode;
+            }) 
+        }
+        list2Aarray.unique('assetsCode');
+        var res ={};
+        res.data=list2Aarray;
+        var tmpl = doT.template($("#listCon2").text());   
+        $("#list2").html(tmpl(res));  
+    }
+    var tab3Res=[]; 
+
+$("#submitBtn").click(function(){  
+    var dom= $("#list1 .chose.active");
+    if(dom.length<=0){
+        alert("请选择调拨明细");
+        return false;
+    } 
+    var res={},obj1={},obj2={};
+    var phoneInvoiceNumber = userInfo.usercode+userInfo.departcode+new Date().Format('yyyyMMddhhmmss');
+    obj1 =$("#form1").serializeObject(); 
+    obj1.phoneInvoiceNumber=phoneInvoiceNumber;
+    obj2.phoneInvoiceNumber=phoneInvoiceNumber; 
+    obj1.createDepartcode	= userInfo.departcode;
+    obj1.createDepartName  =    userInfo.departname ;    
+    obj1.inDepartname = $("select[name=inDepartcode]").find("option:selected").text();
+    obj1.outDepartname = $("select[name=outDepartcode]").find("option:selected").text();
+    //
+    //eamAllotDetal 明细信息
+    obj2.assetsCode =  dom.closest('li').attr("data-assetsCode");  
+    obj2.barCode =  dom.closest('li').attr("data-barCode");   
+    obj2.keyCode =  dom.closest('li').attr("keyCode");
+    var array1=[];
+    var array2=[];
+    array1.push(obj1);
+    array2.push(obj2);
+    var URL =  getURL()+"/AssetsDataPhone/mobile/allotController.do?add"; 
+    var resData ={ 
+        userCode: userInfo.usercode,
+        departCode: userInfo.departcode , 
+        userName:userInfo.username,
+        phoneInvoiceNumber:phoneInvoiceNumber,
+        allotInvoiceDTO: JSON.stringify(array1) , 
+        eamAllotDetal: JSON.stringify(array2), 
+    }   
+     sendPost(URL, resData,function(res){ 
+        if(res.success=='true'){
+            alert(res.msg);
+        }
+     }); 
+}) 
+//扫描条形码功能    
+$("#scanning").click(function () { 
+    if (window.JsCallback) {
+        //安卓
+        window.JsCallback.onQR();
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+                scanData(responseData);
+            })
+
+        })
+    }
+})
+function rnSetQRResult(result) {
+    scanData(result);
+}
+function scanData(data) {
+    var scanData = JSON.parse(data);  
+    var list =$("#list1 li");
+    var BARcode='';
+    //barCode
+    if(scanData.QRCodeLPC==undefined){
+        BARcode=scanData.barCode
+    }else{
+        BARcode=scanData.QRCodeLPC
+    }
+    if(list.length>0){
+        var res = list.filter(function(index) {
+                return  $(this).attr("data-barcode")==BARcode;
+            })  
+        if(res.length>0){
+           // alert("明细已扫描");
+            return false;
+        }
+    }
+    $("input[name=barCode]").val(BARcode);
+     $("#search").click(); 
+}
+</script>
+</html>
+

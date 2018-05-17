@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>本地下载列表</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/index.css">       
+    <style>
+        .cardList li {height:auto;}
+        .barCode{
+            display:none;
+        }
+    </style>
+</head>
+<body> 
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">本地下载列表</p>
+	</nav>
+	<div class="content">
+        <ul class="cardList" id="dowCard">
+           
+        </ul> 
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/main.js"></script>
+<script type="template" id="dwtTmpl">  
+    {{~it.data :value:index}}
+        <li class="clearfix" data-index={{=index}} onclick="enterInfo(this)">  
+            <p class="barCode">{{= value.barCode }}</p>
+            <span class="listInfo"> 
+                <b>盘点计划编码 ：<i class="planNumber">{{= value.planNumber }}</i></b>
+                <b>盘点计划名称 ：<i>{{= value.planName}}</i></b>                    
+                <b>资产编码 ：<i>{{= value.assetsCode}}</i></b>                   
+                <b>资产名称 ：<i>{{= value.assetsName}}</i></b> 
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script> 
+    var pdNumber = $.cookie('pdNumber');    
+    if (window.JsCallback) {
+        var data=window.JsCallback.onGetFileListByPlNum(pdNumber);  
+        template(data)
+    }else{
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onGetFileListByPlNum',pdNumber,function responseCallback(data) {  
+            template(data)
+            }) 
+        })
+    }
+    function template(data){
+        data = JSON.parse(data)  
+        sessionStorage.setItem("pan_all",data.length)
+        var resData={};
+        resData.data=data; 
+        var tmpl = doT.template($("#dwtTmpl").text());  
+        $("#dowCard").html(tmpl(resData));  
+    }
+    function enterInfo(even){
+        var target = $(even);  
+        var barCode = target.find(".barCode").text();    
+        $.cookie('barCode', barCode,{ expires: 30, path: '/', secure: false });   
+        self.location="localInfo.html";
+    } 
+</script>
+</html>

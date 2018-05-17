@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>调出确认</title>
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css"> 
+	<link rel="stylesheet" href="../css/dialog.css"> 
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+    .cardList li{height:auto;}
+    .cadI,.backF{display: none;}
+    </style>
+</head>
+<body>
+	<nav>
+		<a class="back centery backT" href="javascript:history.go(-1)">返回</a> 
+		<a class="back centery backF" href="javascript:;">返回</a> 
+		<p class="navCon">调出确认</p>
+	</nav>
+	<div class="content destoryC formEntry">  
+        <div class="cardList cadL"> 
+            <ul id="list">
+
+            </ul> 
+        </div> 
+        <div class="cardList cadI"> 
+            <ul id="list2">
+
+            </ul>
+            <div class="searchRes DesSearchRes borderFBox" id="dataBox">  
+                <p name="assetsCode">资产编码：<span></span></p>   
+                <p name="assetsName">资产名称：<span></span></p>
+                <p name="departName">所属单位<span></span></p> 
+                <p name="remark">备注<span></span></p> 
+                <p name="storePlace">存放地点<span></span></p>
+                <p name="assetsStandard">规格型号<span></span></p>  
+                <p name="licenceNumber">车牌井号<span></span></p>       
+                <p name="makeFactory">制造厂家<span></span></p>    
+                <p name="departCode"> 所属单位编码<span></span></p>    
+                <p name="userPerson">保管人<span></span></p>
+                <p name="barCode">编码：<span></span></p> 
+                <p name="planNumber">出厂编号：<span></span></p>  
+                <p name="originalValue">原值:<span></span></p>  
+                <p name="nowValue">净值:<span></span></p>  
+                <p name="addDepreciate">累计折旧:<span></span></p>  
+                <p name="devalueValue">减值准备:<span></span></p>  
+                <p name="usedState">使用状态编码:<span></span></p>    
+                <p name="usedStateName">使用状态:<span></span></p>     
+            </div>
+        </div>
+        <bottom class=" bottomFixed BtnCurrent"> 
+            <button id="submitBtn1" class="bottomBtn center  iconfont icon-tijiao"></button> 
+        </bottom>
+	</div> 
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/main.js"></script>   
+<script type="template" id="listCon1">  
+    {{~it.data :value:index}}
+        <li class="clearfix" data-ph={{= value.phoneInvoiceNumber }} data-index={{=index}} onclick='check(this)'>  
+           <span class="listInfo">
+                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
+                <b>申请人 ：<i>{{= value.createuserid}}</i></b>       
+            </span> 
+            <div class=" chose bottomBtn iconfont icon-tijiao" '></div> 
+        </li>
+    {{~}}
+</script> 
+<script type="template" id="listCon2">  
+    {{~it.data :value:index}}
+        <li class="clearfix" data-ph={{= value.phoneInvoiceNumber }} data-id={{= value.id}} onclick='check2(this)'>  
+            <span class="listInfo">
+                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
+                <b>申请人 ：<i>{{= value.createuserid}}</i></b>       
+            </span> 
+            <div class=" chose bottomBtn iconfont icon-tijiao" '></div> 
+        </li>
+    {{~}}
+</script> 
+<script>    
+var departList = $.cookie('departList');
+var userInfo = $.cookie('userinfo');  
+departList = JSON.parse(departList)[0];
+userInfo = JSON.parse(userInfo); 
+var ScrapList=[] ;
+getDate();
+ 
+$("#submitBtn1").click(function(){ 
+    $('#scan1').show();
+    if($("#list .chose.active").length<=0){
+        alert("请选择单据");
+        return false;
+    }
+    var updataUrl=getURL()+'/AssetsDataPhone/mobile/allotController.do?allotOut';
+    var paArr='';
+    var arr =$("#list .chose.active").closest("li");
+    $.each(arr,function(){
+        paArr+=$(this).attr("data-ph")+',' 
+    })
+    var jsons = {  
+            departCode: userInfo.departcode,
+            userCode:userInfo.usercode,
+            userName:userInfo.username,
+            phoneInvoiceNumber: paArr,
+        }   
+    sendPost(updataUrl, jsons, res); 
+    function res(res){
+        $('#scan1').hide();
+        if(res.success=='true'){
+            alert(res.msg);
+            arr.remove() 
+        }else{
+            alert(res.msg);
+        }
+    }
+})
+function check(event){
+    $(event).siblings().find(".chose").removeClass("active");
+    $(event).find(".chose").addClass("active");
+    var Purl =  getURL()+"/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber";
+    var jsons={
+        phoneInvoiceNumber:$(event).attr("data-ph"),
+        departCode: userInfo.departcode ,
+    }
+    sendPost(Purl, jsons, function(data){  
+        var res={};
+        $.each(data.data,function(){
+            this.createuserid=$(event).find("b").last().find("i").text();
+        })
+        res.data = data.data;
+        ScrapList = data.data; 
+        var tmpl = doT.template($("#listCon2").text()); 
+        $(".cadI").show(); 
+        $(".cadL").hide();
+        $(".backF").show();
+        $(".backT").hide(); 
+        if(data.data.length>0){    
+            $("#list2").html(tmpl(res));   
+        }
+        
+    })
+} 
+$(".backF").click(function(){
+    $(".cadI").hide(); 
+    $(".cadL").show();
+    $(".backF").hide();
+    $(".backT").show(); 
+})
+//详情
+function check2(event){
+    $(event).siblings().find(".chose").removeClass("active");
+    $(event).find(".chose").addClass("active");
+    var resD=ScrapList.filter(function(index) {
+            return  index.id==$(event).attr("data-id");
+        })[0] ;
+    var list =$("#dataBox p"); 
+    $.each(list,function(){ 
+        var target = $(this);
+        var key = target.attr("name");
+        var val = resD[key];            
+        target.find("span").text(val==""||val==null?"--":val);
+    })
+}
+//获取. 列表
+function getDate(){ 
+    var updataUrl =getURL()+'/AssetsDataPhone/mobile/allotController.do?queryAllotOut'; 
+    var jsons = {  
+        departCode: userInfo.departcode,
+        userCode: userInfo.usercode,
+        userName:userInfo.username,
+        phoneInvoiceNumber:$(".chose.active").closest('li').attr("data-ph"),
+    }    
+    sendPost(updataUrl, jsons, tab2F); 
+    function tab2F(data){  
+        if(data.success=='false'){
+            alert("data.msg");
+            return false;
+        }
+        var resData={};
+        resData.data=data.data; 
+        var tmpl = doT.template($("#listCon1").text());  
+        if(data.data.length>0){   
+            //userName
+            $("#list").html(tmpl(resData));   
+        }else{
+            $("#list").append("<li class='nodate center'>暂无数据</li>"); 
+        } 
+    }  
+}
+ 
+</script>
+</html>
+

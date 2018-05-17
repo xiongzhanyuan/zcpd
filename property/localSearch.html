@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>盘点查询</title>
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+<nav>
+    <a class="back centery" href="javascript:history.go(-1)">返回</a> 
+    <p class="navCon">盘点查询</p>
+</nav> 
+<div class="content destoryC formEntry">
+    <p>汇总</p>
+    <div class="All">
+        <p>全部:<span id="pan_all">0</span></p>
+        <p>存在:<span id="pan_1">0</span></p>
+        <p>未盘:<span id="pan_2">0</span></p>
+        <p>盘盈:<span id="pan_3">0</span></p> 
+    </div>
+    <h2 style="font-weight: bold; padding-bottom:1rem;">当前盘点计划：<span id="PDnum"></span></h2>
+        
+    <div class="searchBox">
+        <p>
+            盘点单位：
+            <select  id="require1"></select>
+        </p>
+        <p>
+            盘点状态：
+            <select  value="100"  id="require2">
+                <option value="100">全部</option>
+                <option value="1">存在</option>
+                <option value="0">未盘</option>
+                <option value="2">盘盈</option> 
+            </select>
+        </p>
+    </div>
+    <div class="content">
+        <ul class="cardList" id="list1">
+
+        </ul>
+    </div>
+</div> 
+<bottom class="bottomFixed">
+        <div class="center clearfix" style="position: absolute;"> 
+            <i id="searchBtn" > 搜索</i>
+        </div>
+    </bottom>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/fancySelect.js"></script> 
+<script src="../js/main.js"></script>
+<script type="template" id="tml1">  
+    {{~it.data :value:index}}
+        <li class="clearfix" data-index={{=index}} onclick="enterInfo(this)">   
+            <span class="listInfo">             
+                <b>资产名称 ：<i>{{= value.assetsName}}</i></b> 
+                <b>资产编码 ：<i class="assetsCode">{{= value.assetsCode }}</i></b> 
+                <b>规格型号 ：<i>{{= value.assetsStandard}}</i></b>
+  
+            </span> 
+        </li>
+    {{~}}
+</script>
+<script>
+    var departList = $.cookie('departList');
+    var userInfo = $.cookie('userinfo');   
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo);  
+    var pdnum = localStorage.getItem('plnum'); 
+    $("#PDnum").text(pdnum)
+    var departLocalList = [],
+    pan_all=0, pan_1=0, pan_2=0,pan_3=0;    
+    //搜索/盘点
+    function searchList(term){
+        var require = JSON.stringify(term);//这个是JSON字符串参数 
+        if (window.JsCallback) {
+            var res = window.JsCallback.onFindDevicesByDepartCode(require);
+            templateL(res)
+        }else{
+            setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onFindDevicesByDepartCode',require, function(resData){
+                        templateL(resData)
+                    })
+                }) 
+        }
+       
+    }
+function templateL(res){
+    var arr={};
+    arr.data=JSON.parse(res);
+   // if(JSON.parse(res).length<=0){alert("无相应盘点数据");}
+    var tmpl = doT.template($("#tml1").text());  
+    $("#list1").html(tmpl(arr));   
+} 
+function getdepartList (){ 
+   var PDdepartlist = $.cookie('PDdepartlist');
+   PDdepartlist = JSON.parse(PDdepartlist);
+   resD(PDdepartlist); 
+}
+    //单位列表
+    getdepartList ()
+    if (window.JsCallback) {
+        //callbackRes 本地总共的
+        callbackRes(window.JsCallback.onGetStashedDeviceInfoList());
+        //单位列表 
+        //总数 
+        var data=window.JsCallback.onGetFileListByPlNum(pdnum);   
+        pan_all=JSON.parse(data).length;
+        $("#pan_all").text(pan_all);    
+        pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1");
+        $("#pan_1").text(pan_1);
+        pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
+        $("#pan_3").text(pan_3);
+        pan_2=Number(pan_all)-Number(pan_1)-Number(pan_3)
+        $("#pan_2").text(pan_2);
+    } else {
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('getTobesubmitArray', function(res){
+                callbackRes(res)
+            })
+        }) 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onGetFileListByPlNum', pdnum,function responseCallback(data) {  
+                pan_all=JSON.parse(data).length; 
+                $("#pan_all").text(pan_all);    
+                pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1");
+                $("#pan_1").text(pan_1); 
+                pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
+                $("#pan_3").text(pan_3);
+                pan_2=Number(pan_all)-Number(pan_1)-Number(pan_3)
+                $("#pan_2").text(pan_2);
+            }) 
+        })
+    } 
+function resD(data){ 
+    var str='';
+    if(data.length>0){ 
+        $.each(data,function(i,that){ 
+            str+="<option value="+that.departCode+">"+that.departName+"</option>"
+        })
+    }else{
+        var departList = $.cookie('departList');
+        departList = JSON.parse(departList);
+        $.each(departList,function(){ 
+            str+="<option value="+this.departcode+">"+this.shortname+"</option>"
+        })
+    }
+        $("#require1").html(str); 
+        if (window.JsCallback) { 
+	        $('select').fancySelect(); 
+        }
+}
+function callbackRes(data){
+    if (data == null || !data||!data) {    
+            return;
+        }
+        var sendData = JSON.parse(data); 
+        $.each(sendData,function(){
+            departLocalList.push(JSON.parse(this).data)
+        }) 
+}
+$("#searchBtn").click(function(){
+    var sel2= $("#require2").val()=='0'?null:$("#require2").val(),sel1= $("#require1").val(); 
+    var term={
+        'checkResult':sel2,
+        'departCode':sel1,
+    }  
+    searchList(term) 
+})
+$(function(){
+    $("#searchBtn").click();
+})
+</script>
+
+</html>

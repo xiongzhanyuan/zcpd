@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>盘点</title>
+	<!-- 预加载页面 -->
+	
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/dialog.css"> 
+	 <link rel="stylesheet" href="css/bootstrap.css"> 
+	<link rel="stylesheet" href="css/index.css"> 
+	<script src="js/jquery.min.js"></script>
+	<script src="js/cookie.js"></script>
+	<script src="js/dialog.js"></script>
+	<script src="js/hotcss.js"></script>
+	<script src="js/doT.js"></script>
+	<script src="js/chart.js"></script> 
+	<script src="js/fancySelect.js"></script> 
+	<script src="js/main.js"></script> 
+	<script>
+      // 给客户端传
+	if (window.JsCallback) {
+		var res = window.JsCallback.onGetLoginJSON();
+		judgmentUrl(res, "login.html"); 
+	} else {
+		setupWebViewJavascriptBridge(function (bridge) {
+			bridge.callHandler('onGetLoginJSON', function responseCallback(res) { 
+              if (res) {
+            $.cookie('userinfo', res, { expires: 30, path: '/', secure: false });
+							localStorage.setItem("userinfo",res);
+	userINFO();
+              }
+				judgmentUrl(res, "login.html"); 
+			})
+		});
+	}
+
+	</script>
+	<style>
+		.mytabs {
+			display: none;
+		}
+
+		.mytabs.active {
+			display: block;
+		}
+		.scrollCon2{display: none;}
+	</style>
+</head>
+
+<body>
+	<nav>
+		<p class="navCon">应用</p>
+	</nav>
+	<div class="scancontent">
+		<div class="mytabs tab1 active">
+				<div class="userTop clearfix">
+						<div class="userImg">
+							<i class="appNav iconfont"></i>
+						</div>
+						<div class="userInfo">
+							<p class="UserName"></p>
+							<p class="DepartName"></p>
+						</div>
+					</div>
+			<ul class="linkView clearfix">
+				<li>
+					<div class="con">
+						<!--  -->
+						<a href="javascript:;" class="outLine">
+							<i class="appNav iconfont icon-icon-"></i>
+							<p>资产盘点</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="con">
+						<a href="transfer/transferEnter.html">
+							<i class="appNav iconfont icon-navicon-dbd"></i>
+							<p>调拨申请</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="con">
+
+						<a href="destory/destory.html">
+							<i class="appNav iconfont icon-empty"></i>
+							<p>报废申请</p>
+						</a>
+					</div>
+				</li>
+			</ul>
+			<div class="charts charleft" > 
+				<canvas id="myChart"></canvas>
+			</div> 
+			<div class="charts charleft"> 
+					<canvas id="chart-0"></canvas>
+			</div> 
+			<div class="charts"> 
+					<canvas id="chart-1"></canvas>
+			</div>
+		</div>
+		<div class="mytabs tab2">
+				<div class="userTop clearfix">
+						<div class="userImg">
+							<i class="appNav iconfont"></i>
+						</div>
+						<div class="userInfo">
+							<p class="UserName"></p>
+							<p class="DepartName"></p>
+						</div>
+					</div>
+			<ul class="linkView clearfix">
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" class="outLine">
+							<i class="appNav iconfont icon-icon-"></i>
+							<p>资产盘点</p>
+
+						</a>
+					</div>
+				</li> 
+				<li>
+					<div>
+						<div class="con">
+							<a href="property/localSearch.html">
+								<i class="appNav iconfont icon-diaobo"></i>
+								<p>盘点查询</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+
+							<a href="property/downloadList.html">
+								<i class="appNav iconfont icon-msnui-cloud-download"></i>
+								<p>数据下载</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div class="con">
+						<a data-prefetch="true" href="property\propertySearch.html">
+							<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>本地下载查询</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="con">
+
+						<a href="property/uploadData.html">
+							<i class="appNav iconfont icon-shangchuan"></i>
+							<p>数据上传</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="con">
+
+						<a href="destory/destory.html">
+							<i class="appNav iconfont icon-cloud-scrap"></i>
+							<p>报废申请</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="con">
+
+						<a href="destory/shenpiList.html">
+							<i class="appNav iconfont icon-shenpi"></i>
+							<p>报废审批</p>
+						</a>
+					</div>
+				</li>
+				 <li>
+					<div class="con">
+
+						<a href="destory/desSearch.html">
+							<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>报废查询</p>
+						</a>
+					</div>
+				</li> 
+				<li>
+					<div>
+						<div class="con">
+							<a href="transfer/transferEnter.html">
+								<i class="appNav iconfont icon-navicon-dbd"></i>
+								<p>调拨申请</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<a href="transfer/transferList.html">
+								<i class="appNav iconfont icon-caozuo1"></i>
+								<p>调拨操作</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<a href="transfer/shenpi.html">
+								<i class="appNav iconfont icon-navicon-dbsqdsp"></i>
+								<p>调拨审批</p>
+							</a>
+						</div> 
+					</div>
+				</li> 
+				<li>
+					<div class="con">
+						<a href="transfer/transferOUT.html">
+							<i class="appNav iconfont icon-tiaochu"></i>
+							<p>调出确认</p>
+						</a>
+					</div>
+				</li> 
+				<li>
+					<div class="con">
+						<a href="transfer/transferIN.html">
+							<i class="appNav iconfont icon-tiaoru"></i>
+							<p>调入确认</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<a href="transfer/DBsearch.html">
+								<i class="appNav iconfont icon-diaobo"></i>
+								<p>调拨查询</p>
+							</a>
+						</div>
+
+					</div>
+				</li> 
+			</ul>
+		</div>
+		<div class="mytabs tab3">
+				<div class="userTop clearfix">
+						<div class="userImg">
+							<i class="appNav iconfont"></i>
+						</div>
+						<div class="userInfo">
+							<p class="UserName"></p>
+							<p class="DepartName"></p>
+						</div>
+					</div>
+			<ul class="linkView clearfix">
+				<li>
+					<div class="con">
+						<i class="appNav iconfont icon-setup"></i>
+						<a href="set/server.html">
+							<p>服务器设置</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<i class="appNav iconfont icon-brush"></i>
+							<a href="set/reset.html">
+								<p>修改密码</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<i class="appNav iconfont icon-qiehuanzuzhi"></i>
+							<a href="unit.html">
+								<p>切换单位</p>
+							</a>
+						</div>
+
+					</div>
+				</li> 
+				<li>
+					<div>
+						<div class="con">
+							<i class="appNav iconfont icon-qiehuan1"></i>
+							<a href="login.html">
+								<p>重新登陆</p>
+							</a>
+						</div>
+
+					</div>
+				</li> 
+				<li>
+					<div>
+						<div class="con delateData">
+							<i class="appNav iconfont icon-empty"></i>
+							<a href="javascript:;">
+								<p>清除数据</p>
+							</a>
+						</div>
+
+					</div>
+				</li> 
+			</ul>
+		</div>
+	</div>
+	<footer class="navFooter">
+		<ul class="clearfixs">
+			<li tabS="tab1" class="active">
+				<a href="javascript:;">
+					<i class="appNav iconfont icon-shouye"></i> 
+					<span>首页</span>
+				</a>
+			</li>
+			<li tabS="tab2">
+				<a href="javascript:;">
+					<i class="appNav iconfont icon-erji-yingyongzhuangtai"></i>
+					<span>应用</span>
+				</a>
+			</li>
+			<li tabS="tab3">
+				<a href="javascript:;">
+					<i class="appNav iconfont icon-wode"></i>
+					<span>我的
+
+					</span>
+				</a>
+			</li>
+		</ul>
+	</footer>
+	<div class="indexBox" id='Hbox1' style="background:#fff;">
+		<nav>
+			<a class="backOn centery backOnOut" href="javascript:;">返回</a>
+			<p class="navCon">盘点录入</p>
+		</nav>
+		<div class="content scrollCon scrollCon1">
+			<form class="formEntry SformEntry"> 
+				<p>
+					<label for="assetsCode">资产条码:</label>
+					<input type="text" placeholder="条形码输入" id="lid" required=""> 
+					<i id="search" class="iconfont icon-chaxunxiazai"></i> 
+				</p> 
+			</form>
+			<!--需求：用户对资产信息进行确认、修改和补录-->
+			<form method='post' class="formEntry" id="formEntry" enctype="multipart/form-data">
+				<input type="hidden" name='id'>
+				<input type="hidden" name='departCode'> 
+				<input type="hidden" name='barCode'> 
+				<input type="hidden" name='nowValue'> 
+				<input type="hidden" name='originalValue'> 
+				<input type="hidden" name='planName'> 
+				<input type="hidden" name='planNumber'> 
+				<input type="hidden" name='managerDepartName'> 
+				
+				<p>
+					<label for="managerDepart">盘点单位:</label>
+					<input type="text" id="managerDepart" name="managerDepart">
+				</p> 
+				<p>
+					<label for="assetsCode">资产条码:</label>
+					<input type="text"   name="assetsCode">
+				</p>
+				<p>
+					<label for="assetsStatus">使用状态:</label>
+					 <select name="assetsStatus" value='010101' id="assetsStatus">
+						 <option value="010101">生产经营用-科研</option>
+						 <option value="010102">生产经营用-其他</option>
+						 <option value="0102">非生产经营用</option> 
+						 <option value="0201">季节性经营停用</option>
+						 <option value="0202">其他原因停用</option>
+						 <option value="0203">经营场所备用</option>
+						 <option value="0204">闲置</option>
+						 <option value="03">租出</option>
+						 <option value="04">借出</option> 
+					 </select>
+				</p> 
+				<p>
+					<label for="assetsName">资产名称:</label>
+					<input type="text" name="assetsName" id="assetsName">
+				</p>
+				<p>
+					<label for="assetsStandard">规格型号:</label>
+					<input type="text" name="assetsStandard" id="assetsStandard">
+				</p>
+				
+				<p>
+					<label for="licenceNumber">车牌井号:</label>
+					<input type="text" name="licenceNumber" id="licenceNumber">
+				</p> 
+				<p>
+					<label for="storePlaceName">存放地点:</label>
+					<input type="text" name="storePlaceName" id="storePlaceName">
+				</p>
+				<!-- <p>
+					<label for="checkResult">盘点状态:</label>
+					<select name="checkResult" value="1" id="checkResult">
+						<option value="1">存在</option>
+						<option value="2">盘亏</option>
+						<option value="3">盘盈</option>  
+					</select>
+				</p> -->
+				<p>
+					<label for="realcodeStatus">贴码状态 :</label>
+					<select name="realcodeStatus" value="0" id="realcodeStatus">
+						<option value="0">相符</option>
+						<option value="1">不符</option> 
+					</select>
+				</p> 
+                <p>
+                    <label for="technicalCondition">技术状况</label> 
+                    <select name="technicalCondition" value="01" id="technicalCondition">
+                        <option value="01">完好</option>
+                        <option value="02">带病运行</option>
+                        <option value="03">在修</option>
+                        <option value="04">待修</option>
+                        <option value="05">待报废</option>
+                        <option value="06">损毁</option>
+                        <option value="07">待处置</option>
+                        <option value="08">已处置</option>
+                    </select>
+                </p>
+			</form>
+			<input type="hidden" id='keyCode'>
+		</div>
+		<!-- 盘盈 -->
+		<div class="content scrollCon scrollCon2">
+			<p>盘点计划编码：<span id="PLnum"></span></p>
+			<div class="indexBox" id='Hbox2'>
+					<form class="formEntry" id="formEntry2" > 
+						<p>
+							<label for="managerDepart">盘点单位:</label>
+							<input type="text" name="managerDepart">
+						</p> 
+						<p>
+							<label for="assetsCode">资产条码:</label>
+							<input type="text" name="assetsCode">
+						</p>
+						<p>
+							<label for="assetsName">资产名称 :</label>
+							<input type="text" name="assetsName">
+						</p>
+						<p>
+							<label for="assetsStatus">资产状态:</label>
+							 <select name="assetsStatus" value='010101' >
+								 <option value="010101">生产经营用-科研</option>
+								 <option value="010102">生产经营用-其他</option>
+								 <option value="0102">非生产经营用</option> 
+								 <option value="0201">季节性经营停用</option>
+								 <option value="0202">其他原因停用</option>
+								 <option value="0203">经营场所备用</option>
+								 <option value="0204">闲置</option>
+								 <option value="03">租出</option>
+								 <option value="04">借出</option> 
+							 </select>
+							</p>
+							<p>
+								<label for="assetsStandard">规格型号:</label>
+								<input type="text" name="assetsStandard" >
+							</p>
+							<p>
+								<label for="lossReason">盘盈原因:</label>
+								<input type="text" name="lossReason" />
+							</p>
+							<p>
+								<label for="remark">备注:</label>
+								<input type="text" name="remark" />
+							</p>
+					</form>
+				</div>
+		</div> 
+		<bottom class=" bottomFixed bottombgNone">
+			<div class="center clearfix">
+				<button id="cancelBtn" class="bottomBtn">
+					<a class="backOn" href="javascript:;"><</a>
+				</button>
+				<button id="scanning" class="bottomBtn centerx iconfont icon-icon-"></button>
+				<button id="submitBtn" class="bottomBtn iconfont icon-tijiao"></button>
+				<!-- <button id="submitBtn" class="bottomBtn">提交</button> -->
+			</div>
+		</bottom>
+	</div>
+	
+	<div class="layBox center">清除成功</div>
+</body>
+<script>
+		
+	//char1：
+	var ctx = document.getElementById("myChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+			datasets: [{
+				label: '# of Votes',
+				data: [12, 19, 3, 5, 2, 3],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero:true
+					}
+				}]
+			}
+		}
+	}); 
+	//char2：
+	var ctx = document.getElementById("chart-0");
+
+	var myChart = new Chart(ctx, {
+	
+		type: 'line',
+		
+		data: {
+		
+		 labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+		
+		  datasets: [
+		
+		{
+		
+		label: '第1月',
+		
+		data: [12, 19, 3, 5, 2, 3],
+		
+		backgroundColor: ['rgba(255, 0, 0, 0.2)'],
+		
+		borderColor: ['rgba(255, 0, 0,0.7)'],
+		
+		borderWidth: 1
+		
+		},
+		
+		{
+		
+		label: '第2月',
+		
+		data: [15, 12, 3, 50, 12, 43],
+		
+		backgroundColor: ['rgba(0, 255, 0, 0.2)'],
+		
+		borderColor: [ 'rgba(0, 255, 0,0.7)'],
+		
+		borderWidth: 1
+		
+		},
+		
+			{
+				label: '第3月',
+				
+				data: [45, 10, 13, 20, 12, 23],
+				
+				backgroundColor: ['rgba(0, 0, 255, 0.2)'],
+				
+				borderColor: [ 'rgba(0, 0, 255,0.7)'],
+				
+				borderWidth: 1 
+			} 
+		] 
+		}, 
+		options: { 
+		title:{ 
+		display:true, 
+		text:'折线图', 
+		fontSize:20, 
+		fontColor:'red' 
+		}, 
+		scales: {
+			yAxes: [{
+				ticks: {
+					beginAtZero:true
+				}
+			}]
+		}
+		}
+	});
+	var ctx = document.getElementById("chart-1");
+
+	var myChart2 = new Chart(ctx, {
+
+	type: 'radar',
+
+	data: {
+
+	labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+
+	datasets: [
+
+	//一个{}表示一组数据的数据结构
+
+	{
+
+	fill:false,                  //是否充满
+
+	pointStyle:'triangle',       //点的风格 'circle', 'triangle', 'rect', 'rectRot', 'cross', 'crossRot', 'star', 'line'
+
+	label: '第1月',       //标签
+
+	data: [12, 19, 3, 5, 2, 3],     //数据
+
+	backgroundColor: ['rgba(255, 0, 0, 0.5)'],    //曲线与X轴之间的颜色
+
+	borderColor: ['rgba(255, 0, 0,0.7)'],         //曲线的颜色
+
+	piontColor:['rgba(0,255,0,1)'],               //点的颜色
+
+	pointBackgroundColor: "rgba(255,0,0,1)",   //填充点的颜色
+
+	borderWidth:2,                              //曲线的宽度
+
+	showLine:true                            //曲线是显示与否
+
+	},
+
+	{
+
+	label: '第2月',
+
+	pointStyle:'rect',
+
+	data: [15, 12, 3, 50, 12, 43],
+
+	backgroundColor: ['rgba(0, 255, 0, 0.2)'],
+
+	borderColor: [ 'rgba(0, 255, 0,0.7)'],
+
+	borderWidth: 1
+
+	},
+
+	{
+
+	label: '第3月',
+
+	pointStyle:'star',
+
+	data: [45, 10, 13, 20, 12, 23],
+
+	backgroundColor: ['rgba(0, 0, 255, 0.2)'],
+
+	borderColor: [ 'rgba(0, 0, 255,0.7)'],
+
+	borderWidth: 1
+
+	}
+
+	]
+
+	},
+
+	options: {
+
+	title:{
+
+	display:true,
+
+	text:'雷达图',
+
+	fontSize:20,
+
+	fontColor:'red'
+
+	},
+
+	scales: {
+
+	xAxes:[{              //X轴属性
+
+	display:true      //坐标轴是否显示
+
+	}],
+
+	yAxes: [{              //Y轴属性
+
+	display:true,
+
+	stacked:false,       //是否堆叠
+
+	ticks: {
+
+	beginAtZero:true
+
+	}
+
+	}]
+
+	}
+
+	}
+
+	}); 
+</script>
+
+<!-- chart结束 -->
+<script> 
+//select 
+var saveData={}; 
+var pany=0;
+	if (window.JsCallback) {  
+		$('#assetsStatus').fancySelect(); 
+		//$('#checkResult').fancySelect();  
+		$('#realcodeStatus').fancySelect();  
+	}
+	//$('#checkResult').val("1");  
+	$('#realcodeStatus').val("0");  
+	if (window.JsCallback) {  
+		$('select').fancySelect();  
+	}
+	$(".outLine").click(function () {
+		if (window.navigator.onLine == true) {
+			alert("请切换飞行模式");
+			$("#Hbox1").removeClass("active");
+		} else {
+			$("#Hbox1").addClass("active");
+			$(".scrollCon1").show(); 
+			$(".scrollCon2").hide();
+		}
+	})
+	$(".navFooter li").click(function () {
+		$(".navFooter li").removeClass("active");
+		$(this).addClass("active");
+		var tabStatus = $(this).attr("tabS");
+		$(".mytabs").removeClass("active");
+		$("." + tabStatus).addClass("active");
+	}) 
+</script>
+<script>
+	// 判断是否登陆
+	function userINFO(){
+		var departListStr = $.cookie('departList');
+		var userInfo = $.cookie('userinfo'); 
+		if(departListStr&&userInfo){ 
+			departList = JSON.parse(departListStr)[0];
+			userInfo = JSON.parse(userInfo);  
+			$(".userInfo .DepartName").text(userInfo.departname);
+			$(".userInfo .UserName").text(userInfo.username); 
+		}  
+	}
+	userINFO();
+	// 搜索
+	$("#search").click(function () {
+		var scanData = "";
+		var lid = $("#lid").val();
+		if(lid.trim()==''){
+			alert('请输入需要搜索的资产条码')
+			return false;
+		}
+		if (window.JsCallback) {
+			renderData($("#formEntry"), window.JsCallback.onGetDeviceById(lid));
+		} else {
+			setupWebViewJavascriptBridge(function (bridge) {
+				bridge.callHandler('getJSONWithDeviceId', lid, function responseCallback(result) {
+					renderData($("#formEntry"), result);
+
+				})
+			})
+		}
+	})
+	//扫描条形码功能    
+	$("#scanning").click(function () {
+		var scanData = "";
+		if (window.JsCallback) {
+			//安卓
+			window.JsCallback.onQR();
+		} else {
+			//IOS 
+			setupWebViewJavascriptBridge(function (bridge) {
+				bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+					renderData($("#formEntry"), responseData);
+				})
+
+			})
+		}
+	})
+	//此方法用于给Android系统调用
+	function rnSetQRResult(result) {
+		renderData($("#formEntry"), result);
+	} 
+	function renderData(dom, data) { 
+		var scanData = JSON.parse(data); 
+		saveData=scanData;
+		if(scanData.QRCodeLPC){
+			$(".scrollCon2").show();
+			$(".scrollCon1").hide();
+			var PLnum = sessionStorage.getItem("plnum");
+			$("#PLnum").text(PLnum); 
+			$("#Hbox2 input[name=assetsCode]").val(scanData.QRCodeLPC);
+			$('select').fancySelect(); 
+		}else{
+			$(".scrollCon1").show(); 
+			$(".scrollCon2").hide(); 
+			var keyCode = scanData.keyCode; 
+			$('#keyCode').val(keyCode);
+			$("#lid").val(scanData.barCode)
+			$.each(dom.find("input[name],select[name]"), function () {
+				var that = $(this);
+				var nameData = $(this).attr('name');
+				var jValue = ""
+				for (var item in scanData) {
+					if (item == nameData) {  //item 表示Json串中的属性，如'name'  
+						jValue = scanData[item];//key所对应的value  
+						that.val(jValue == "" ? "" : jValue);
+						return;
+					}
+				}
+
+			})
+		}  
+
+	}
+	//保存数据 到本机
+	$("#submitBtn").click(function () { 
+		var pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1"),  
+		pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
+		var formBox = {};
+		if($("#formEntry").is(":hidden")){ 
+			pany=1;
+			formData = $("#formEntry2").serializeObject();
+			formData.checkResult=3;
+			localStorage.setItem("pan_3",Number(pan_3)+1);
+			var clientData = Object.assign(saveData,formData); 
+			clientData = JSON.stringify(clientData);
+		}else{ 
+			formData = $("#formEntry").serializeObject();  
+			formData.keyCode=$("#keyCode").val();
+				formData.checkResult=1;
+			if (window.JsCallback) {
+			 	formData.realcodeStatus =$('#realcodeStatus').next().next().find(".selected").attr("data-raw-value");
+				formData.assetsStatus=$('#assetsStatus').next().next().find(".selected").attr("data-raw-value");
+				formData.assetsStatusName=$('#assetsStatus').next().next().find(".selected").text();
+				
+			}else{ 
+				formData.realcodeStatus =$('#realcodeStatus').val();
+				formData.assetsStatus=$('#assetsStatus').val();
+				formData.assetsStatusName=$('#assetsStatus').find("option:selected").text();
+			} 
+			var clientData = Object.assign(saveData,formData); 
+			clientData = JSON.stringify(clientData); 
+		}     
+		if(pany == 1){
+			localStorage.setItem("pan_3",Number(pan_3)+1);
+			pany=0;
+		}else{
+//存查询时候的数目（存在）  //加上去重！！！barcode
+			if (window.JsCallback) {
+				var res = window.JsCallback.onGetStashedDeviceInfoList() ;
+				if (res == null || !res) {            
+					localStorage.setItem("pan_1",Number(pan_1)+1);
+				}else{
+					var sendData = JSON.parse(res); 
+					//去重
+					var barcode = $("#lid").val();
+					var resList = sendData.filter(function(index) {
+						return  JSON.parse(index).barCode==barcode;
+					})   
+					if(resList.length<=0){localStorage.setItem("pan_1",Number(pan_1)+1);}
+				}
+			} else {
+				setupWebViewJavascriptBridge(function (bridge) {
+					bridge.callHandler('getTobesubmitArray', function(data){
+						var res = data;
+						if (res == null || !res) {            
+							localStorage.setItem("pan_1",Number(pan_1)+1);
+						}else{
+							var sendData = JSON.parse(res); 
+							//去重
+							var barcode = $("#lid").val();
+							var resList = sendData.filter(function(index) {
+								return  JSON.parse(index).barCode==barcode;
+							})   
+							if(resList.length<=0){localStorage.setItem("pan_1",Number(pan_1)+1);}
+						}
+					})
+				})
+			}
+		}
+		if (window.JsCallback) {
+			var res = window.JsCallback.onStashDeviceInfo (clientData);
+			if (res) {
+				alert("保存成功");
+				$("#formEntry").reset();
+				$("#lid").val("");
+			}
+		} else {
+			setupWebViewJavascriptBridge(function (bridge) {
+				bridge.callHandler('saveTobesubmit', clientData, function responseCallback(result) {
+					if (result) {
+						alert("保存成功");
+						$("#formEntry").reset();
+						$("#lid").val("");
+					}
+
+				})
+			})
+		}
+
+	})
+	$(".backOn").click(function () { 
+		$(".indexBox").removeClass("active");
+	})
+	$(".delateData").click(function () {    
+		if (window.JsCallback) {
+			var result = window.JsCallback.onClearCache();
+			if(result){
+				delateCookie()
+			}
+		} else {
+			setupWebViewJavascriptBridge(function (bridge) {
+				bridge.callHandler('onClearCache',function responseCallback(result) {
+					if(result){
+						delateCookie()
+					}
+				})
+			})
+		}
+	})
+	function delateCookie(){
+		$.cookie('departList', null,{ expires: 30, path: '/', secure: false });
+		$.cookie('userinfo', null,{ expires: 30, path: '/', secure: false });
+		$.cookie('postUrl', "",{ expires: 30, path: '/', secure: false });	
+		//改成弹窗然后消失
+		$(".layBox").show()
+		setTimeout(function(){ $(".layBox").hide()},1000) ;
+		setTimeout(function(){ history.go(0)},1200) 			 
+	}
+</script>
+
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>报废申请</title> 
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">   
+    <link rel="stylesheet" href="../css/dialog.css"> 
+    <link rel="stylesheet" href="../css/lCalendar.css">   
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+    .cardList li{height:auto;}
+    </style>
+</head>
+<body>
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">报废申请</p>
+	</nav>
+	<div class="content destoryC formEntry ">
+        
+        <ul class="nav nav-tabs tabs-two" id="myTab">
+            <li class="active"  hid="tab1"><a href="javascript:;">报废单据</a></li>
+            <li hid="tab2"><a href="javascript:;" >单据明细</a></li> 
+        </ul>
+        <div class="tab-content">
+            <div class="cardList tab-pane active" id="tab1">
+                <div class="userTop clearfix">
+                    <div class="userImg">
+                        <i class="appNav iconfont"></i>
+                    </div>
+                    <div class="userInfo">
+                        <p class="UserName"></p>
+                        <p class="DepartName"></p>
+                    </div>
+                </div>
+                <form action="" id="form1"> 
+                        <p class="sel_p">
+                            <label for="invoiceType">报废类型：</label>
+                            <select name="invoiceType" value="020201" id="Invoice"> 
+                                <option value="020201">有形（正常报废）</option> 
+                                <option value="020202">有形（非正常地区公司批复）</option>
+                                <option value="020203">有形（非正常总部批复）</option> 
+                            </select> 
+                        </p> 
+
+
+                        <p>
+                                <label for=" sl">数量</label>
+                                <input type="text" id="countall"  name="sl" value='0'  placeholder="数量"> 
+                            </p> 
+                            <p>
+                                <label for="originalValue">原值</label>
+                                <input type="text" name="originalValue"  value='0' placeholder="原值"> 
+                            </p>
+                            <p>
+                                <label for="nowValue">净值</label>
+                                <input type="text" name="nowValue"  value='0' placeholder="净值"> 
+                            </p>
+                            <p>
+                                <label for="addDepreciate">累计折旧 </label>
+                                <input type="text" name="addDepreciate" value='0'  placeholder="累计折旧 "> 
+                            </p>  
+                            <p>
+                                <label for="devalueValueSum">减值准备 </label>
+                                <input type="text" name="devalueValueSum" value='0'  placeholder="减值准备 "> 
+                            </p>
+                            
+                    <!-- <p>
+                        <label for="invoiceType">单据类型</label> 
+                        <select name="invoiceType" value="1401" id="Invoice">
+                            <option value="1401">有形</option>
+                            <option value="1402">无形</option>
+                            <option value="1403">长摊</option> 
+                            <option value="1404">整体</option> 
+                        </select>
+                    </p>-->
+                    <p>
+                        <label for="departCode">申请单位</label>
+                        <select name="departCode" id="departCode"> 
+                        </select>
+                    </p>
+                    <p>
+                            <label for="userCode">申请人</label>
+                        <input type="text" name="userCode" readonly="readonly" placeholder="申请人"> 
+                    </p>
+                    <p>
+                        <label for="createdate">申请时间</label>
+                        <input type="text" name="createdate" readonly="readonly" placeholder="申请时间"> 
+                    </p>
+                </form> 
+                <bottom class=" bottomFixed BtnCurrent"> 
+                     <button id="submitBtn3" class="bottomBtn center sc">送审</button>  
+                </bottom>
+            </div>
+            <div class="cardList tab-pane destory_tab2" id="tab2">
+                    <div class="userTop clearfix">
+                            <div class="userImg">
+                                <i class="appNav iconfont"></i>
+                            </div>
+                            <div class="userInfo">
+                                <p class="UserName"></p>
+                                <p class="DepartName"></p>
+                            </div>
+                        </div>
+                <div class="searchHeader"> 
+                    <p class="clearfix">
+                       <div class="checkTop">
+                            <label class="checkB "><input type="radio" data-name='barCode' class='radio' checked /><span>资产条码:</span></label>
+                            <label class="checkB "><input type="radio"  data-name='assetsCode'  class='radio' /><span>资产编码:</span></label>
+                       </div>
+                       <div class='checkSear'>
+                            <input class="check1" type="text" placeholder="条形码 " name='barCode' required=""> 
+                            <input class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required=""> 
+                       </div>
+                        <i   id="search" class="checkSearch iconfont icon-chaxunxiazai"></i> 
+                    </p>
+                </div>
+                
+
+                <ul id="list1">
+
+                </ul>
+                <div class="searchRes DesSearchRes borderFBox" id="dataBox">  
+                    <p name="assetsCode">资产编码：<span></span></p>   
+                    <p name="assetsName">资产名称：<span></span></p>
+                    <p name="departName">所属单位<span></span></p> 
+                    <p name="remark">备注<span></span></p> 
+                    <p name="storePlace">存放地点<span></span></p>
+                    <p name="assetsStandard">规格型号<span></span></p>  
+                    <p name="licenceNumber">车牌井号<span></span></p>       
+                    <p name="makeFactory">制造厂家<span></span></p>    
+                    <p name="departCode"> 所属单位编码<span></span></p>    
+                    <p name="userPerson">保管人<span></span></p>
+                    <p name="barCode">编码：<span></span></p> 
+                    <p name="planNumber">出厂编号：<span></span></p>  
+                    <p name="originalValue">原值:<span></span></p>  
+                    <p name="nowValue">净值:<span></span></p>  
+                    <p name="addDepreciate">累计折旧:<span></span></p>  
+                    <p name="devalueValue">减值准备:<span></span></p>  
+                    <p name="usedState">使用状态编码:<span></span></p>    
+                    <p name="usedStateName">使用状态:<span></span></p>     
+                </div>
+                <p class="destory_p">停产日期：</p>
+                    <input placeholder='停产日期' readonly type="data" id="stopDate" name="stopDate" readonly="readonly"  data-lcalendar="2010-01-11,2025-12-31" /> 
+                    
+               
+                <p class="destory_p">报废原因：</p>
+                    <select name="discardReasonCode" value="01" id="discardReasonCode">
+                        <option value="01">技术淘汰</option>
+                        <option value="02">毁损</option>
+                        <option value="03">管理不善</option>
+                        <option value="04">自然灾害</option>
+                        <option value="05">国家限制使用</option>
+                        <option value="06">事故</option>
+                        <option value="07">规划、改造拆除</option>
+                        <option value="08">工程</option>
+                        <option value="09">地质</option>
+                        <option value="11">安全、环保</option>
+                        <option value="10">其他</option>
+                    </select>
+                    <!-- <p class="destory_p">详细报废原因：</p>  -->
+                    <textarea placeholder="详细报废原因" id="discardMark" name="discardMark" id="destoryText" cols="30" rows="10"></textarea>
+                <bottom class=" bottomFixed BtnCurrent"> 
+                        <button id="submitBtn" class="bottomBtn center  iconfont icon-tijiao"></button> 
+                        <button id="submitBtn2" class="bottomBtn eam">传EAM</button> 
+                    <button id="scanning" class="bottomBtn   iconfont icon-icon-"></button> 
+                </bottom>
+            </div>
+      
+        </div>  
+         
+	</div>
+   
+     <div class="bomb">
+         <div class="bombCon">
+            
+         </div>
+     </div> 
+	<div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script> 
+<script src="../js/lCalendar.js"></script> 
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>   
+<script src="../js/fancySelect.js"></script> 
+<script src="../js/main.js"></script>    
+<script type="template" id="listCon1">  
+        {{~it.data :value:index}}
+        <li class="clearfix listli" data-index={{=index}} data-barCode={{= value.barCode}} data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}} data-assetsCode={{= value.assetsCode}} >  
+            <p class="barCode" style='display:none;'>{{= value.barCode }}</p>
+            <span class="listInfo">
+                <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
+                <b>资产名称 ：<i>{{= value.assetsName}}</i></b>                    
+            </span> 
+            <div class="chose bottomBtn iconfont icon-tijiao" ></div>
+        </li>
+    {{~}}
+</script>
+ 
+<script>
+    //先清除
+    if (window.JsCallback) {
+        window.JsCallback.onClearScrapList();  
+        }else{
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('onClearScrapList',function responseCallback(data) {  
+                     
+                }) 
+            })
+        }
+    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+    var departListStr = $.cookie('departList');
+    var userInfo = $.cookie('userinfo');  
+    departList = JSON.parse(departListStr)[0];
+    userInfo = JSON.parse(userInfo); 
+    var listAarray=[];  
+    var phoneInvoiceNumber = userInfo.usercode+userInfo.departcode+new Date().Format('yyyyMMddhhmmss');
+    var lcalendarData='1900-1-1'+',2030-12-31'
+    $("#stopDate").attr("data-lcalendar",lcalendarData); 
+    $("#stopDate").val(new Date().Format('yyyy-MM-dd')) 
+    var calendardatetime = new lCalendar();
+    calendardatetime.init({
+        'trigger': '#stopDate ',
+        'type': 'date',
+        'minDate':'1900-1-1',//最小日期 注意：该值会覆盖标签内定义的日期范围
+    }); 
+    var str="";   
+        $.each(JSON.parse(departListStr),function(index,i){  
+            if(index==0){
+                $("#departcode").val(this.departcode)
+            }
+            if(userInfo.departcode==this.departcode){
+                str+="<option selected='true' value="+this.departcode+">"+this.shortname+"</option>" 
+            }else{
+                str+="<option value="+this.departcode+">"+this.shortname+"</option>" 
+            }
+        })
+    if (window.JsCallback) {  
+        var mySelectDC = $('#departCode');
+        mySelectDC.fancySelect(); 
+        mySelectDC.append(str);
+        mySelectDC.trigger('update'); 
+        $('select').fancySelect();  
+    }else{
+        var mySelectDC = $('#departCode'); 
+        mySelectDC.append(str);
+        $('#departCode').val(userInfo.departcode)
+    } 
+    $("input[name='departCode']").val(userInfo.departcode);
+    $("input[name='userCode']").val(userInfo.username); 
+    $(".userInfo .DepartName").text(userInfo.departname);
+    $(".userInfo .UserName").text(userInfo.username);  
+    $("input[name='createdate']").val(new Date().Format('yyyy-MM-dd')); 
+    $(".checkTop input").click(function(){  
+        $(".checkSear input").val('');
+        $(this).parent().siblings(".checkB").find('input').attr("checked",false);
+       var name =$(this).attr("data-name"); 
+       $('.checkSear input').hide(); 
+       $('.checkSear input[name='+name+']').show(); 
+    })  
+    //搜索
+    $("#search").click(function(){   
+        if($("input[name='assetsCode']").val().trim()==''&&$("input[name='barCode']").val().trim()==''){
+            return false;
+        }
+        var jsons={
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode,
+            assetsCode:$("input[name='assetsCode']").val(),
+            barCode:$("input[name='barCode']").val(),
+        }  
+    sendPost(getListUrl,jsons,ListA)
+    })
+    function ListA(data){   
+        if(data.success=='true'){  
+            listAarray.push(data.data); 
+            var reslistAarray = listAarray.unique('barCode');
+            sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
+            template(reslistAarray) 
+        }else{
+            alert(data.msg)
+        }
+    } 
+    function template(data){ 
+       var res={};
+       res.data = data;
+        var tmpl = doT.template($("#listCon1").text());  
+        $("#list1").html(tmpl(res));  
+
+        $(".listli").click(function(e){ 
+            var target = $(this);
+            var barCode = target.find(".barCode").text(); 
+            var list  =  sessionStorage.getItem("form1"); 
+            list = JSON.parse(list);
+            var res = list.filter(function(index) {
+                    return  index.barCode==barCode;
+                })  
+            dataInfo(res[0],'dataBox');
+            e.stopPropagation();
+        });
+        $(".chose.active").unbind( "click");
+        $(".chose").click(function(e){       
+            $(this).addClass("active"); 
+            var thatLi=$(this).closest('li');
+            if($("#discardReasonCode").val()==''||$("#discardReasonCode").val()==null){
+                $("#discardReasonCode").val('01');
+            }
+            if($("#Invoice").val()==null){
+                $("#Invoice").val('020201');
+            }
+            var res={},obj1=$("#form1").serializeObject(),obj2={};
+            obj1.phoneInvoiceNumber=phoneInvoiceNumber;
+            obj2.phoneInvoiceNumber=phoneInvoiceNumber;
+            obj1.userCode=  userInfo.usercode;      
+            obj1.userName=userInfo.username;
+            obj1.departCode	= userInfo.departcode;
+            obj2.departCode	= userInfo.departcode;
+            obj1.departName  =  userInfo.departname ;                                 
+            obj1.invoiceType =$("#Invoice").val();
+            obj1.invoiceName =$("#Invoice").find("option:selected").text();
+            //eamDiscardDetails 明细信息
+            obj2.assetsCode =  thatLi.attr("data-assetsCode");  
+            obj2.barCode = thatLi.attr("data-barCode");  
+            obj2.stopDate=  $("input[name='stopDate']").val();
+          //  obj1.discardTypeCode=$("#dypeCode").val() ; 
+            obj2.discardTypeCode=obj1.invoiceType ; 
+            obj1.sl= $("#countall").val();
+            obj1.originalValue=thatLi.attr('data-num1');
+            obj1.nowValue=thatLi.attr('data-num2');
+            obj1.addDepreciate=thatLi.attr('data-num3');
+            obj1.devalueValueSum=thatLi.attr('data-num4');
+            var nameres='';
+            switch (obj1.invoiceType){
+                case '020201':
+                nameres="正常报废"
+                break;
+                case '020202':
+                nameres="非正常地区公司批复" 
+                break;
+                case '020203':
+                nameres="非正常股份公司批复" 
+                break; 
+            } 
+           // obj1.discardTypeName=nameres;
+            obj2.discardTypeName=nameres;
+            obj2.discardReasonName=$("#discardReasonCode").find("option:selected").text();      
+            obj2.discardReasonCode=$("#discardReasonCode").val();     
+            obj2.discardMark = $("#discardMark").val();
+            obj2.userCode=obj1.userCode;
+            obj2.userName=obj1.userName;
+            obj2.departCode=obj1.departCode;
+            obj2.departName=obj1.departName;
+            var resData ={
+                eamDiscardInvoices:obj1 , 
+                eamDiscardDetails:obj2,
+                assetsCode:obj2.assetsCode,
+            }  
+            if (window.JsCallback) {
+                var data=window.JsCallback.onAddToScrapList(JSON.stringify(resData));   
+                if(data)
+                {
+                    alert("保存本地成功"); 
+                    var data=JSON.parse(window.JsCallback.onGetScrapList());
+                    count(data)
+                    } 
+            }else{
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onAddToScrapList',JSON.stringify(resData),function responseCallback(data) {   
+                        if(data){
+                            alert("保存本地成功");
+                            bridge.callHandler('onGetScrapList',function responseCallback(res) {
+                                count(JSON.parse(res)) 
+                            })
+                        } 
+                    }) 
+                })
+            }  
+            e.stopPropagation();
+        })
+    }
+    function dataInfo(data,id){ 
+        var list =$("#"+id+" p"); 
+        $.each(list,function(){ 
+            var target = $(this);
+            var key = target.attr("name");
+            var val = data[key];            
+            target.find("span").text(val==""||val==null?"--":val);
+        })
+    }   
+ 
+//保存
+$("#submitBtn").click(function(){   
+    if (window.JsCallback) {
+        var data=JSON.parse(window.JsCallback.onGetScrapList());
+        EAdata(data)
+    }else{
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onGetScrapList',function responseCallback(res) {
+                EAdata(JSON.parse(res)) 
+            })
+        })
+    } 
+}) 
+function EAdata(data){
+    var addUrl =getURL()+'/AssetsDataPhone/mobile/discardController.do?add'; 
+    var eamDI=[],eamD=[];
+    $.each(data,function(){
+        var that = this;   
+        that.eamDiscardDetails.sl= $("#countall").val();
+        that.eamDiscardInvoices.sl= $("#countall").val();
+        that.eamDiscardInvoices.originalValue= $("input[name=originalValue]").val();
+        that.eamDiscardInvoices.nowValue=  $("input[name=nowValue]").val();
+        that.eamDiscardInvoices.addDepreciate= $("input[name=addDepreciate]").val();
+        that.eamDiscardInvoices.devalueValueSum= $("input[name=devalueValueSum]").val();
+        eamDI.push(that.eamDiscardInvoices)
+        eamD.push(that.eamDiscardDetails) 
+    })
+    var jsons = {   
+        departCode: userInfo.departcode,
+        userCode: userInfo.usercode, 
+        departName: userInfo.departname,
+        userName:userInfo.username,
+        eamDiscardInvoices: JSON.stringify(eamDI) , 
+        eamDiscardDetails: JSON.stringify(eamD),
+    } 
+        sendPost(addUrl, jsons, resA);
+        function  resA(res){ 
+            if(res.success=='true'){
+                $("#list1 .chose.active").closest('li').remove();
+                if (window.JsCallback) {
+                    var data = window.JsCallback.onClearScrapList(); 
+                    if(data){ 
+                        alert("上传成功");
+                        $(".check1").val("");
+                        $(".check2").val("");
+                        $("#dataBox span").text("");
+                    }  
+                }else{
+                    setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('onClearScrapList',function responseCallback(data) {  
+                            if(data){ 
+                                alert("上传成功");
+                            }  
+                        }) 
+                    })
+                }
+            }else{
+                alert(res.msg);
+            }
+
+        }
+    } 
+//传EAM、
+$("#submitBtn2").click(function(){
+    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?confirm'; 
+    var jsons = {  
+            departCode: userInfo.departcode,
+            phoneInvoiceNumber: phoneInvoiceNumber,
+        }   
+    sendPost(updataUrl, jsons, function(data){ 
+        if(data.success=='true'){
+            alert(data.msg)
+        }else{
+            alert(data.msg)
+        }
+    }); 
+})
+//传送审、
+$("#submitBtn3").click(function(){
+    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?send'; 
+    var jsons = {  
+            departCode: userInfo.departcode,
+            userCode:userInfo.usercode,
+            phoneInvoiceNumber: phoneInvoiceNumber,
+        }   
+    sendPost(updataUrl, jsons, function(data){ 
+        if(data.success=='true'){
+            alert(data.msg)
+        }else{
+            alert(data.msg)
+        }
+    }); 
+})
+
+
+//扫描条形码功能    
+$("#scanning").click(function () { 
+    if (window.JsCallback) {
+        //安卓
+        window.JsCallback.onQR();
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+                scanData(responseData);
+            })
+
+        })
+    }
+})
+function rnSetQRResult(result) {
+    scanData(result);
+}
+function scanData(data) {
+    var scanData = JSON.parse(data);  
+    var list =$("#list1 li");
+    var BARcode='';
+    //barCode
+    if(scanData.QRCodeLPC==undefined){
+        BARcode=scanData.barCode
+    }else{
+        BARcode=scanData.QRCodeLPC
+    }
+    if(list.length>0){
+        var res = list.filter(function(index) {
+                return  $(this).attr("data-barcode")==BARcode;
+            })  
+        if(res.length>0){
+            //alert("明细已扫描");
+            return false;
+        }
+    }
+    $("input[name=barCode]").val(BARcode);
+     $("#search").click();
+}
+
+// 价值 进行汇总
+function count(data){
+    var res = data.unique('assetsCode'); 
+    $("#countall").val(res.length); 
+    var originalValue=0,nowValue=0,addDepreciate=0,devalueValueSum=0;
+    $.each(res,function(){
+        var that =this;
+        originalValue+=Number(that.eamDiscardInvoices.originalValue);
+        nowValue+=Number(that.eamDiscardInvoices.nowValue);
+        addDepreciate+=Number(that.eamDiscardInvoices.addDepreciate);
+        devalueValueSum+=Number(that.eamDiscardInvoices.devalueValueSum); 
+    })  
+    $("input[name=originalValue]").val(originalValue);
+    $("input[name=nowValue]").val(nowValue);
+    $("input[name=addDepreciate]").val(addDepreciate);
+    $("input[name=devalueValueSum]").val(devalueValueSum);
+}
+
+</script>
+</html>
+
