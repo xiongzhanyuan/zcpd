@@ -1,5 +1,4 @@
 @import 'rempx.scss'; 
-@import 'layer.css'; 
 $designWidth: 750;
 //基本变量
 $fsizem: rem(24);
@@ -270,6 +269,7 @@ label{display: inline-block;}
     }
     label{
         display: inline-block;
+        &.editStatus{color: red;}
     }
     select,input{
         display: inline-block;
@@ -1148,7 +1148,6 @@ div.hide{display: none;}
 .bottomFixed.BtnCurrent.DBbottomm button#scanning{margin:0; height:rem(100); line-height:rem(100); margin-top: -.3rem;}
 #searchBtn{color: #0091d2;font-size: 0.8rem ;}
 #formEntry2{ padding-top:rem(88);}
-
 
 
 
