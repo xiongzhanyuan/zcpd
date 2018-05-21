@@ -1522,4 +1522,19 @@ div.hide {
 #formEntry2 {
   padding-top: 1.87733rem;
 }
+
+.zcpdImgBorder {
+  border: 1px dashed #000;
+  width: 90%;
+}
+
+.zcpdImgBorder span {
+  display: block;
+  width: 150px;
+  height: 30px;
+  position: relative;
+  top: -15px;
+  text-align: center;
+  background: white;
+}
 /*# sourceMappingURL=index.css.map */
