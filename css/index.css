@@ -394,6 +394,14 @@ label {
   font-size: 0.64rem;
 }
 
+.formEntry .tzRadioCheck {
+  display: inline-block;
+}
+
+.formEntry .tzRadioCheck span {
+  font-size: 0.64rem;
+}
+
 .formEntry .check2 {
   display: none;
 }
@@ -1536,5 +1544,19 @@ div.hide {
   top: -15px;
   text-align: center;
   background: white;
+}
+
+.imgBox {
+  border: 0.04267rem solid #aaa;
+  border-radius: 0.128rem;
+  padding: 0 0.42667rem;
+  overflow-y: auto;
+}
+
+.borderTableBox {
+  border: 0.04267rem solid #aaa;
+  border-radius: 0.128rem;
+  max-height: 8.53333rem;
+  overflow-y: auto;
 }
 /*# sourceMappingURL=index.css.map */

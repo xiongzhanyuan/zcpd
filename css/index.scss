@@ -298,6 +298,10 @@ label{display: inline-block;}
         display: inline-block;
         span{font-size: $fsizen;}
     }
+    .tzRadioCheck{
+        display: inline-block;
+        span{font-size: $fsizen;}
+    }
     .check2{display: none;} 
     input{
         box-sizing: border-box; 
@@ -1160,6 +1164,19 @@ div.hide{display: none;}
         text-align: center;
         background: white;
     }
+}
+
+.imgBox{   
+    border: rem(2) solid #aaa;
+   border-radius: rem(6);
+   padding: 0 rem(20);
+   overflow-y: auto;
+}
+.borderTableBox{   
+    border: rem(2) solid #aaa;
+   border-radius: rem(6);
+   max-height:rem(400);
+   overflow-y: auto;
 }
 
 
