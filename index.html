@@ -296,6 +296,15 @@
 						</a>
 					</div>
 				</li> 
+				<li>
+					<div class="con">
+
+							<a href="JavaScript:;" id = "pyEntry">
+									<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>盘盈录入</p>
+						</a>
+					</div>
+				</li> 
 			</ul>
 		</div>
 		<div class="mytabs tab3">
@@ -488,7 +497,7 @@
 
 			<div class="zcpdImgBorder">
 				<span>图片区</span>
-				<div class="swiper-container" style="height: 700px;">
+				<div class="swiper-container">
 					<div id = "zcpdImgsDiv" class="swiper-wrapper">
 					</div>
 				</div>
@@ -499,21 +508,49 @@
 		<!-- 盘盈 -->
 		<div class="content scrollCon scrollCon2">
 			<p>盘点计划编码：<span id="PLnum"></span></p>
-			<div class="indexBox" id='Hbox2'>
-					<form class="formEntry" id="formEntry2" > 
+			<div class="indexBox" id='Hbox2' style="height: 90% !important;">
+					<form class="formEntry " id="formEntry2" > 
 						<p>
 							<label for="managerDepart">盘点单位:</label>
-							<input type="text" name="managerDepart">
+							<input type="text" name="managerDepart" id = "pyManagerDepart">
 						</p> 
 						<p>
 							<label for="assetsCode">资产条码:</label>
 							<input type="text" name="assetsCode">
 						</p>
 						<p>
-							<label for="assetsName">资产名称 :</label>
+							<label for="assetsName" class="editStatus">资产名称 :</label>
 							<input type="text" name="assetsName">
 						</p>
 						<p>
+							<label for="assetsStandard">规格型号:</label>
+								<input type="text" name="assetsStandard" id="assetsStandard">
+						</p>
+						<p>
+							<label for="storePlaceName" class="editStatus">存放地点:</label>
+							<input type="text" name="storePlaceName" id="storePlaceName">
+						</p>
+						<p>
+							<label for="userPerson" class="editStatus">保管人:</label>
+							<input type="text" name="userPerson" id="userPerson">
+						</p>
+
+						<p>
+							<label class="editStatus" for="assetsStatus">使用状态:</label>
+								<select name="assetsStatus" value='010101' id="assetsStatus">
+									<option value="010101">生产经营用-科研</option>
+									<option value="010102">生产经营用-其他</option>
+									<option value="0102">非生产经营用</option> 
+									<option value="0201">季节性经营停用</option>
+									<option value="0202">其他原因停用</option>
+									<option value="0203">经营场所备用</option>
+									<option value="0204">闲置</option>
+									<option value="03">租出</option>
+									<option value="04">借出</option> 
+								</select>
+						</p> 
+
+						<!-- <p>
 							<label for="assetsStatus">资产状态:</label>
 							 <select name="assetsStatus" value='010101' >
 								 <option value="010101">生产经营用-科研</option>
@@ -526,6 +563,19 @@
 								 <option value="03">租出</option>
 								 <option value="04">借出</option> 
 							 </select>
+							</p> -->
+							<p>
+								<label class="editStatus" for="technicalCondition">技术状况</label> 
+								<select name="technicalCondition" value="01" id="technicalCondition">
+									<option value="01">完好</option>
+									<option value="02">带病运行</option>
+									<option value="03">在修</option>
+									<option value="04">待修</option>
+									<option value="05">待报废</option>
+									<option value="06">损毁</option>
+									<option value="07">待处置</option>
+									<option value="08">已处置</option>
+								</select>
 							</p>
 							<p>
 								<label for="assetsStandard">规格型号:</label>
@@ -539,8 +589,17 @@
 								<label for="remark">备注:</label>
 								<input type="text" name="remark" />
 							</p>
+							<div class="zcpdImgBorder">
+									<span>图片区</span>
+									<div class="swiper-container">
+										<div id = "pyImgsDiv" class="swiper-wrapper">
+										</div>
+									</div>
+								</div>
 					</form>
+					
 				</div>
+				
 		</div> 
 		<bottom class=" bottomFixed bottombgNone">
 			<div class="center clearfix">
@@ -801,9 +860,14 @@ var pany=0;
 
 	//开发调试临时注释掉  -xiongzy
 	$(".outLine").click(function () {
+		$(".navCon").html("资产盘点");
+
+		zcpdImgs = [];
+		$("#zcpdImgsDiv").html("");
 		$("#Hbox1").addClass("active");
 		$(".scrollCon1").show(); 
 		$(".scrollCon2").hide();
+		
 
 		// if (window.navigator.onLine == true) {
 		// 	alert("请切换飞行模式");
@@ -813,6 +877,21 @@ var pany=0;
 		// 	$(".scrollCon1").show(); 
 		// 	$(".scrollCon2").hide();
 		// }
+	}) 
+
+	$("#pyEntry").click(function () {
+		debugger
+		zcpdImgs = [];
+		$(".navCon").html("盘盈录入");
+		$("#pyImgsDiv").html("");
+		$("#Hbox1").addClass("active");
+		$(".scrollCon1").hide(); 
+		$(".scrollCon2").show();
+		// alert(123)
+		// $(".scrollCon2").show();
+		// 	$(".scrollCon1").hide();
+		// 	$("#PLnum").text(PLnum); 
+
 	}) 
 	
 	$(".navFooter li").click(function () {
@@ -833,12 +912,15 @@ var pany=0;
 			userInfo = JSON.parse(userInfo);  
 			$(".userInfo .DepartName").text(userInfo.departname);
 			$(".userInfo .UserName").text(userInfo.username); 
+			$("#pyManagerDepart").val(userInfo.departname);
 		}  
 	}
 	userINFO();
 	// 搜索
 	$("#search").click(function () {
 		var scanData = "";
+		$("#zcpdImgsDiv").html("");
+		$("#pyImgsDiv").html("");
 		var lid = $("#lid").val();
 		if(lid.trim()==''){
 			alert('请输入需要搜索的资产条码')
@@ -859,6 +941,7 @@ var pany=0;
 	//资产盘点拍照
 	var zcpdImgs = [];
 	function changeImg(obj) {
+		debugger
 		if (!obj.files.length) return;
 
 		var file = obj.files[0];
@@ -869,8 +952,13 @@ var pany=0;
 			var result = this.result;    //data:base64    
 			zcpdImgs.unshift(result);
 			$("#zcpdImgsDiv").html("");
+			$("#pyImgsDiv").html("");
 			zcpdImgs.forEach(function(value, index) {
-				$("#zcpdImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+				if ($('.scrollCon1').css('display') == "block") {
+					$("#zcpdImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+				} else if ($('.scrollCon2').css('display') == "block") {
+					$("#pyImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+				}
 			})
 			// $("#zcpdImgsDiv").html(value);
 
@@ -908,6 +996,7 @@ var pany=0;
 		var scanData = JSON.parse(data); 
 		saveData=scanData;
 		if(scanData.QRCodeLPC){
+			$(".navCon").html("盘盈录入");
 			$(".scrollCon2").show();
 			$(".scrollCon1").hide();
 			var PLnum = sessionStorage.getItem("plnum");
@@ -933,11 +1022,22 @@ var pany=0;
 				}
 
 			})
+			if (!!scanData.zcpdImgs) {
+				zcpdImgs = scanData.zcpdImgs;
+				zcpdImgs.forEach(function(value, index) {
+					if ($('.scrollCon1').css('display') == "block") {
+						$("#zcpdImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+					} else if ($('.scrollCon2').css('display') == "block") {
+						$("#pyImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+					}
+				})
+			}
 		}  
 
 	}
 	//保存数据 到本机
 	$("#submitBtn").click(function () { 
+		debugger
 		var pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1"),  
 		pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
 		var formBox = {};
@@ -947,6 +1047,8 @@ var pany=0;
 			formData.checkResult=3;
 			localStorage.setItem("pan_3",Number(pan_3)+1);
 			var clientData = Object.assign(saveData,formData); 
+			clientData.zcpdImgs = zcpdImgs;
+			debugger
 			clientData = JSON.stringify(clientData);
 		}else{ 
 			formData = $("#formEntry").serializeObject();  
@@ -963,6 +1065,8 @@ var pany=0;
 				formData.assetsStatusName=$('#assetsStatus').find("option:selected").text();
 			} 
 			var clientData = Object.assign(saveData,formData); 
+			clientData.zcpdImgs = zcpdImgs;
+			
 			clientData = JSON.stringify(clientData); 
 		}     
 		if(pany == 1){
@@ -1008,6 +1112,9 @@ var pany=0;
 				alert("保存成功");
 				$("#formEntry").reset();
 				$("#lid").val("");
+				zcpdImgs = [];
+				$("#zcpdImgsDiv").html("");
+				$("#pyImgsDiv").html("");
 			}
 		} else {
 			setupWebViewJavascriptBridge(function (bridge) {
@@ -1016,6 +1123,9 @@ var pany=0;
 						alert("保存成功");
 						$("#formEntry").reset();
 						$("#lid").val("");
+						zcpdImgs = [];
+						$("#zcpdImgsDiv").html("");
+						$("#pyImgsDiv").html("");
 					}
 
 				})
@@ -1024,6 +1134,8 @@ var pany=0;
 
 	})
 	$(".backOn").click(function () { 
+		$(".navCon").html("应用");
+
 		$(".indexBox").removeClass("active");
 	})
 	$(".delateData").click(function () {    

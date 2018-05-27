@@ -141,7 +141,9 @@
             assetsCode:$("input[name='assetsCode']").val(),
             barCode:$("input[name='barCode']").val(),
         } 
-    sendPost(getListUrl,jsons,ListA)
+        var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+
+        sendPost(getListUrl,jsons,ListA)
     })
     
     function template(data){ 

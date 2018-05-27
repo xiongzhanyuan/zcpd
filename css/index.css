@@ -1559,4 +1559,33 @@ div.hide {
   max-height: 8.53333rem;
   overflow-y: auto;
 }
+
+.switch-bg {
+  width: 150px;
+  height: 60px;
+  background: #76d95c;
+  border-radius: 50px;
+  box-shadow: inset 0px 0px 3px;
+  transition: all 0.5s;
+}
+
+.switch-block {
+  width: 58px;
+  height: 58px;
+  background: #ffffff;
+  border-radius: 50%;
+  position: relative;
+  top: 1px;
+  left: 1px;
+  box-shadow: 1px 3px 5px;
+  transition: all 0.5s;
+}
+
+.turn-off {
+  background: #ffffff;
+}
+
+.turn-off > .switch-block {
+  left: 99px;
+}
 /*# sourceMappingURL=index.css.map */
