@@ -73,9 +73,7 @@ function getURL(){
     return postUrl;
 }
 function sendPost(reqUrl, jsonObj, callbackFun) {
-    debugger
     if (window.JsCallback) {
-        alert("开始调用方法")
         window.JsCallback.onShowProgress();
         $.ajax({
             async : false,
@@ -87,9 +85,6 @@ function sendPost(reqUrl, jsonObj, callbackFun) {
         beforeSend: function(){
         },
             error : function(request) {
-                debugger
-                alert("调用方法失败")
-
                 if (window.JsCallback) {
                     window.JsCallback.onHideProgress()
                 }else{
@@ -100,9 +95,6 @@ function sendPost(reqUrl, jsonObj, callbackFun) {
                 alert("网络错误");
             },
             success : function(data) {
-                alert("调用方法成功")
-
-                debugger
                 callbackFun(data);
                 if (window.JsCallback) {
                     window.JsCallback.onHideProgress()
@@ -113,7 +105,6 @@ function sendPost(reqUrl, jsonObj, callbackFun) {
                 }
             },
             complete :function(XMLHttpRequest,status){
-                debugger
                 if(status=='timeout'){//超时,status还有success,error等值的情况
                     　　　　　  alert("请求超时");
                     　　　　}
@@ -127,7 +118,6 @@ function sendPost(reqUrl, jsonObj, callbackFun) {
             }
         });
     }else{
-        debugger
         setupWebViewJavascriptBridge(function (bridge) {
             bridge.callHandler('onShowProgress','',function(){
                 $.ajax({
