@@ -131,20 +131,31 @@
 <script>
     //搜索
     $("#search").click(function(){ 
+        debugger
         $('#scan1').show();
         if($("input[name='assetsCode']").val().trim()==''&&$("input[name='barCode']").val().trim()==''){
             return false;
         }
         var jsons={
-            userCode: userInfo.usercode,
-            departCode: userInfo.departcode,
+            // userCode: userInfo.usercode,
+            // departCode: userInfo.departcode,
             assetsCode:$("input[name='assetsCode']").val(),
             barCode:$("input[name='barCode']").val(),
         } 
-        var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+        var getListUrl = getURL()+'/AssetsDataPhone/mobile/cellPhoneController.do?queryLedger';
 
         sendPost(getListUrl,jsons,ListA)
     })
+    function ListA(data){   
+        if(data.success=='true'){  
+            listAarray.push(data.data); 
+            var reslistAarray = listAarray.unique('barCode');
+            sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
+            template(reslistAarray) 
+        }else{
+            alert(data.msg)
+        }
+    } 
     
     function template(data){ 
        var res={};
