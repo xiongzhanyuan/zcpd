@@ -48,31 +48,25 @@
                     <p class="clearfix">
                         <div class="checkTop">
                             <label class="hzRadioCheck ">
-                                <input type="radio" class='radio' checked />
+                                <input type="radio" class='radio' value="0101" checked />
                                 <span>固定资产</span>
                             </label>
                             <label class="hzRadioCheck ">
-                                <input type="radio" class='radio' />
+                                <input type="radio" class='radio' value="0106" />
                                 <span>无形资产</span>
                             </label>
                             <label class="hzRadioCheck ">
-                                <input type="radio" class='radio' />
+                                <input type="radio" class='radio' value="0201" />
                                 <span>投资性房地产</span>
                             </label>
                         </div>
                         <p class="sel_p">
-                            <label for="departName">所属单位</label>
-                            <select name="departName" id="departName">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                            <label for="departCode">所属单位</label>
+                            <select name="departCode" id="departCode">
+                                <option value="14400">14400</option>
+                                <option value="14400">14400</option>
+                                <option value="14400">14400</option>
                             </select>
-                        </p>
-
-
-                        <p>
-                            <label for="userPerson">保管人</label>
-                            <input type="text" id="userPerson" name="userPerson" placeholder="">
                         </p>
                     </p>
                 </div>
@@ -83,32 +77,58 @@
                     <a class="clearfix">
                         <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
 
-                        <div class="switch-bg" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
-                                <div class="switch-block"></div>
-                            </div>
-                        <select name="departName" style="display:inline-block; width: 30%; margin-left: 10%" id="departName">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                            <div class="switch-block"></div>
+                        </div>
+                        <select name="group1" style="display:inline-block; width: 30%; margin-left: 10%" id="group1">
+                            <option value="">三级分组</option>
+                            <option value="">四级分组</option>
+                            <option value="">五级分组</option>
+                            <option value="">六级分组</option>
                         </select>
-                        
+
 
                     </a>
 
                     <a class="clearfix">
-                            <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
-    
-                            <div class="switch-bg" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
-                                    <div class="switch-block"></div>
-                                </div>
-                            <select name="departName" style="display:inline-block; width: 30%; margin-left: 10%" id="departName">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                            
-    
-                        </a>
+                        <label for="groupZclb" style="display:inline-block; font-size: 0.64rem">资产类别</label>
+
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                            <div class="switch-block"></div>
+                        </div>
+                        <select name="groupZclb" style="display:inline-block; width: 30%; margin-left: 10%" id="groupZclb">
+                            <option value="2">大类汇总</option>
+                            <option value="4">中类汇总</option>
+                        </select>
+                    </a>
+                    <a class="clearfix">
+                        <label for="groupJszk" style="display:inline-block; font-size: 0.64rem">技术状况</label>
+
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                            <div class="switch-block"></div>
+                        </div>
+                    </a>
+                    <a class="clearfix">
+                        <label for="groupSyzt" style="display:inline-block; font-size: 0.64rem;">使用状态</label>
+
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
+                            <div class="switch-block"></div>
+                        </div>
+                    </a>
+                    <a class="clearfix">
+                        <label for="groupZjyy" style="display:inline-block; font-size: 0.64rem;">增加原因</label>
+
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
+                            <div class="switch-block"></div>
+                        </div>
+                    </a>
+                    <a class="clearfix">
+                        <label for="groupZjqd" style="display:inline-block; font-size: 0.64rem;">资金渠道</label>
+
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%; margin-top:23px">
+                            <div class="switch-block"></div>
+                        </div>
+                    </a>
 
 
                     <!-- 
@@ -132,11 +152,12 @@
                     </p>
                 </div>
                 <bottom class=" bottomFixed BtnCurrent">
-                    <button id="submitBtn3" class="bottomBtn center sc">送审</button>
+                    <button id="hzSearchBtn" class="bottomBtn center sc">查询</button>
                 </bottom>
             </div>
             <div class="cardList tab-pane destory_tab2" id="tab2">
-
+                123123
+                    <canvas id="myChart"></canvas>
             </div>
 
         </div>
@@ -160,6 +181,8 @@
 <script src="../js/doT.js"></script>
 <script src="../js/fancySelect.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/chart.js"></script> 
+
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
         <li class="clearfix listli" data-index={{=index}} data-barCode={{= value.barCode}} data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}} data-assetsCode={{= value.assetsCode}} >  
@@ -174,25 +197,33 @@
 </script>
 <script>  
     $(".switch-bg").click(function () {
+        debugger
         if ($(this).hasClass("turn-off")) {
             $(this).removeClass("turn-off");
+            var turnOn = $(".turn-on");
+            turnOn.removeClass("turn-on");
+            turnOn.addClass("turn-off");
+            
+            $(this).addClass("turn-on");
             return;
+        } else {
+            $(this).removeClass("turn-on");
+            $(this).addClass("turn-off");
         }
-        $(this).addClass("turn-off");
     });  
 </script>
 
 <script>
     //先清除
-    if (window.JsCallback) {
-        window.JsCallback.onClearScrapList();
-    } else {
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('onClearScrapList', function responseCallback(data) {
+    // if (window.JsCallback) {
+    //     window.JsCallback.onClearScrapList();
+    // } else {
+    //     setupWebViewJavascriptBridge(function (bridge) {
+    //         bridge.callHandler('onClearScrapList', function responseCallback(data) {
 
-            })
-        })
-    }
+    //         })
+    //     })
+    // }
     // var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
     // var departListStr = $.cookie('departList');
     // var userInfo = $.cookie('userinfo');  
@@ -242,24 +273,62 @@
         $(this).parent().siblings(".hzRadioCheck").find('input').attr("checked", false);
     })
     //搜索
-    $("#search").click(function () {
-        if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
-            return false;
-        }
+    $("#hzSearchBtn").click(function () {
+        debugger
         var jsons = {
-            userCode: userInfo.usercode,
-            departCode: userInfo.departcode,
-            assetsCode: $("input[name='assetsCode']").val(),
-            barCode: $("input[name='barCode']").val(),
+            assetsType: $('input[class="radio"]:checked ').val(),
+            departCode: $("#departCode").val(),
+            groupZclb: 2
         }
-        sendPost(getListUrl, jsons, ListA)
+        debugger
+        var url = getURL() + '/AssetsDataPhone/mobile/summaryController.do?querySummary';
+
+        sendPost(url, jsons, ListA)
     })
     function ListA(data) {
+        debugger
         if (data.success == 'true') {
-            listAarray.push(data.data);
-            var reslistAarray = listAarray.unique('barCode');
-            sessionStorage.setItem("form1", JSON.stringify(reslistAarray));
-            template(reslistAarray)
+            // listAarray.push(data.data);
+            // var reslistAarray = listAarray.unique('barCode');
+            // sessionStorage.setItem("form1", JSON.stringify(reslistAarray));
+            // template(reslistAarray)
+            var ctx = document.getElementById("myChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+			datasets: [{
+				label: '# of Votes',
+				data: [12, 19, 3, 5, 2, 3],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero:true
+					}
+				}]
+			}
+		}
+	}); 
         } else {
             alert(data.msg)
         }
@@ -372,18 +441,20 @@
 
     //保存
     $("#submitBtn").click(function () {
-        if (window.JsCallback) {
-            var data = JSON.parse(window.JsCallback.onGetScrapList());
-            EAdata(data)
-        } else {
-            setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler('onGetScrapList', function responseCallback(res) {
-                    EAdata(JSON.parse(res))
-                })
-            })
-        }
+        // if (window.JsCallback) {
+        //     var data = JSON.parse(window.JsCallback.onGetScrapList());
+        //     EAdata(data)
+        // } else {
+        //     setupWebViewJavascriptBridge(function (bridge) {
+        //         bridge.callHandler('onGetScrapList', function responseCallback(res) {
+        //             EAdata(JSON.parse(res))
+        //         })
+        //     })
+        // }
+        var url = getURL() + '/AssetsDataPhone/mobile/summaryController.do?querySummary';
+
     })
-    function EAdata(data) {
+    function EAdata() {
         var addUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?add';
         var eamDI = [], eamD = [];
         $.each(data, function () {
