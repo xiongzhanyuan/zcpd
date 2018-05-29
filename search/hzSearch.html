@@ -1,74 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>汇总查询</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>汇总查询</title>
     <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
 
-	<link rel="stylesheet" href="../css/iconfont.css">
-	<link rel="stylesheet" href="../css/icon.css">
-	<link rel="stylesheet" href="../css/bootstrap.css">   
-    <link rel="stylesheet" href="../css/dialog.css"> 
-    <link rel="stylesheet" href="../css/lCalendar.css">   
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/icon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/lCalendar.css">
     <link rel="stylesheet" href="../css/index.css">
     <style>
-    .cardList li{height:auto;}
+        .cardList li {
+            height: auto;
+        }
     </style>
-    
+
 </head>
+
 <body>
-	<nav>
-		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
-		<p class="navCon">汇总查询</p>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a>
+        <p class="navCon">汇总查询</p>
     </nav>
-    
-	<div class="content destoryC formEntry">
-        
+
+    <div class="content destoryC formEntry">
+
         <ul class="nav nav-tabs tabs-three" id="myTab">
-            <li class="active"  hid="tab1"><a href="javascript:;">查询条件</a></li>
-            <li hid="tab2"><a href="javascript:;" >查询结果</a></li> 
-            <li hid="tab3"><a href="javascript:;" >图表</a></li> 
+            <li class="active" hid="tab1">
+                <a href="javascript:;">查询条件</a>
+            </li>
+            <li hid="tab2">
+                <a href="javascript:;">查询结果</a>
+            </li>
+            <li hid="tab3">
+                <a href="javascript:;">图表</a>
+            </li>
 
         </ul>
-        
+
         <div class="tab-content">
             <div class="cardList tab-pane active" id="tab1">
-                    <div class="searchHeader imgBox">
-                            <p class="clearfix">
-                                <div class="checkTop">
-                                    <label class="hzRadioCheck ">
-                                        <input type="radio" class='radio' checked />
-                                        <span>固定资产</span>
-                                    </label>
-                                    <label class="hzRadioCheck ">
-                                        <input type="radio" class='radio' />
-                                        <span>无形资产</span>
-                                    </label>
-                                    <label class="hzRadioCheck ">
-                                        <input type="radio" class='radio' />
-                                        <span>投资性房地产</span>
-                                    </label>
-                                </div>
-                                <p class="sel_p">
-                                    <label for="departName">所属单位</label>
-                                    <select name="departName" id="departName">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </p>
-            
-            
-                                <p>
-                                    <label for="userPerson">保管人</label>
-                                    <input type="text" id="userPerson" name="userPerson" placeholder="">
-                                </p>
-                            </p>
+                <div class="searchHeader imgBox">
+                    <p class="clearfix">
+                        <div class="checkTop">
+                            <label class="hzRadioCheck ">
+                                <input type="radio" class='radio' checked />
+                                <span>固定资产</span>
+                            </label>
+                            <label class="hzRadioCheck ">
+                                <input type="radio" class='radio' />
+                                <span>无形资产</span>
+                            </label>
+                            <label class="hzRadioCheck ">
+                                <input type="radio" class='radio' />
+                                <span>投资性房地产</span>
+                            </label>
                         </div>
+                        <p class="sel_p">
+                            <label for="departName">所属单位</label>
+                            <select name="departName" id="departName">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </p>
 
 
-                        <div class="searchHeader imgBox" style = "margin-top: 60px">
+                        <p>
+                            <label for="userPerson">保管人</label>
+                            <input type="text" id="userPerson" name="userPerson" placeholder="">
+                        </p>
+                    </p>
+                </div>
+
+
+                <div class="searchHeader imgBox" style="margin-top: 60px">
+
+                    <a class="clearfix">
+                        <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
+
+                        <div class="switch-bg" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                                <div class="switch-block"></div>
+                            </div>
+                        <select name="departName" style="display:inline-block; width: 30%; margin-left: 10%" id="departName">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        
+
+                    </a>
+
+                    <a class="clearfix">
+                            <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
+    
+                            <div class="switch-bg" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                                    <div class="switch-block"></div>
+                                </div>
+                            <select name="departName" style="display:inline-block; width: 30%; margin-left: 10%" id="departName">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            
+    
+                        </a>
+
+
+                    <!-- 
+
+
+
                                 <p>
                                         <label for="userPerson">保管人</label>
                                         <input type="text" id="userPerson" name="userPerson" placeholder="">
@@ -82,36 +128,38 @@
             
                                     <label for="userPerson">保管人</label>
                                     <input type="text" id="userPerson" name="userPerson" placeholder="">
-                                </p>
-                            </p>
-                        </div>
-                <bottom class=" bottomFixed BtnCurrent"> 
-                     <button id="submitBtn3" class="bottomBtn center sc">送审</button>  
+                                </p> -->
+                    </p>
+                </div>
+                <bottom class=" bottomFixed BtnCurrent">
+                    <button id="submitBtn3" class="bottomBtn center sc">送审</button>
                 </bottom>
             </div>
             <div class="cardList tab-pane destory_tab2" id="tab2">
-            
+
             </div>
-      
-        </div>  
-         
-	</div>
-   
-     <div class="bomb">
-         <div class="bombCon">
-            
-         </div>
-     </div> 
-	<div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+
+        </div>
+
+    </div>
+
+    <div class="bomb">
+        <div class="bombCon">
+
+        </div>
+    </div>
+    <div class="layBoxscan scan1">
+        <span class='center'>加载中...</span>
+    </div>
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/dialog.js"></script>
-<script src="../js/cookie.js"></script> 
-<script src="../js/lCalendar.js"></script> 
+<script src="../js/cookie.js"></script>
+<script src="../js/lCalendar.js"></script>
 <script src="../js/hotcss.js"></script>
-<script src="../js/doT.js"></script>   
-<script src="../js/fancySelect.js"></script> 
-<script src="../js/main.js"></script>    
+<script src="../js/doT.js"></script>
+<script src="../js/fancySelect.js"></script>
+<script src="../js/main.js"></script>
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
         <li class="clearfix listli" data-index={{=index}} data-barCode={{= value.barCode}} data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}} data-assetsCode={{= value.assetsCode}} >  
@@ -125,26 +173,26 @@
     {{~}}
 </script>
 <script>  
-        $(".switch-bg").click(function(){  
-            if($(this).hasClass("turn-off")){  
-                $(this).removeClass("turn-off");  
-                return;  
-            }  
-            $(this).addClass("turn-off");  
-        });  
-        </script>   
- 
+    $(".switch-bg").click(function () {
+        if ($(this).hasClass("turn-off")) {
+            $(this).removeClass("turn-off");
+            return;
+        }
+        $(this).addClass("turn-off");
+    });  
+</script>
+
 <script>
     //先清除
     if (window.JsCallback) {
-        window.JsCallback.onClearScrapList();  
-        }else{
-            setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler('onClearScrapList',function responseCallback(data) {  
-                     
-                }) 
+        window.JsCallback.onClearScrapList();
+    } else {
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onClearScrapList', function responseCallback(data) {
+
             })
-        }
+        })
+    }
     // var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
     // var departListStr = $.cookie('departList');
     // var userInfo = $.cookie('userinfo');  
@@ -188,295 +236,294 @@
     // $(".userInfo .DepartName").text(userInfo.departname);
     // $(".userInfo .UserName").text(userInfo.username);  
     // $("input[name='createdate']").val(new Date().Format('yyyy-MM-dd')); 
-    $(".checkTop input").click(function(){  
+    $(".checkTop input").click(function () {
         // alert(123)
         $(".checkSear input").val('');
         $(this).parent().siblings(".hzRadioCheck").find('input').attr("checked", false);
-    })  
+    })
     //搜索
-    $("#search").click(function(){   
-        if($("input[name='assetsCode']").val().trim()==''&&$("input[name='barCode']").val().trim()==''){
+    $("#search").click(function () {
+        if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
             return false;
         }
-        var jsons={
+        var jsons = {
             userCode: userInfo.usercode,
             departCode: userInfo.departcode,
-            assetsCode:$("input[name='assetsCode']").val(),
-            barCode:$("input[name='barCode']").val(),
-        }  
-    sendPost(getListUrl,jsons,ListA)
+            assetsCode: $("input[name='assetsCode']").val(),
+            barCode: $("input[name='barCode']").val(),
+        }
+        sendPost(getListUrl, jsons, ListA)
     })
-    function ListA(data){   
-        if(data.success=='true'){  
-            listAarray.push(data.data); 
+    function ListA(data) {
+        if (data.success == 'true') {
+            listAarray.push(data.data);
             var reslistAarray = listAarray.unique('barCode');
-            sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
-            template(reslistAarray) 
-        }else{
+            sessionStorage.setItem("form1", JSON.stringify(reslistAarray));
+            template(reslistAarray)
+        } else {
             alert(data.msg)
         }
-    } 
-    function template(data){ 
-       var res={};
-       res.data = data;
-        var tmpl = doT.template($("#listCon1").text());  
-        $("#list1").html(tmpl(res));  
+    }
+    function template(data) {
+        var res = {};
+        res.data = data;
+        var tmpl = doT.template($("#listCon1").text());
+        $("#list1").html(tmpl(res));
 
-        $(".listli").click(function(e){ 
+        $(".listli").click(function (e) {
             var target = $(this);
-            var barCode = target.find(".barCode").text(); 
-            var list  =  sessionStorage.getItem("form1"); 
+            var barCode = target.find(".barCode").text();
+            var list = sessionStorage.getItem("form1");
             list = JSON.parse(list);
-            var res = list.filter(function(index) {
-                    return  index.barCode==barCode;
-                })  
-            dataInfo(res[0],'dataBox');
+            var res = list.filter(function (index) {
+                return index.barCode == barCode;
+            })
+            dataInfo(res[0], 'dataBox');
             e.stopPropagation();
         });
-        $(".chose.active").unbind( "click");
-        $(".chose").click(function(e){       
-            $(this).addClass("active"); 
-            var thatLi=$(this).closest('li');
-            if($("#discardReasonCode").val()==''||$("#discardReasonCode").val()==null){
+        $(".chose.active").unbind("click");
+        $(".chose").click(function (e) {
+            $(this).addClass("active");
+            var thatLi = $(this).closest('li');
+            if ($("#discardReasonCode").val() == '' || $("#discardReasonCode").val() == null) {
                 $("#discardReasonCode").val('01');
             }
-            if($("#Invoice").val()==null){
+            if ($("#Invoice").val() == null) {
                 $("#Invoice").val('020201');
             }
-            var res={},obj1=$("#form1").serializeObject(),obj2={};
-            obj1.phoneInvoiceNumber=phoneInvoiceNumber;
-            obj2.phoneInvoiceNumber=phoneInvoiceNumber;
-            obj1.userCode=  userInfo.usercode;      
-            obj1.userName=userInfo.username;
-            obj1.departCode	= userInfo.departcode;
-            obj2.departCode	= userInfo.departcode;
-            obj1.departName  =  userInfo.departname ;                                 
-            obj1.invoiceType =$("#Invoice").val();
-            obj1.invoiceName =$("#Invoice").find("option:selected").text();
+            var res = {}, obj1 = $("#form1").serializeObject(), obj2 = {};
+            obj1.phoneInvoiceNumber = phoneInvoiceNumber;
+            obj2.phoneInvoiceNumber = phoneInvoiceNumber;
+            obj1.userCode = userInfo.usercode;
+            obj1.userName = userInfo.username;
+            obj1.departCode = userInfo.departcode;
+            obj2.departCode = userInfo.departcode;
+            obj1.departName = userInfo.departname;
+            obj1.invoiceType = $("#Invoice").val();
+            obj1.invoiceName = $("#Invoice").find("option:selected").text();
             //eamDiscardDetails 明细信息
-            obj2.assetsCode =  thatLi.attr("data-assetsCode");  
-            obj2.barCode = thatLi.attr("data-barCode");  
-            obj2.stopDate=  $("input[name='stopDate']").val();
-          //  obj1.discardTypeCode=$("#dypeCode").val() ; 
-            obj2.discardTypeCode=obj1.invoiceType ; 
-            obj1.sl= $("#countall").val();
-            obj1.originalValue=thatLi.attr('data-num1');
-            obj1.nowValue=thatLi.attr('data-num2');
-            obj1.addDepreciate=thatLi.attr('data-num3');
-            obj1.devalueValueSum=thatLi.attr('data-num4');
-            var nameres='';
-            switch (obj1.invoiceType){
+            obj2.assetsCode = thatLi.attr("data-assetsCode");
+            obj2.barCode = thatLi.attr("data-barCode");
+            obj2.stopDate = $("input[name='stopDate']").val();
+            //  obj1.discardTypeCode=$("#dypeCode").val() ; 
+            obj2.discardTypeCode = obj1.invoiceType;
+            obj1.sl = $("#countall").val();
+            obj1.originalValue = thatLi.attr('data-num1');
+            obj1.nowValue = thatLi.attr('data-num2');
+            obj1.addDepreciate = thatLi.attr('data-num3');
+            obj1.devalueValueSum = thatLi.attr('data-num4');
+            var nameres = '';
+            switch (obj1.invoiceType) {
                 case '020201':
-                nameres="正常报废"
-                break;
+                    nameres = "正常报废"
+                    break;
                 case '020202':
-                nameres="非正常地区公司批复" 
-                break;
+                    nameres = "非正常地区公司批复"
+                    break;
                 case '020203':
-                nameres="非正常股份公司批复" 
-                break; 
-            } 
-           // obj1.discardTypeName=nameres;
-            obj2.discardTypeName=nameres;
-            obj2.discardReasonName=$("#discardReasonCode").find("option:selected").text();      
-            obj2.discardReasonCode=$("#discardReasonCode").val();     
+                    nameres = "非正常股份公司批复"
+                    break;
+            }
+            // obj1.discardTypeName=nameres;
+            obj2.discardTypeName = nameres;
+            obj2.discardReasonName = $("#discardReasonCode").find("option:selected").text();
+            obj2.discardReasonCode = $("#discardReasonCode").val();
             obj2.discardMark = $("#discardMark").val();
-            obj2.userCode=obj1.userCode;
-            obj2.userName=obj1.userName;
-            obj2.departCode=obj1.departCode;
-            obj2.departName=obj1.departName;
-            var resData ={
-                eamDiscardInvoices:obj1 , 
-                eamDiscardDetails:obj2,
-                assetsCode:obj2.assetsCode,
-            }  
+            obj2.userCode = obj1.userCode;
+            obj2.userName = obj1.userName;
+            obj2.departCode = obj1.departCode;
+            obj2.departName = obj1.departName;
+            var resData = {
+                eamDiscardInvoices: obj1,
+                eamDiscardDetails: obj2,
+                assetsCode: obj2.assetsCode,
+            }
             if (window.JsCallback) {
-                var data=window.JsCallback.onAddToScrapList(JSON.stringify(resData));   
-                if(data)
-                {
-                    alert("保存本地成功"); 
-                    var data=JSON.parse(window.JsCallback.onGetScrapList());
+                var data = window.JsCallback.onAddToScrapList(JSON.stringify(resData));
+                if (data) {
+                    alert("保存本地成功");
+                    var data = JSON.parse(window.JsCallback.onGetScrapList());
                     count(data)
-                    } 
-            }else{
+                }
+            } else {
                 setupWebViewJavascriptBridge(function (bridge) {
-                    bridge.callHandler('onAddToScrapList',JSON.stringify(resData),function responseCallback(data) {   
-                        if(data){
+                    bridge.callHandler('onAddToScrapList', JSON.stringify(resData), function responseCallback(data) {
+                        if (data) {
                             alert("保存本地成功");
-                            bridge.callHandler('onGetScrapList',function responseCallback(res) {
-                                count(JSON.parse(res)) 
+                            bridge.callHandler('onGetScrapList', function responseCallback(res) {
+                                count(JSON.parse(res))
                             })
-                        } 
-                    }) 
+                        }
+                    })
                 })
-            }  
+            }
             e.stopPropagation();
         })
     }
-    function dataInfo(data,id){ 
-        var list =$("#"+id+" p"); 
-        $.each(list,function(){ 
+    function dataInfo(data, id) {
+        var list = $("#" + id + " p");
+        $.each(list, function () {
             var target = $(this);
             var key = target.attr("name");
-            var val = data[key];            
-            target.find("span").text(val==""||val==null?"--":val);
+            var val = data[key];
+            target.find("span").text(val == "" || val == null ? "--" : val);
         })
-    }   
- 
-//保存
-$("#submitBtn").click(function(){   
-    if (window.JsCallback) {
-        var data=JSON.parse(window.JsCallback.onGetScrapList());
-        EAdata(data)
-    }else{
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('onGetScrapList',function responseCallback(res) {
-                EAdata(JSON.parse(res)) 
+    }
+
+    //保存
+    $("#submitBtn").click(function () {
+        if (window.JsCallback) {
+            var data = JSON.parse(window.JsCallback.onGetScrapList());
+            EAdata(data)
+        } else {
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('onGetScrapList', function responseCallback(res) {
+                    EAdata(JSON.parse(res))
+                })
             })
-        })
-    } 
-}) 
-function EAdata(data){
-    var addUrl =getURL()+'/AssetsDataPhone/mobile/discardController.do?add'; 
-    var eamDI=[],eamD=[];
-    $.each(data,function(){
-        var that = this;   
-        that.eamDiscardDetails.sl= $("#countall").val();
-        that.eamDiscardInvoices.sl= $("#countall").val();
-        that.eamDiscardInvoices.originalValue= $("input[name=originalValue]").val();
-        that.eamDiscardInvoices.nowValue=  $("input[name=nowValue]").val();
-        that.eamDiscardInvoices.addDepreciate= $("input[name=addDepreciate]").val();
-        that.eamDiscardInvoices.devalueValueSum= $("input[name=devalueValueSum]").val();
-        eamDI.push(that.eamDiscardInvoices)
-        eamD.push(that.eamDiscardDetails) 
+        }
     })
-    var jsons = {   
-        departCode: userInfo.departcode,
-        userCode: userInfo.usercode, 
-        departName: userInfo.departname,
-        userName:userInfo.username,
-        eamDiscardInvoices: JSON.stringify(eamDI) , 
-        eamDiscardDetails: JSON.stringify(eamD),
-    } 
+    function EAdata(data) {
+        var addUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?add';
+        var eamDI = [], eamD = [];
+        $.each(data, function () {
+            var that = this;
+            that.eamDiscardDetails.sl = $("#countall").val();
+            that.eamDiscardInvoices.sl = $("#countall").val();
+            that.eamDiscardInvoices.originalValue = $("input[name=originalValue]").val();
+            that.eamDiscardInvoices.nowValue = $("input[name=nowValue]").val();
+            that.eamDiscardInvoices.addDepreciate = $("input[name=addDepreciate]").val();
+            that.eamDiscardInvoices.devalueValueSum = $("input[name=devalueValueSum]").val();
+            eamDI.push(that.eamDiscardInvoices)
+            eamD.push(that.eamDiscardDetails)
+        })
+        var jsons = {
+            departCode: userInfo.departcode,
+            userCode: userInfo.usercode,
+            departName: userInfo.departname,
+            userName: userInfo.username,
+            eamDiscardInvoices: JSON.stringify(eamDI),
+            eamDiscardDetails: JSON.stringify(eamD),
+        }
         sendPost(addUrl, jsons, resA);
-        function  resA(res){ 
-            if(res.success=='true'){
+        function resA(res) {
+            if (res.success == 'true') {
                 $("#list1 .chose.active").closest('li').remove();
                 if (window.JsCallback) {
-                    var data = window.JsCallback.onClearScrapList(); 
-                    if(data){ 
+                    var data = window.JsCallback.onClearScrapList();
+                    if (data) {
                         alert("上传成功");
                         $(".check1").val("");
                         $(".check2").val("");
                         $("#dataBox span").text("");
-                    }  
-                }else{
+                    }
+                } else {
                     setupWebViewJavascriptBridge(function (bridge) {
-                        bridge.callHandler('onClearScrapList',function responseCallback(data) {  
-                            if(data){ 
+                        bridge.callHandler('onClearScrapList', function responseCallback(data) {
+                            if (data) {
                                 alert("上传成功");
-                            }  
-                        }) 
+                            }
+                        })
                     })
                 }
-            }else{
+            } else {
                 alert(res.msg);
             }
 
         }
-    } 
-//传EAM、
-$("#submitBtn2").click(function(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?confirm'; 
-    var jsons = {  
+    }
+    //传EAM、
+    $("#submitBtn2").click(function () {
+        var updataUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?confirm';
+        var jsons = {
             departCode: userInfo.departcode,
             phoneInvoiceNumber: phoneInvoiceNumber,
-        }   
-    sendPost(updataUrl, jsons, function(data){ 
-        if(data.success=='true'){
-            alert(data.msg)
-        }else{
-            alert(data.msg)
         }
-    }); 
-})
-//传送审、
-$("#submitBtn3").click(function(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?send'; 
-    var jsons = {  
+        sendPost(updataUrl, jsons, function (data) {
+            if (data.success == 'true') {
+                alert(data.msg)
+            } else {
+                alert(data.msg)
+            }
+        });
+    })
+    //传送审、
+    $("#submitBtn3").click(function () {
+        var updataUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?send';
+        var jsons = {
             departCode: userInfo.departcode,
-            userCode:userInfo.usercode,
+            userCode: userInfo.usercode,
             phoneInvoiceNumber: phoneInvoiceNumber,
-        }   
-    sendPost(updataUrl, jsons, function(data){ 
-        if(data.success=='true'){
-            alert(data.msg)
-        }else{
-            alert(data.msg)
         }
-    }); 
-})
+        sendPost(updataUrl, jsons, function (data) {
+            if (data.success == 'true') {
+                alert(data.msg)
+            } else {
+                alert(data.msg)
+            }
+        });
+    })
 
 
-//扫描条形码功能    
-$("#scanning").click(function () { 
-    if (window.JsCallback) {
-        //安卓
-        window.JsCallback.onQR();
-    } else {
-        //IOS 
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
-                scanData(responseData);
+    //扫描条形码功能    
+    $("#scanning").click(function () {
+        if (window.JsCallback) {
+            //安卓
+            window.JsCallback.onQR();
+        } else {
+            //IOS 
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+                    scanData(responseData);
+                })
+
             })
-
-        })
-    }
-})
-function rnSetQRResult(result) {
-    scanData(result);
-}
-function scanData(data) {
-    var scanData = JSON.parse(data);  
-    var list =$("#list1 li");
-    var BARcode='';
-    //barCode
-    if(scanData.QRCodeLPC==undefined){
-        BARcode=scanData.barCode
-    }else{
-        BARcode=scanData.QRCodeLPC
-    }
-    if(list.length>0){
-        var res = list.filter(function(index) {
-                return  $(this).attr("data-barcode")==BARcode;
-            })  
-        if(res.length>0){
-            //alert("明细已扫描");
-            return false;
         }
+    })
+    function rnSetQRResult(result) {
+        scanData(result);
     }
-    $("input[name=barCode]").val(BARcode);
-     $("#search").click();
-}
+    function scanData(data) {
+        var scanData = JSON.parse(data);
+        var list = $("#list1 li");
+        var BARcode = '';
+        //barCode
+        if (scanData.QRCodeLPC == undefined) {
+            BARcode = scanData.barCode
+        } else {
+            BARcode = scanData.QRCodeLPC
+        }
+        if (list.length > 0) {
+            var res = list.filter(function (index) {
+                return $(this).attr("data-barcode") == BARcode;
+            })
+            if (res.length > 0) {
+                //alert("明细已扫描");
+                return false;
+            }
+        }
+        $("input[name=barCode]").val(BARcode);
+        $("#search").click();
+    }
 
-// 价值 进行汇总
-function count(data){
-    var res = data.unique('assetsCode'); 
-    $("#countall").val(res.length); 
-    var originalValue=0,nowValue=0,addDepreciate=0,devalueValueSum=0;
-    $.each(res,function(){
-        var that =this;
-        originalValue+=Number(that.eamDiscardInvoices.originalValue);
-        nowValue+=Number(that.eamDiscardInvoices.nowValue);
-        addDepreciate+=Number(that.eamDiscardInvoices.addDepreciate);
-        devalueValueSum+=Number(that.eamDiscardInvoices.devalueValueSum); 
-    })  
-    $("input[name=originalValue]").val(originalValue);
-    $("input[name=nowValue]").val(nowValue);
-    $("input[name=addDepreciate]").val(addDepreciate);
-    $("input[name=devalueValueSum]").val(devalueValueSum);
-}
+    // 价值 进行汇总
+    function count(data) {
+        var res = data.unique('assetsCode');
+        $("#countall").val(res.length);
+        var originalValue = 0, nowValue = 0, addDepreciate = 0, devalueValueSum = 0;
+        $.each(res, function () {
+            var that = this;
+            originalValue += Number(that.eamDiscardInvoices.originalValue);
+            nowValue += Number(that.eamDiscardInvoices.nowValue);
+            addDepreciate += Number(that.eamDiscardInvoices.addDepreciate);
+            devalueValueSum += Number(that.eamDiscardInvoices.devalueValueSum);
+        })
+        $("input[name=originalValue]").val(originalValue);
+        $("input[name=nowValue]").val(nowValue);
+        $("input[name=addDepreciate]").val(addDepreciate);
+        $("input[name=devalueValueSum]").val(devalueValueSum);
+    }
 
 </script>
-</html>
 
+</html>

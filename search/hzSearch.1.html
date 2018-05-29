@@ -6,23 +6,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>汇总查询</title>
     <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
+
     <link rel="stylesheet" href="../css/iconfont.css">
-	<link rel="stylesheet" href="../css/icon.css">
-	<link rel="stylesheet" href="../css/bootstrap.css">   
-    <link rel="stylesheet" href="../css/dialog.css"> 
-    <link rel="stylesheet" href="../css/lCalendar.css">   
+    <link rel="stylesheet" href="../css/icon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/lCalendar.css">
     <link rel="stylesheet" href="../css/index.css">
     <style>
         .cardList li {
             height: auto;
         }
     </style>
+
 </head>
 
 <body>
-        <label class="ui-switch">
-                <input type="checkbox" checked="">
-            </label>
-    </body>
+
+    <div class="content destoryC formEntry">
+
+        <div class="tab-content">
+            <div class="cardList tab-pane active" id="tab1">
+                <div class="searchHeader imgBox" style="margin-top: 60px">
+
+                    <div class="clearfix">
+                        <label for="departName">哈哈</label>
+                        <select name="departName" id="departName">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        <div class="switch-bg">
+                            <div class="switch-block"></div>
+                        </div>
+                    </div>
+
+
+                    <!-- 
+
+
+
+                                <p>
+                                        <label for="userPerson">保管人</label>
+                                        <input type="text" id="userPerson" name="userPerson" placeholder="">
+                                    </p>
+
+                                        所属单位
+                                    <div class="switch-bg">  
+                                            <div class="switch-block"></div>  
+                                        </div>  
+            
+            
+                                    <label for="userPerson">保管人</label>
+                                    <input type="text" id="userPerson" name="userPerson" placeholder="">
+                                </p> -->
+                    </p>
+                </div>
+                <bottom class=" bottomFixed BtnCurrent">
+                    <button id="submitBtn3" class="bottomBtn center sc">送审</button>
+                </bottom>
+            </div>
+            <div class="cardList tab-pane destory_tab2" id="tab2">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bomb">
+        <div class="bombCon">
+
+        </div>
+    </div>
+    <div class="layBoxscan scan1">
+        <span class='center'>加载中...</span>
+    </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/lCalendar.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/doT.js"></script>
+<script src="../js/fancySelect.js"></script>
+<script src="../js/main.js"></script>
 
 </html>
