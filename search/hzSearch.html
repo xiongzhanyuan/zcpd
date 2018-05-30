@@ -72,7 +72,7 @@
                 </div>
 
 
-                <div class="searchHeader imgBox" style="margin-top: 60px">
+                <div class="searchHeader imgBox" style="margin-top: 60px; height: 800px;">
 
                     <a class="clearfix">
                         <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
@@ -129,36 +129,24 @@
                             <div class="switch-block"></div>
                         </div>
                     </a>
-
-
-                    <!-- 
-
-
-
-                                <p>
-                                        <label for="userPerson">保管人</label>
-                                        <input type="text" id="userPerson" name="userPerson" placeholder="">
-                                    </p>
-
-                                        所属单位
-                                    <div class="switch-bg">  
-                                            <div class="switch-block"></div>  
-                                        </div>  
-            
-            
-                                    <label for="userPerson">保管人</label>
-                                    <input type="text" id="userPerson" name="userPerson" placeholder="">
-                                </p> -->
-                    </p>
                 </div>
                 <bottom class=" bottomFixed BtnCurrent">
                     <button id="hzSearchBtn" class="bottomBtn center sc">查询</button>
                 </bottom>
             </div>
-            <div class="cardList tab-pane destory_tab2" id="tab2">
-                123123
-                    <canvas id="myChart"></canvas>
+            <div class="cardList tab-pane destory_tab2" id="tab3">
+                
+                <canvas id="yzChart"></canvas>
+                <canvas id="jzChart"></canvas>
+                <canvas id="ljzjChart"></canvas>
+                <canvas id="jzzbChart"></canvas>
             </div>
+
+            <div class="cardList tab-pane" id="tab2">
+                <ul id="list1">
+                    
+                </ul>
+                </div>
 
         </div>
 
@@ -181,17 +169,16 @@
 <script src="../js/doT.js"></script>
 <script src="../js/fancySelect.js"></script>
 <script src="../js/main.js"></script>
-<script src="../js/chart.js"></script> 
+<script src="../js/chart.js"></script>
 
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
-        <li class="clearfix listli" data-index={{=index}} data-barCode={{= value.barCode}} data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}} data-assetsCode={{= value.assetsCode}} >  
-            <p class="barCode" style='display:none;'>{{= value.barCode }}</p>
+        <li class="clearfix listli" data-index={{=index}} >  
+            <p class="barCode">分组维度：{{= value.zclbmc }}</p>
             <span class="listInfo">
-                <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
-                <b>资产名称 ：<i>{{= value.assetsName}}</i></b>                    
+                <b><i>原值 ：{{= value.yz }}</i>  <i style="float:right">净值 ：{{= value.jz}}</i></b>
+                <b><i>累计折旧 ：{{= value.ljzj }}</i>  <i style="float:right">减值准备 ：{{= value.jzzb}}</i></b>
             </span> 
-            <div class="chose bottomBtn iconfont icon-tijiao" ></div>
         </li>
     {{~}}
 </script>
@@ -203,7 +190,7 @@
             var turnOn = $(".turn-on");
             turnOn.removeClass("turn-on");
             turnOn.addClass("turn-off");
-            
+
             $(this).addClass("turn-on");
             return;
         } else {
@@ -292,142 +279,164 @@
             // var reslistAarray = listAarray.unique('barCode');
             // sessionStorage.setItem("form1", JSON.stringify(reslistAarray));
             // template(reslistAarray)
-            var ctx = document.getElementById("myChart").getContext('2d');
-	var myChart = new Chart(ctx, {
-		type: 'bar',
-		data: {
-			labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-			datasets: [{
-				label: '# of Votes',
-				data: [12, 19, 3, 5, 2, 3],
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255,99,132,1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero:true
-					}
-				}]
-			}
-		}
-	}); 
+            
+            var label = [];
+            var yzData = [];
+            var jzData = [];
+            var ljzjData = [];
+            var jzzbData = [];
+            var backgroundColor = [];
+            var boderColor = [];
+            var defaultBackGround = [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ];
+            var defaultBoderColor = [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ];
+            data.data.forEach(function(value, index) {
+                if (!value.yz) {
+                    value.yz = 0;
+                }
+                if (!value.jz) {
+                    value.jz = 0;
+                }
+                if (!value.ljzj) {
+                    value.ljzj = 0;
+                }
+                if (!value.jzzb) {
+                    value.jzzb = 0;
+                }
+                label.push(value.zclbmc);
+                yzData.push(value.yz);
+                jzData.push(value.jz);
+                ljzjData.push(value.ljzj);
+                jzzbData.push(value.jzzb);
+                backgroundColor.push(defaultBackGround[index%6]);
+                boderColor.push(defaultBoderColor[index%6]);
+            });
+
+            template(data.data);
+
+
+
+
+            var ctx = document.getElementById("yzChart").getContext('2d');
+            var yzChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        label: '原值分布图',
+                        data: yzData,
+                        backgroundColor: backgroundColor,
+                        borderColor: boderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var ctx = document.getElementById("jzChart").getContext('2d');
+            var jzChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        label: '净值分布图',
+                        data: jzData,
+                        backgroundColor: backgroundColor,
+                        borderColor: boderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var ctx = document.getElementById("ljzjChart").getContext('2d');
+            var ljzjChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        label: '累计折旧分布图',
+                        data: ljzjData,
+                        backgroundColor: backgroundColor,
+                        borderColor: boderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var ctx = document.getElementById("jzzbChart").getContext('2d');
+            var jzzbChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        label: '减值准备分布图',
+                        data: jzzbData,
+                        backgroundColor: backgroundColor,
+                        borderColor: boderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         } else {
             alert(data.msg)
         }
     }
     function template(data) {
+        debugger
         var res = {};
         res.data = data;
         var tmpl = doT.template($("#listCon1").text());
         $("#list1").html(tmpl(res));
 
-        $(".listli").click(function (e) {
-            var target = $(this);
-            var barCode = target.find(".barCode").text();
-            var list = sessionStorage.getItem("form1");
-            list = JSON.parse(list);
-            var res = list.filter(function (index) {
-                return index.barCode == barCode;
-            })
-            dataInfo(res[0], 'dataBox');
-            e.stopPropagation();
-        });
-        $(".chose.active").unbind("click");
-        $(".chose").click(function (e) {
-            $(this).addClass("active");
-            var thatLi = $(this).closest('li');
-            if ($("#discardReasonCode").val() == '' || $("#discardReasonCode").val() == null) {
-                $("#discardReasonCode").val('01');
-            }
-            if ($("#Invoice").val() == null) {
-                $("#Invoice").val('020201');
-            }
-            var res = {}, obj1 = $("#form1").serializeObject(), obj2 = {};
-            obj1.phoneInvoiceNumber = phoneInvoiceNumber;
-            obj2.phoneInvoiceNumber = phoneInvoiceNumber;
-            obj1.userCode = userInfo.usercode;
-            obj1.userName = userInfo.username;
-            obj1.departCode = userInfo.departcode;
-            obj2.departCode = userInfo.departcode;
-            obj1.departName = userInfo.departname;
-            obj1.invoiceType = $("#Invoice").val();
-            obj1.invoiceName = $("#Invoice").find("option:selected").text();
-            //eamDiscardDetails 明细信息
-            obj2.assetsCode = thatLi.attr("data-assetsCode");
-            obj2.barCode = thatLi.attr("data-barCode");
-            obj2.stopDate = $("input[name='stopDate']").val();
-            //  obj1.discardTypeCode=$("#dypeCode").val() ; 
-            obj2.discardTypeCode = obj1.invoiceType;
-            obj1.sl = $("#countall").val();
-            obj1.originalValue = thatLi.attr('data-num1');
-            obj1.nowValue = thatLi.attr('data-num2');
-            obj1.addDepreciate = thatLi.attr('data-num3');
-            obj1.devalueValueSum = thatLi.attr('data-num4');
-            var nameres = '';
-            switch (obj1.invoiceType) {
-                case '020201':
-                    nameres = "正常报废"
-                    break;
-                case '020202':
-                    nameres = "非正常地区公司批复"
-                    break;
-                case '020203':
-                    nameres = "非正常股份公司批复"
-                    break;
-            }
-            // obj1.discardTypeName=nameres;
-            obj2.discardTypeName = nameres;
-            obj2.discardReasonName = $("#discardReasonCode").find("option:selected").text();
-            obj2.discardReasonCode = $("#discardReasonCode").val();
-            obj2.discardMark = $("#discardMark").val();
-            obj2.userCode = obj1.userCode;
-            obj2.userName = obj1.userName;
-            obj2.departCode = obj1.departCode;
-            obj2.departName = obj1.departName;
-            var resData = {
-                eamDiscardInvoices: obj1,
-                eamDiscardDetails: obj2,
-                assetsCode: obj2.assetsCode,
-            }
-            if (window.JsCallback) {
-                var data = window.JsCallback.onAddToScrapList(JSON.stringify(resData));
-                if (data) {
-                    alert("保存本地成功");
-                    var data = JSON.parse(window.JsCallback.onGetScrapList());
-                    count(data)
-                }
-            } else {
-                setupWebViewJavascriptBridge(function (bridge) {
-                    bridge.callHandler('onAddToScrapList', JSON.stringify(resData), function responseCallback(data) {
-                        if (data) {
-                            alert("保存本地成功");
-                            bridge.callHandler('onGetScrapList', function responseCallback(res) {
-                                count(JSON.parse(res))
-                            })
-                        }
-                    })
-                })
-            }
-            e.stopPropagation();
-        })
+        
     }
     function dataInfo(data, id) {
         var list = $("#" + id + " p");

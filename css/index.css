@@ -583,38 +583,6 @@ label {
   margin-top: 0.64rem;
 }
 
-table {
-  width: 100%;
-  border: 1px solid #999;
-  font-size: 0.512rem;
-  table-layout: fixed;
-  box-sizing: border-box;
-  margin: 0.21333rem;
-}
-
-table td, table th {
-  border-right: 1px solid #999;
-  padding: 0 0.21333rem;
-  width: 3.2rem;
-  word-break: break-all;
-}
-
-table td input[type='checkbox'], table th input[type='checkbox'] {
-  width: 0.64rem;
-  height: 0.64rem;
-  display: block;
-  margin: 0 auto;
-}
-
-table tr {
-  border-bottom: 1px solid #999;
-  line-height: 1.06667rem;
-}
-
-table tr td:nth-child(1), table tr th:nth-child(1) {
-  width: 1.49333rem;
-}
-
 .tab-pane {
   display: none;
 }
