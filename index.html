@@ -1226,6 +1226,13 @@ var pany=0;
 		if($("#formEntry").is(":hidden")){ 
 			pany=1;
 			formData = $("#formEntry2").serializeObject();
+			if(!formData.assetsName || !formData.storePlaceName || !formData.technicalCondition ||
+				!formData.userPerson || !formData.assetsStatus || !formData.lossReason) {
+				alert("有必传字段未填写");
+				return false;
+			}
+			
+
 			formData.checkResult=3;
 			localStorage.setItem("pan_3",Number(pan_3)+1);
 			var clientData = Object.assign(saveData,formData); 
@@ -1234,6 +1241,11 @@ var pany=0;
 			clientData = JSON.stringify(clientData);
 		}else{ 
 			formData = $("#formEntry").serializeObject();  
+			if(!formData.assetsStatus || !formData.realcodeStatus || !formData.technicalCondition ||
+				!formData.userPerson) {
+				alert("有必传字段未填写");
+				return false;
+			}
 			formData.keyCode=$("#keyCode").val();
 				formData.checkResult=1;
 			if (window.JsCallback) {
