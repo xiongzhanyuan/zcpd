@@ -73,6 +73,7 @@ function getURL(){
     return postUrl;
 }
 function sendPost(reqUrl, jsonObj, callbackFun) {
+    debugger
     if (window.JsCallback) {
         window.JsCallback.onShowProgress();
         $.ajax({

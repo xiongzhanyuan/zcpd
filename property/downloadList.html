@@ -76,8 +76,10 @@
         } ;  
         
         if (window.JsCallback) {
+            debugger
             sendPost(qustString, jsons, ListA) 
         }else{
+            debugger
             sendPost2(qustString, jsons, function(responce){
                 //  判断是否在本地已经下载 
                 if(responce.success=='false'){ 
@@ -95,6 +97,7 @@
         }
     }
     function ListA(responce) { 
+        debugger
         //  判断是否在本地已经下载 
         if(responce.success=='false'){ 
             alert(responce.msg);

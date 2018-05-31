@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/dialog.css">
     <link rel="stylesheet" href="../css/lCalendar.css">
+    <link href="../css/select2.css" rel="stylesheet" /> 
     <link rel="stylesheet" href="../css/index.css">
+    
+
     <style>
         .cardList li {
             height: auto;
@@ -60,14 +63,13 @@
                                 <span>投资性房地产</span>
                             </label>
                         </div>
-                        <p class="sel_p">
+                        <p>
                             <label for="departCode">所属单位</label>
-                            <select name="departCode" id="departCode">
-                                <option value="14400">14400</option>
-                                <option value="14400">14400</option>
-                                <option value="14400">14400</option>
+                            <select name="departCodeSelect" value="" id="departCodeSelect">
+
                             </select>
                         </p>
+                        
                     </p>
                 </div>
 
@@ -170,6 +172,8 @@
 <script src="../js/fancySelect.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/chart.js"></script>
+<script src="../js/select2.js"></script>
+
 
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
@@ -201,6 +205,27 @@
 </script>
 
 <script>
+    debugger
+    // $("#departCodeSelect").html("")
+    // var departList = $.cookie('departList');
+    // departList = JSON.parse(departList);
+    // var str="";
+    // $.each(departList,function(){
+    //     str+="<option value="+this.departcode+">"+this.shortname+"</option>"
+    // })
+    // $("#departCodeSelect").html(str); 
+
+    var strIN="",strINList='';    
+    $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){  
+        // if(index==0){
+        //     $("#createDepartcode").val(this.departcode)
+        // }
+        strIN+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
+    })   
+    
+    $("#departCodeSelect").html(strIN);
+    $("#departCodeSelect").select2();
+
     //先清除
     // if (window.JsCallback) {
     //     window.JsCallback.onClearScrapList();
@@ -264,7 +289,8 @@
         debugger
         var jsons = {
             assetsType: $('input[class="radio"]:checked ').val(),
-            departCode: $("#departCode").val(),
+            // departCode: $("#departCodeSelect").val(),
+            departCode: 14400,
             groupZclb: 2
         }
         debugger
