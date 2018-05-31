@@ -875,19 +875,19 @@ var pany=0;
 
 		zcpdImgs = [];
 		$("#zcpdImgsDiv").html("");
-		$("#Hbox1").addClass("active");
-		$(".scrollCon1").show(); 
-		$(".scrollCon2").hide();
+		// $("#Hbox1").addClass("active");
+		// $(".scrollCon1").show(); 
+		// $(".scrollCon2").hide();
 		
 
-		// if (window.navigator.onLine == true) {
-		// 	alert("请切换飞行模式");
-		// 	$("#Hbox1").removeClass("active");
-		// } else {
-		// 	$("#Hbox1").addClass("active");
-		// 	$(".scrollCon1").show(); 
-		// 	$(".scrollCon2").hide();
-		// }
+		if (window.navigator.onLine == true) {
+			alert("请切换飞行模式");
+			$("#Hbox1").removeClass("active");
+		} else {
+			$("#Hbox1").addClass("active");
+			$(".scrollCon1").show(); 
+			$(".scrollCon2").hide();
+		}
 	}) 
 
 	$("#pyEntry").click(function () {
