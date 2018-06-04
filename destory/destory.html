@@ -16,7 +16,7 @@
 </head>
 <body>
 	<nav>
-		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<a class="back centery" href="javascript:;" id = "destroyBackBtn">返回</a> 
 		<p class="navCon">报废申请</p>
 	</nav>
 	<div class="content destoryC formEntry ">
@@ -314,6 +314,7 @@
                 $("#Invoice").val('020201');
             }
             var res={},obj1=$("#form1").serializeObject(),obj2={};
+            debugger
             obj1.phoneInvoiceNumber=phoneInvoiceNumber;
             obj2.phoneInvoiceNumber=phoneInvoiceNumber;
             obj1.userCode=  userInfo.usercode;      
@@ -480,6 +481,7 @@ $("#submitBtn3").click(function(){
         }   
     sendPost(updataUrl, jsons, function(data){ 
         if(data.success=='true'){
+            localStorage.removeItem('bfdjStorage');
             alert(data.msg)
         }else{
             alert(data.msg)
@@ -545,6 +547,26 @@ function count(data){
     $("input[name=nowValue]").val(nowValue);
     $("input[name=addDepreciate]").val(addDepreciate);
     $("input[name=devalueValueSum]").val(devalueValueSum);
+}
+
+$("#destroyBackBtn").click(function(e) {
+    var bfdjStorage = {};
+    bfdjStorage.countall = $("#countall").val();
+    bfdjStorage.originalValue = $("input[name=originalValue]").val();
+    bfdjStorage.nowValue = $("input[name=nowValue]").val();
+    bfdjStorage.addDepreciate = $("input[name=addDepreciate]").val();
+    bfdjStorage.devalueValueSum = $("input[name=devalueValueSum]").val();
+    localStorage.setItem("bfdjStorage",JSON.stringify(bfdjStorage));
+    history.go(-1);
+})
+
+if (localStorage.getItem("bfdjStorage")) {
+    var data = JSON.parse(localStorage.getItem("bfdjStorage"));
+    $("#countall").val(data.countall); 
+    $("input[name=originalValue]").val(data.originalValue);
+    $("input[name=nowValue]").val(data.nowValue);
+    $("input[name=addDepreciate]").val(data.addDepreciate);
+    $("input[name=devalueValueSum]").val(data.devalueValueSum);
 }
 
 </script>

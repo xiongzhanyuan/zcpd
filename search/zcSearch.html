@@ -72,15 +72,10 @@
                         </div>
                     </div>
                     <div class="cardList tab-pane" id="tab2">
-                            <div class="searchRes DesSearchRes borderFBox" id="pdLogInfo">  
-                                    <p name="planNumber">盘点计划:<span></span></p>   
-                                    <p name="checkResult">盘点结果:<span></span></p>
-                                    <p name="userPerson">保管人:<span></span></p> 
-                                    <p name="departName">所属单位:<span></span></p> 
-                                    <p name="storePlace">存放地点:<span></span></p>
-                                    <p name="usedStateName">使用状态:<span></span></p>    
-                                    <p name="propertyStatus">技术状况:<span></span></p>    
-                                    <p name="realcodeStatus">贴码状态:<span></span></p>    
+                            <div class="searchRes DesSearchRes borderFBox">  
+                                <ul id="list1">
+                    
+                                </ul>
                                 </div>
                             </div>
                     </div>
@@ -122,18 +117,26 @@
 <script src="../js/fancySelect.js"></script> 
 <script src="../js/select2.js"></script>
 <script src="../js/main.js"></script>   
-<!-- <script type="template" id="listCon1">  
+<script type="template" id="listCon1">  
         {{~it.data :value:index}}
-        <li class="clearfix" data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}}   keyCode={{=value.keyCode}}  data-assetsCode={{=value.assetsCode}}  data-barCode={{=value.barCode}}  data-index={{=index}}  data-index={{=index}} onclick="enterInfo(this,'dataBox')">  
-            <p class="barCode" style='display:none;'>{{= value.barCode }}</p>
+        <li class="clearfix">  
             <span class="listInfo">
-                <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
-                <b>资产名称 ：<i>{{= value.assetsName}}</i></b>           
+                <b>盘点名称 ：<i>{{= value.planName }}</i></b>
+                <b>盘点编码 ：<i>{{= value.planNumber}}</i></b>
+                <b>所属单位 ：<i>{{= value.managerDepartName}}</i></b>
+                {{? value.checkResult==1 }} 
+                    <b>盘点结果：<i>存在</i></b>
+                {{?? value.checkResult==2 }} 
+                    <b>盘点结果：<i>盘亏</i></b>
+                {{?? value.checkResult==3 }} 
+                    <b>盘点结果：<i>盘盈</i></b>
+                {{??}}
+                    <b>盘点结果：<i>无结果</i></b>
+                {{?}}
             </span> 
-            <div class=" chose bottomBtn iconfont icon-tijiao" ></div>
         </li>
     {{~}}
-</script>  -->
+</script> 
 <script>
     //搜索
     $("#search").click(function(){ 
@@ -158,20 +161,22 @@
             // var reslistAarray = listAarray.unique('barCode');
             // sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
             dataInfo(data.data, "baseInfo");
-            dataInfo(data.data, "pdLogInfo");
+
+            template(data.listRecord);
+
+            // dataInfo(data.data, "pdLogInfo");
         }else{
             alert(data.msg)
         }
     } 
     
-    // function template(data){ 
-    //    var res={};
-    //    res.data = data;
-    //     var tmpl = doT.template($("#listCon1").text());  
-    //     $("#list1").html(tmpl(res));  
-        // dataInfo(res[0],'dataBox');
-
-    // }
+    function template(data) {
+        debugger
+        var res = {};
+        res.data = data;
+        var tmpl = doT.template($("#listCon1").text());
+        $("#list1").html(tmpl(res));
+    }
       
     function dataInfo(data,id){ 
         var list =$("#"+id+" p"); 

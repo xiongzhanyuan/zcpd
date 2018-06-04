@@ -526,8 +526,8 @@
 							<input type="text" name="managerDepart" id = "pyManagerDepart">
 						</p> 
 						<p>
-							<label for="assetsCode">资产条码:</label>
-							<input type="text" name="assetsCode">
+							<label for="barCode">资产条码:</label>
+							<input type="text" name="barCode">
 						</p>
 						<p>
 							<label for="assetsName" class="editStatus">资产名称 :</label>
@@ -593,7 +593,7 @@
 								<input type="text" name="assetsStandard" >
 							</p>
 							<p>
-								<label for="lossReason">盘盈原因:</label>
+								<label for="lossReason" class="editStatus">盘盈原因:</label>
 								<input type="text" name="lossReason" />
 							</p>
 							<p>
@@ -1183,7 +1183,7 @@ var pany=0;
 			$(".scrollCon1").hide();
 			var PLnum = sessionStorage.getItem("plnum");
 			$("#PLnum").text(PLnum); 
-			$("#Hbox2 input[name=assetsCode]").val(scanData.QRCodeLPC);
+			$("#Hbox2 input[name=barCode]").val(scanData.QRCodeLPC);
 			$('select').fancySelect(); 
 		}else{
 			$(".scrollCon1").show(); 
@@ -1313,6 +1313,7 @@ var pany=0;
 		} else {
 			setupWebViewJavascriptBridge(function (bridge) {
 				bridge.callHandler('saveTobesubmit', clientData, function responseCallback(result) {
+					debugger
 					if (result) {
 						alert("保存成功");
 						$("#formEntry").reset();

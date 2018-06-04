@@ -42,7 +42,7 @@
                     <img class="center" src="../images/static.png" alt=""> 
                 </span>  
                 <span class="listInfo"> 
-                    <b>资产编号 ：<i class="assetsCode">{{= value.assetsCode }}</i></b>
+                    <b>资产编号 ：<i class="barCode">{{= value.barCode }}</i></b>
                     <b>资产名称 ：<i>{{= value.assetsName}}</i></b>
                 </span> 
             </li>
@@ -60,6 +60,7 @@
             bridge.callHandler('getTobesubmitArray', callbackRes)
         })
     }
+    var newDate = [];
     function callbackRes(result) {
       
         if (result == null || !result) {            
@@ -67,7 +68,7 @@
             return;
         }
         var sendData = JSON.parse(result);
-        var newDate = [];
+        newDate = [];
         for (i = 0; i < sendData.length; i++) {
             var data = JSON.parse(sendData[i]); 
             newDate.push(data);
@@ -86,24 +87,33 @@
                 if(!a){
                     return false;
                 }else{ 
-                    saveData(newDate,JSON.parse(sendData[0]).keyCode);
+                    if(newDate.length > 0) {
+                        saveData(newDate[0],JSON.parse(sendData[0]).keyCode);
+                        newDate.splice(0,1);
+                    }
                 }
             }
         })
     }
 
-    function saveData(data,keycode) {   
+    function saveData(data,keycode) {  
         var time =new Date().Format('yyyy-MM-dd').replaceAll("-",''), 
         time2 = localStorage.getItem("stopDate");
         if(Number(time)>Number(time2)){
             alert("当前盘点已结束，禁止上传盘点");
             return false;
         }
+        var uploadType = 0;
+        var uploadFile = "";
+        if(data.zcpdImgs.length > 0) {
+            uploadType = 2;
+            uploadFile = data.zcpdImgs[0];
+        }
         var uploadUrl = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?uploadcheckplan" 
         var json = { 
             userCode: userInfo.usercode,
-            uploadType: 0,
-            uploadFile: '', 
+            uploadType: uploadType,
+            uploadFile: uploadFile, 
             data:JSON.stringify(data)
         }
         sendPost(uploadUrl, json, callbackA);
@@ -127,6 +137,10 @@
             }
         }else{
             alert(data.msg);   
+        }
+        if(newDate.length > 0) {
+            saveData(newDate[0],"");
+            newDate.splice(0,1);
         }
 
     }
