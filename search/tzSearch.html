@@ -44,12 +44,11 @@
                         </label>
                     </div>
                     <p class="sel_p">
-                        <label for="departName">所属单位</label>
-                        <select name="departName" id="departName">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                        <label for="departCode">所属单位</label>
+                        <select name="departCodeSelect" id="departCodeSelect">
+                            
                         </select>
+                       
                     </p>
 
 
@@ -63,7 +62,7 @@
             <div class="tab-content">
                 <div class="cardList tab-pane active" id="tab1">
 
-                    <div class="searchRes DesSearchRes borderTableBox" id="baseInfo" style="width: 1000px;">
+                    <div class="searchRes DesSearchRes borderTableBox" id="baseInfo" style="width: 150%;">
                             <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -81,7 +80,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>1</td>
+                                            <td>2</td>
                                             <td>Bangalore</td>
                                             <td>560001</td>
                                             <td></td>
@@ -187,6 +186,16 @@
     {{~}}
 </script>
 <script>
+    var strIN="",strINList='';    
+    $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){  
+        // if(index==0){
+        //     $("#createDepartcode").val(this.departcode)
+        // }
+        strIN+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
+    })   
+    
+    $("#departCodeSelect").html(strIN);
+    $("#departCodeSelect").select2();
     //搜索
     $("#search").click(function () {
         $('#scan1').show();
