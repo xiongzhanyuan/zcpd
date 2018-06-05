@@ -110,21 +110,23 @@
             uploadFile = data.zcpdImgs[0];
         }
         var uploadUrl = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?uploadcheckplan" 
+        var jsonData = [];
+        jsonData.push(data);
         var json = { 
             userCode: userInfo.usercode,
             uploadType: uploadType,
             uploadFile: uploadFile, 
-            data:JSON.stringify(data)
+            data:JSON.stringify(jsonData)
         }
-        sendPost(uploadUrl, json, callbackA);
+        sendPostUpload(uploadUrl, json, callbackA);
     }
 
     function callbackA(data) { 
         var status = false;
         if (data.success == "true") {
             status = true;
-            alert(data.msg);   
-            $("#TobeArray").html("");
+            // alert(data.msg);   
+            // $("#TobeArray").html("");
             // 给客户端传
             if (window.JsCallback) {
                 var responseData = window.JsCallback.onUnStashDeviceList();
@@ -132,7 +134,7 @@
             } else {
                 //cleanTobesubmit
                 setupWebViewJavascriptBridge(function (bridge) {
-                    bridge.callHandler('onUnStashDeviceList', status, callbackUploadResult)
+                    bridge.callHandler('onUnStashDeviceList', data.barCode, callbackUploadResult)
                 });
             }
         }else{
@@ -141,6 +143,8 @@
         if(newDate.length > 0) {
             saveData(newDate[0],"");
             newDate.splice(0,1);
+        } else {
+            history.go(0);
         }
 
     }
