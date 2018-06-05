@@ -548,9 +548,9 @@
 
 						<p>
 							<label class="editStatus" for="assetsStatus">使用状态:</label>
-								<select name="assetsStatus" value='010101' id="assetsStatus">
+								<select name="assetsStatus" id="assetsStatus">
+									<option selected="selected" value="010102">生产经营用-其他</option>
 									<option value="010101">生产经营用-科研</option>
-									<option value="010102">生产经营用-其他</option>
 									<option value="0102">非生产经营用</option> 
 									<option value="0201">季节性经营停用</option>
 									<option value="0202">其他原因停用</option>
@@ -891,6 +891,7 @@ var pany=0;
 	}) 
 
 	$("#pyEntry").click(function () {
+		pyFrom = 0;
 		debugger
 		zcpdImgs = [];
 		$(".navCon").html("盘盈录入");
@@ -1174,17 +1175,19 @@ var pany=0;
 	function rnSetQRResult(result) {
 		renderData($("#formEntry"), result);
 	} 
+	var pyFrom = 0;
 	function renderData(dom, data) { 
 		var scanData = JSON.parse(data); 
 		saveData=scanData;
 		if(scanData.QRCodeLPC){
+			pyFrom = 1;
 			$(".navCon").html("盘盈录入");
 			$(".scrollCon2").show();
 			$(".scrollCon1").hide();
 			var PLnum = sessionStorage.getItem("plnum");
 			$("#PLnum").text(PLnum); 
 			$("#Hbox2 input[name=barCode]").val(scanData.QRCodeLPC);
-			$('select').fancySelect(); 
+			// $('select').fancySelect(); 
 		}else{
 			$(".scrollCon1").show(); 
 			$(".scrollCon2").hide(); 
@@ -1303,24 +1306,39 @@ var pany=0;
 		if (window.JsCallback) {
 			var res = window.JsCallback.onStashDeviceInfo (clientData);
 			if (res) {
+				var userInfo = JSON.parse($.cookie('userinfo'));  
 				alert("保存成功");
-				$("#formEntry").reset();
+				document.getElementById("formEntry").reset();
+				$("#pyManagerDepart").val(userInfo.departname);
 				$("#lid").val("");
 				zcpdImgs = [];
 				$("#zcpdImgsDiv").html("");
 				$("#pyImgsDiv").html("");
+				if(pyFrom == 1) {
+					$(".navCon").html("资产盘点");
+					$(".scrollCon1").show();
+					$(".scrollCon2").hide();
+				}
 			}
 		} else {
 			setupWebViewJavascriptBridge(function (bridge) {
 				bridge.callHandler('saveTobesubmit', clientData, function responseCallback(result) {
 					debugger
 					if (result) {
+						var userInfo = JSON.parse($.cookie('userinfo'));  
 						alert("保存成功");
-						$("#formEntry").reset();
+						document.getElementById("formEntry").reset();
+						document.getElementById("formEntry2").reset();
+						$("#pyManagerDepart").val(userInfo.departname);
 						$("#lid").val("");
 						zcpdImgs = [];
 						$("#zcpdImgsDiv").html("");
-						$("#pyImgsDiv").html("");
+						$("#pyImgsDiv").html("");			
+						if(pyFrom == 1) {
+							$(".navCon").html("资产盘点");
+							$(".scrollCon1").show();
+							$(".scrollCon2").hide();
+						}
 					}
 
 				})

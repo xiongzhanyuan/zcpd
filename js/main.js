@@ -453,14 +453,14 @@ function closeClick(){
     $(".bomb").removeClass("active");
 }
 //清空表单reset
-jQuery.fn.extend( {
-reset:function(){
-    this.find("input").val("");
-    this.find("select").val("请选择");
-    this.find("textarea").val("");
-},
+// jQuery.fn.extend( {
+// reset:function(){
+//     this.find("input").val("");
+//     this.find("select").val("请选择");
+//     this.find("textarea").val("");
+// },
     
-})
+// })
 //数组去重
 Array.prototype.unique = function(key) {
     var arr = this;
