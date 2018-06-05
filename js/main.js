@@ -146,8 +146,9 @@ function sendPostUpload(reqUrl, jsonObj, callbackFun) {
                         alert("网络错误");
                     },
                     success : function(data) {
-                        var reqJson = JSON.parse(jsonObj.data)[0];                        if(reqJson.barCode) {
-                        data.barCode = reqJson.barCode;
+                        var reqJson = JSON.parse(jsonObj.data)[0];                        
+                        if(reqJson.barCode) {
+                            data.barCode = reqJson.barCode;
                         }
                         callbackFun(data);
                         if (window.JsCallback) {
