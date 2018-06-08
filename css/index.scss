@@ -1187,6 +1187,7 @@ div.hide{display: none;}
     box-shadow:inset 0px 0px 3px;  
     transition:all 0.5s;  
 }  
+
 .switch-block {  
     width: 58px;  
     height: 58px;  
@@ -1204,6 +1205,11 @@ div.hide{display: none;}
 .turn-on>.switch-block {  
     left: 99px;  
 }  
+.hzSelectGroup {
+    display:inline-block; 
+    width: 30%; 
+    margin-left: 10%
+}
 
 
 

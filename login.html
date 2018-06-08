@@ -42,7 +42,7 @@
     </div>
 </header> 
     <!--  Sign Up  -->
-    <section class="section sign-up"> 
+    <section class="section sign-up" id = "signUpBtn"> 
     <div class="trapezoid"></div>
     <form  class="loginform" id="register"> 
         <!-- userCode      ？？？     -->        
@@ -57,18 +57,18 @@
         <input type="password"id="password_again" name="password_again" placeholder="确认密码" required>
         <input type="text" name="remark" placeholder="备注，非必填">
         <div class="button" id="registBtn">注册</div>
-        <p class="opposite-btn2">已有账户，点击登录</p>
+        <p class="opposite-btn2" id="hasAccountBtn">已有账户，点击登录</p>
     </form>
     </section>
     
     <!--  Sign In  -->
-    <section class="section sign-in">
+    <section class="section sign-in" id="signInBtn">
     <form class="loginform" id="login">
         <input type="text" class="" name="usercode" placeholder="用户名/邮箱" required>
         <input type="password" class="" name="password" placeholder="密码" required>
         <div  class="button" id="loginBtn">登录</div>
         <div class="bottomLogin clearfix"> 
-                <p class="opposite-btn1 centery le">没有账户?</p>
+                <p class="opposite-btn1 centery le" id = "hasNoAccountBtn">没有账户?</p>
                 <a href="set/server.html" class="serverLink">
                     <i class="appNav  iconfont icon-iconfonticonfontjixieqimo"></i>
                     <i>服务器设置</i>
@@ -107,26 +107,33 @@ $(document).ready(function() {
     }
     });
 });
-const signUp = document.querySelector('.sign-up');
-const signIn = document.querySelector('.sign-in');
+// const signUp = document.querySelector('.sign-up');
+// const signIn = document.querySelector('.sign-in');
 
 // Switch btns: there are two only because I was in a hurry a didn't want to write all the javascript immediately. In a production environment, a better solution would be implemented.
-const btn1 = document.querySelector('.opposite-btn1');
-const btn2 = document.querySelector('.opposite-btn2');
-
+// const btn1 = document.querySelector('.opposite-btn1');
+// const btn2 = document.querySelector('.opposite-btn2');
 
 // Switches to 'Create Account'
-btn1.addEventListener('click', () => {
-  signUp.style.display = 'block';
-  signIn.style.display = 'none'; 
-});
+// btn1.addEventListener('click', () => {
+//   signUp.style.display = 'block';
+//   signIn.style.display = 'none'; 
+// });
 
-// Switches to 'Sign In'
-btn2.addEventListener('click', () => {
-  signUp.style.display = 'none';
-  signIn.style.display = 'block';
-});  
+// // Switches to 'Sign In'
+// btn2.addEventListener('click', () => {
+//   signUp.style.display = 'none';
+//   signIn.style.display = 'block';
+// });  
 // 注册 
+$("#hasNoAccountBtn").click(function(){
+    document.getElementById("signUpBtn").style.display = 'block';
+    document.getElementById("signInBtn").style.display = 'none';
+})
+$("#hasAccountBtn").click(function(){
+    document.getElementById("signUpBtn").style.display = 'none';
+    document.getElementById("signInBtn").style.display = 'block';
+});  
 $("#registBtn").click(function(){ 
     $(".scan1").show(); 
     if(!$("#register").validate()){

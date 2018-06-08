@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
     <title>汇总查询</title>
     <!-- <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css"> -->
 
@@ -19,6 +21,20 @@
     <style>
         .cardList li {
             height: auto;
+        }
+        @media screen and (max-width: 500px) {
+        .switch-bg {
+                
+                margin-left: -30px !important;
+                margin-top: 0 !important;
+                transform: scale(0.5,0.5) !important;
+            }
+        .clearfix select{
+            margin-left: 0 !important;
+        }
+        .groupBy .clearfix{
+            height: 45px;
+        }
         }
     </style>
 
@@ -74,14 +90,14 @@
                 </div>
 
 
-                <div class="searchHeader imgBox" style="margin-top: 60px; height: 800px;">
+                <div class="searchHeader imgBox groupBy" style="margin-top: 60px; height: 800px;">
 
-                    <a class="clearfix">
+                    <div class="clearfix">
                         <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
-
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
-                            <div class="switch-block"></div>
-                        </div>
+                            <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
+                                <div class="switch-block"></div>    
+                            </div>
+                        
                         <select name="group1" style="display:inline-block; width: 30%; margin-left: 10%" id="group1">
                             <option value="">三级分组</option>
                             <option value="">四级分组</option>
@@ -90,47 +106,47 @@
                         </select>
 
 
-                    </a>
+                    </div>
 
-                    <a class="clearfix">
+                    <div class="clearfix">
                         <label for="groupZclb" style="display:inline-block; font-size: 0.64rem">资产类别</label>
 
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
                             <div class="switch-block"></div>
                         </div>
                         <select name="groupZclb" style="display:inline-block; width: 30%; margin-left: 10%" id="groupZclb">
                             <option value="2">大类汇总</option>
                             <option value="4">中类汇总</option>
                         </select>
-                    </a>
-                    <a class="clearfix">
+                    </div>
+                    <div class="clearfix">
                         <label for="groupJszk" style="display:inline-block; font-size: 0.64rem">技术状况</label>
 
                         <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
                             <div class="switch-block"></div>
                         </div>
-                    </a>
-                    <a class="clearfix">
+                    </div>
+                    <div class="clearfix">
                         <label for="groupSyzt" style="display:inline-block; font-size: 0.64rem;">使用状态</label>
 
                         <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
                             <div class="switch-block"></div>
                         </div>
-                    </a>
-                    <a class="clearfix">
+                    </div>
+                    <div class="clearfix">
                         <label for="groupZjyy" style="display:inline-block; font-size: 0.64rem;">增加原因</label>
 
                         <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
                             <div class="switch-block"></div>
                         </div>
-                    </a>
-                    <a class="clearfix">
+                    </div>
+                    <div class="clearfix">
                         <label for="groupZjqd" style="display:inline-block; font-size: 0.64rem;">资金渠道</label>
 
                         <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%; margin-top:23px">
                             <div class="switch-block"></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <bottom class=" bottomFixed BtnCurrent">
                     <button id="hzSearchBtn" class="bottomBtn center sc">查询</button>

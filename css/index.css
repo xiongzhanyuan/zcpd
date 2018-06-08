@@ -1556,4 +1556,10 @@ div.hide {
 .turn-on > .switch-block {
   left: 99px;
 }
+
+.hzSelectGroup {
+  display: inline-block;
+  width: 30%;
+  margin-left: 10%;
+}
 /*# sourceMappingURL=index.css.map */
