@@ -1562,4 +1562,19 @@ div.hide {
   width: 30%;
   margin-left: 10%;
 }
+
+.borderTzDetailBox {
+  border: 0.04267rem solid #aaa;
+  overflow-y: auto;
+}
+
+.borderTzDetailBox p {
+  padding: 0 0.42667rem;
+  margin: 0 !important;
+  line-height: 2;
+}
+
+.borderTzDetailBox p:nth-of-type(even) {
+  background: #efefef;
+}
 /*# sourceMappingURL=index.css.map */

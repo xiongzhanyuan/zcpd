@@ -27,28 +27,28 @@
     </nav>
     <div class="content destoryC formEntry ">
         <div class="cardList">
-            <div class="searchHeader">
+            <div class="searchHeader borderTableBox">
                 <p class="clearfix">
                     <div class="checkTop">
                         <label class="tzRadioCheck ">
-                            <input type="radio" class='radio' checked />
+                            <input type="radio" class='radio' value="0101" checked />
                             <span>固定资产</span>
                         </label>
                         <label class="tzRadioCheck ">
-                            <input type="radio" class='radio' />
+                            <input type="radio" class='radio' value="0201" />
                             <span>无形资产</span>
                         </label>
                         <label class="tzRadioCheck ">
-                            <input type="radio" class='radio' />
+                            <input type="radio" class='radio' value="0106" />
                             <span>投资性房地产</span>
                         </label>
                     </div>
                     <p class="sel_p">
                         <label for="departCode">所属单位</label>
                         <select name="departCodeSelect" id="departCodeSelect">
-                            
+
                         </select>
-                       
+
                     </p>
 
 
@@ -59,98 +59,21 @@
                 </p>
             </div>
 
-            <div class="tab-content">
-                <div class="cardList tab-pane active" id="tab1">
 
-                    <div class="searchRes DesSearchRes borderTableBox" id="baseInfo" style="width: 150%;">
-                            <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>第一列</th>
-                                            <th>第二列</th>
-                                            <th>第三列</th>
-                                            <th>第四列</th>
-                                            <th>第五列</th>
-                                            <th>第六列</th>
-                                            <th>第七列</th>
-                                            <th>第八列</th>
-                                            <th>第九列</th>
-                                            <th>第十列</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Bangalore</td>
-                                            <td>560001</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Mumbai</td>
-                                            <td>400003</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Pune</td>
-                                            <td>411027</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                    </div>
-                </div>
-                <div class="cardList tab-pane" id="tab2">
-                    <div class="searchRes DesSearchRes borderFBox" id="pdLogInfo">
-                        <p name="assetsCode">资产编码：
-                            <span></span>
-                        </p>
-                        <p name="assetsName">资产名称：
-                            <span></span>
-                        </p>
-                    </div>
-                </div>
+            <div class="cardList" id="tab2">
+                <ul id="list1">
+                </ul>
             </div>
 
-            <div class="cardList" id="">
-                <div class="searchRes DesSearchRes imgBox" id="pdLogInfo">
-                    <p>图片区</p>
-                    <div class="swiper-container" style="height: 700px;">
-                        <div id="zcpdImgsDiv" class="swiper-wrapper">
-                            <div class="swiper-slide">
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <bottom class="bottomFixed">
             <!-- <div class="center clearfix">
                 <i id="submitBtn" class="iconfont icon-tijiao rightBtn"></i>
             </div> -->
-            <div class="center clearfix" style="position: absolute;"> 
-                    <i id="searchBtn" > 搜索</i>
-                </div>
+            <div class="center clearfix" style="position: absolute;">
+                <i id="searchBtn"> 搜索</i>
+            </div>
         </bottom>
     </div>
     </div>
@@ -175,47 +98,82 @@
 <script src="../js/main.js"></script>
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
-        <li class="clearfix" data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}}   keyCode={{=value.keyCode}}  data-assetsCode={{=value.assetsCode}}  data-barCode={{=value.barCode}}  data-index={{=index}}  data-index={{=index}} onclick="enterInfo(this,'dataBox')">  
+        <li class="clearfix" id={{= value.assetsCode }} onclick="enterInfo(this.id)">  
             <p class="barCode" style='display:none;'>{{= value.barCode }}</p>
             <span class="listInfo">
                 <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
                 <b>资产名称 ：<i>{{= value.assetsName}}</i></b>           
             </span> 
-            <div class=" chose bottomBtn iconfont icon-tijiao" ></div>
         </li>
     {{~}}
 </script>
 <script>
-    var strIN="",strINList='';    
-    $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){  
+    var userInfo = $.cookie('userinfo');
+    userInfo = JSON.parse(userInfo);
+    var strIN = "", strINList = '';
+    $.each(JSON.parse(localStorage.getItem('selOut')), function (index, i) {
         // if(index==0){
         //     $("#createDepartcode").val(this.departcode)
         // }
-        strIN+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
-    })   
-    
+        strIN += "<option dp_code=" + this.departcode + " value=" + this.departcode + ">" + this.departname + "</option>"
+    })
+
     $("#departCodeSelect").html(strIN);
     $("#departCodeSelect").select2();
     //搜索
-    $("#search").click(function () {
-        $('#scan1').show();
-        if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
+    $("#searchBtn").click(function () {
+        page = 1;
+        if ($("select[name='departCodeSelect']").val() == '') {
+            alert("所属单位为空");
             return false;
         }
         var jsons = {
-            userCode: userInfo.usercode,
             departCode: userInfo.departcode,
-            assetsCode: $("input[name='assetsCode']").val(),
-            barCode: $("input[name='barCode']").val(),
+            assetsType: $('input:radio[class="radio"]:checked').val(),
+            userPerson: $("#userPerson").val(),
+            page: 1,
+            pageSize: 20,
         }
-        sendPost(getListUrl, jsons, ListA)
-    })
+        var url = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedgerList';
 
-    function template(data) {
+        sendPost(url, jsons, clickSearchCallBack)
+    })
+    var tzArray = [];
+    function clickSearchCallBack(data) {
+        debugger
+        if (data.success == 'true') {
+            searchTemplate(data.data);
+            tzArray = [];
+            tzArray = tzArray.concat(data.data);
+        } else {
+            alert(data.msg)
+        }
+    }
+
+    function searchTemplate(data) {
+        debugger
         var res = {};
         res.data = data;
         var tmpl = doT.template($("#listCon1").text());
         $("#list1").html(tmpl(res));
+    }
+
+    function pageCallBack(data) {
+        debugger
+        if (data.success == 'true') {
+            appendTemplate(data.data);
+            tzArray = tzArray.concat(data.data);
+        } else {
+            alert(data.msg)
+        }
+    }
+
+    function appendTemplate(data) {
+        debugger
+        var res = {};
+        res.data = data;
+        var tmpl = doT.template($("#listCon1").text());
+        $("#list1").append(tmpl(res));
     }
 
     function dataInfo(data, id) {
@@ -228,51 +186,53 @@
         })
     }
 
+    function enterInfo(id) {
+        debugger
+        tzArray.forEach(function(value, index){
+            if(value.assetsCode == id) {
+                sessionStorage.setItem('tzDetailItem', JSON.stringify(value));
+                window.location.href="tzDetail.html";
+                return;
+            }
+        })
+
+    }
+
     $(".checkTop input").click(function () {
         $(".checkSear input").val('');
         $(this).parent().siblings(".tzRadioCheck").find('input').attr("checked", false);
     })
-
-    //扫描条形码功能    
-    $("#scanning").click(function () {
-        if (window.JsCallback) {
-            //安卓
-            window.JsCallback.onQR();
-        } else {
-            //IOS 
-            setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
-                    scanData(responseData);
-                })
-
-            })
+    var page = 0;
+    $(window).scroll(function () {
+        if (page == 0) {
+            return false;
         }
-    })
-    function rnSetQRResult(result) {
-        scanData(result);
-    }
-    function scanData(data) {
-        var scanData = JSON.parse(data);
-        var list = $("#list1 li");
-        var BARcode = '';
-        //barCode
-        if (scanData.QRCodeLPC == undefined) {
-            BARcode = scanData.barCode
-        } else {
-            BARcode = scanData.QRCodeLPC
-        }
-        if (list.length > 0) {
-            var res = list.filter(function (index) {
-                return $(this).attr("data-barcode") == BARcode;
-            })
-            if (res.length > 0) {
-                // alert("明细已扫描");
+        //已经滚动到上面的页面高度
+        var scrollTop = $(this).scrollTop();
+        //页面高度
+        var scrollHeight = $(document).height();
+        //浏览器窗口高度
+        var windowHeight = $(this).height();
+        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        if (scrollTop + windowHeight == scrollHeight) {
+            if ($("select[name='departCodeSelect']").val() == '') {
+                alert("所属单位为空");
                 return false;
             }
+            page = page + 1;
+            alert("加载第" + page + "页")
+            var jsons = {
+                departCode: userInfo.departcode,
+                assetsType: $('input:radio[class="radio"]:checked').val(),
+                userPerson: $("#userPerson").val(),
+                page: page,
+                pageSize: 20,
+            }
+            var url = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedgerList';
+
+            sendPost(url, jsons, pageCallBack)
         }
-        $("input[name=barCode]").val(BARcode);
-        $("#search").click();
-    }
+    });
 </script>
 
 </html>

@@ -4,74 +4,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>汇总查询</title>
-    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
-
+    <title>台账查询</title>
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/icon.css">
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/dialog.css">
+    <link href="../css/select2.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/lCalendar.css">
     <link rel="stylesheet" href="../css/index.css">
+
     <style>
         .cardList li {
             height: auto;
         }
     </style>
-
 </head>
 
 <body>
-
-    <div class="content destoryC formEntry">
-
-        <div class="tab-content">
-            <div class="cardList tab-pane active" id="tab1">
-                <div class="searchHeader imgBox" style="margin-top: 60px">
-
-                    <div class="clearfix">
-                        <label for="departName">哈哈</label>
-                        <select name="departName" id="departName">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a>
+        <p class="navCon">台账查询</p>
+    </nav>
+    <div class="content destoryC formEntry ">
+        <div class="cardList">
+            <div class="searchHeader borderTableBox">
+                <p class="clearfix">
+                    <div class="checkTop">
+                        <label class="tzRadioCheck ">
+                            <input type="radio" class='radio' checked />
+                            <span>固定资产</span>
+                        </label>
+                        <label class="tzRadioCheck ">
+                            <input type="radio" class='radio' />
+                            <span>无形资产</span>
+                        </label>
+                        <label class="tzRadioCheck ">
+                            <input type="radio" class='radio' />
+                            <span>投资性房地产</span>
+                        </label>
+                    </div>
+                    <p class="sel_p">
+                        <label for="departCode">所属单位</label>
+                        <select name="departCodeSelect" id="departCodeSelect">
+                            
                         </select>
-                        <div class="switch-bg">
-                            <div class="switch-block"></div>
+                       
+                    </p>
+
+
+                    <p>
+                        <label for="userPerson">保管人</label>
+                        <input type="text" id="userPerson" name="userPerson" placeholder="">
+                    </p>
+                </p>
+            </div>
+
+            <div class="tab-content">
+                <div class="cardList tab-pane active" id="tab1">
+
+                    <div class="searchRes DesSearchRes borderTableBox" id="baseInfo" style="width: 150%;">
+                            <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>第一列</th>
+                                            <th>第二列</th>
+                                            <th>第三列</th>
+                                            <th>第四列</th>
+                                            <th>第五列</th>
+                                            <th>第六列</th>
+                                            <th>第七列</th>
+                                            <th>第八列</th>
+                                            <th>第九列</th>
+                                            <th>第十列</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Bangalore</td>
+                                            <td>560001</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Mumbai</td>
+                                            <td>400003</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Pune</td>
+                                            <td>411027</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                    </div>
+                </div>
+                <div class="cardList tab-pane" id="tab2">
+                    <div class="searchRes DesSearchRes borderFBox" id="pdLogInfo">
+                        <p name="assetsCode">资产编码：
+                            <span></span>
+                        </p>
+                        <p name="assetsName">资产名称：
+                            <span></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cardList" id="">
+                <div class="searchRes DesSearchRes imgBox" id="pdLogInfo">
+                    <p>图片区</p>
+                    <div class="swiper-container" style="height: 700px;">
+                        <div id="zcpdImgsDiv" class="swiper-wrapper">
+                            <div class="swiper-slide">
+
+                            </div>
                         </div>
                     </div>
-
-
-                    <!-- 
-
-
-
-                                <p>
-                                        <label for="userPerson">保管人</label>
-                                        <input type="text" id="userPerson" name="userPerson" placeholder="">
-                                    </p>
-
-                                        所属单位
-                                    <div class="switch-bg">  
-                                            <div class="switch-block"></div>  
-                                        </div>  
-            
-            
-                                    <label for="userPerson">保管人</label>
-                                    <input type="text" id="userPerson" name="userPerson" placeholder="">
-                                </p> -->
-                    </p>
                 </div>
-                <bottom class=" bottomFixed BtnCurrent">
-                    <button id="submitBtn3" class="bottomBtn center sc">送审</button>
-                </bottom>
             </div>
-            <div class="cardList tab-pane destory_tab2" id="tab2">
-
-            </div>
-
         </div>
-
+        <bottom class="bottomFixed">
+            <!-- <div class="center clearfix">
+                <i id="submitBtn" class="iconfont icon-tijiao rightBtn"></i>
+            </div> -->
+            <div class="center clearfix" style="position: absolute;"> 
+                    <i id="searchBtn" > 搜索</i>
+                </div>
+        </bottom>
+    </div>
     </div>
 
     <div class="bomb">
@@ -90,6 +171,108 @@
 <script src="../js/hotcss.js"></script>
 <script src="../js/doT.js"></script>
 <script src="../js/fancySelect.js"></script>
+<script src="../js/select2.js"></script>
 <script src="../js/main.js"></script>
+<script type="template" id="listCon1">  
+        {{~it.data :value:index}}
+        <li class="clearfix" data-num1={{= value.originalValue}} data-num2={{= value.nowValue}} data-num3={{= value.addDepreciate}} data-num4={{= value.devalueValue}}   keyCode={{=value.keyCode}}  data-assetsCode={{=value.assetsCode}}  data-barCode={{=value.barCode}}  data-index={{=index}}  data-index={{=index}} onclick="enterInfo(this,'dataBox')">  
+            <p class="barCode" style='display:none;'>{{= value.barCode }}</p>
+            <span class="listInfo">
+                <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
+                <b>资产名称 ：<i>{{= value.assetsName}}</i></b>           
+            </span> 
+            <div class=" chose bottomBtn iconfont icon-tijiao" ></div>
+        </li>
+    {{~}}
+</script>
+<script>
+    var strIN="",strINList='';    
+    $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){  
+        // if(index==0){
+        //     $("#createDepartcode").val(this.departcode)
+        // }
+        strIN+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
+    })   
+    
+    $("#departCodeSelect").html(strIN);
+    $("#departCodeSelect").select2();
+    //搜索
+    $("#search").click(function () {
+        $('#scan1').show();
+        if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
+            return false;
+        }
+        var jsons = {
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode,
+            assetsCode: $("input[name='assetsCode']").val(),
+            barCode: $("input[name='barCode']").val(),
+        }
+        sendPost(getListUrl, jsons, ListA)
+    })
+
+    function template(data) {
+        var res = {};
+        res.data = data;
+        var tmpl = doT.template($("#listCon1").text());
+        $("#list1").html(tmpl(res));
+    }
+
+    function dataInfo(data, id) {
+        var list = $("#" + id + " p");
+        $.each(list, function () {
+            var target = $(this);
+            var key = target.attr("name");
+            var val = data[key];
+            target.find("span").text(val == "" || val == null ? "--" : val);
+        })
+    }
+
+    $(".checkTop input").click(function () {
+        $(".checkSear input").val('');
+        $(this).parent().siblings(".tzRadioCheck").find('input').attr("checked", false);
+    })
+
+    //扫描条形码功能    
+    $("#scanning").click(function () {
+        if (window.JsCallback) {
+            //安卓
+            window.JsCallback.onQR();
+        } else {
+            //IOS 
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+                    scanData(responseData);
+                })
+
+            })
+        }
+    })
+    function rnSetQRResult(result) {
+        scanData(result);
+    }
+    function scanData(data) {
+        var scanData = JSON.parse(data);
+        var list = $("#list1 li");
+        var BARcode = '';
+        //barCode
+        if (scanData.QRCodeLPC == undefined) {
+            BARcode = scanData.barCode
+        } else {
+            BARcode = scanData.QRCodeLPC
+        }
+        if (list.length > 0) {
+            var res = list.filter(function (index) {
+                return $(this).attr("data-barcode") == BARcode;
+            })
+            if (res.length > 0) {
+                // alert("明细已扫描");
+                return false;
+            }
+        }
+        $("input[name=barCode]").val(BARcode);
+        $("#search").click();
+    }
+</script>
 
 </html>

@@ -230,6 +230,8 @@
     //     str+="<option value="+this.departcode+">"+this.shortname+"</option>"
     // })
     // $("#departCodeSelect").html(str); 
+    var userInfo = $.cookie('userinfo');   
+    userInfo = JSON.parse(userInfo);  
 
     var strIN="",strINList='';    
     $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){  

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>台账明细</title>
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/icon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/index.css">
+
+    <style>
+        .cardList li {
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a>
+        <p class="navCon">台账明细</p>
+    </nav>
+    <div class="content destoryC formEntry ">
+        <div class="cardList">
+            <div>
+                <div class="borderTzDetailBox" id="baseInfo">
+                    <p name="assetsCode">资产编码:
+                        <span></span>
+                    </p>
+                    <p name="assetsName">资产名称:
+                        <span></span>
+                    </p>
+                    <p name="departName">所属单位:
+                        <span></span>
+                    </p>
+                    <p name="remark">备注:
+                        <span></span>
+                    </p>
+                    <p name="storePlace">存放地点:
+                        <span></span>
+                    </p>
+                    <p name="assetsStandard">规格型号:
+                        <span></span>
+                    </p>
+                    <p name="licenceNumber">车牌井号:
+                        <span></span>
+                    </p>
+                    <p name="makeFactory">制造厂家:
+                        <span></span>
+                    </p>
+                    <p name="departCode"> 所属单位编码:
+                        <span></span>
+                    </p>
+                    <p name="userPerson">保管人:
+                        <span></span>
+                    </p>
+                    <p name="barCode">编码:
+                        <span></span>
+                    </p>
+                    <p name="planNumber">出厂编号:
+                        <span></span>
+                    </p>
+                    <p name="originalValue">原值:
+                        <span></span>
+                    </p>
+                    <p name="nowValue">净值:
+                        <span></span>
+                    </p>
+                    <p name="addDepreciate">累计折旧:
+                        <span></span>
+                    </p>
+                    <p name="devalueValue">减值准备:
+                        <span></span>
+                    </p>
+                    <p name="usedState">使用状态编码:
+                        <span></span>
+                    </p>
+                    <p name="usedStateName">使用状态:
+                        <span></span>
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="cardList" id="tab2">
+                <ul id="list1">
+                </ul>
+            </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    <div class="layBoxscan scan1">
+        <span class='center'>加载中...</span>
+    </div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/main.js"></script>
+
+<script>
+    function dataInfo(data, id) {
+        var list = $("#" + id + " p");
+        $.each(list, function () {
+            var target = $(this);
+            var key = target.attr("name");
+            var val = data[key];
+            target.find("span").text(val == "" || val == null ? "--" : val);
+        })
+    }
+    dataInfo(JSON.parse(sessionStorage.getItem('tzDetailItem')), "baseInfo");
+</script>
+
+</html>

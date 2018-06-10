@@ -1210,6 +1210,13 @@ div.hide{display: none;}
     width: 30%; 
     margin-left: 10%
 }
+.borderTzDetailBox{   
+    border: rem(2) solid #aaa;
+   overflow-y: auto;
+} 
+.borderTzDetailBox p{padding:0 rem(20);margin: 0!important;
+    line-height: 2;}
+.borderTzDetailBox p:nth-of-type(even){background:#efefef; }
 
 
 
