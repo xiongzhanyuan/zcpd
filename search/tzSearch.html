@@ -101,14 +101,15 @@
         <li class="clearfix" id={{= value.assetsCode }} onclick="enterInfo(this.id)">  
 
                 {{? value.remark==null}}
-                <img src="http://lhsm.weiapp.pw:3575/AssetsDataPhone/media/default.png" style="width: 10%" />
+                <img src="http://lhsm.weiapp.pw:3575/AssetsDataPhone/media/default.png" style="width: 25%" />
                 {{??}}
-                <img src={{="http://lhsm.weiapp.pw:3575/AssetsDataPhone"+value.remark}} style="width: 10%" />
+                <img src={{="http://lhsm.weiapp.pw:3575/AssetsDataPhone"+value.remark}} style="width: 25%" />
                 {{?}}
-            <span class="listInfo">
+            <span class="zcList">
                 <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
                 <b>资产名称 ：<i>{{= value.assetsName}}</i></b>    
-                <b>保管人 ：<i>{{= value.userPerson}}</i></b>           
+                <b>保管人 ：<i>{{= value.userPerson}}</i></b>  
+                <b>所属单位 ：<i>{{= value.departName}}</i></b>           
             </span> 
         </li>
     {{~}}
@@ -145,7 +146,7 @@
             return false;
         }
         var jsons = {
-            departCode: userInfo.departcode,
+            departCode: $("select[name='departCodeSelect']").val(),
             assetsType: $('input:radio[class="radio"]:checked').val(),
             userPerson: $("#userPerson").val(),
             page: 1,

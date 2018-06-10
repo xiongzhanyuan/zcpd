@@ -1231,7 +1231,20 @@ div.hide{display: none;}
     line-height: 2;}
 .borderTzDetailBox p:nth-of-type(even){background:#efefef; }
 
-
+.cardList li .zcList {
+    margin-left: 0.53333rem;
+    display: inline-block;
+    vertical-align: middle;
+    width: 60%
+  }
+  
+  .cardList li .zcList b {
+    font-size: 0.64rem;
+    line-height: 0.85333rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
 
 
