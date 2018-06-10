@@ -963,6 +963,22 @@ form.loginform div.fancy-select {
   font-size: 0.85333rem;
 }
 
+#zcSanning {
+  display: inline-block;
+  color: #fff;
+  padding: 0.42667rem 1.06667rem;
+  vertical-align: middle;
+  color: #0091d2;
+  font-size: 0.85333rem;
+}
+
+#zcSanning.checkSearch {
+  display: inline-block;
+  padding: 0;
+  margin-left: 0.42667rem;
+  font-size: 1.92rem;
+}
+
 .indexBox, #loading {
   position: absolute;
   top: 0;
@@ -1309,6 +1325,10 @@ div.fancy-select ul.options li {
 
 .checkSear input {
   width: 12.16rem;
+}
+
+.zcCheckSear {
+  display: inline-block;
 }
 
 #discardMark {

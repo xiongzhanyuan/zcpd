@@ -1,122 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>资产查询</title> 
-	<link rel="stylesheet" href="../css/iconfont.css">
-	<link rel="stylesheet" href="../css/icon.css">
-	<link rel="stylesheet" href="../css/bootstrap.css">   
-    <link rel="stylesheet" href="../css/dialog.css">  
-    <link href="../css/select2.css" rel="stylesheet" /> 
-    <link rel="stylesheet" href="../css/lCalendar.css">   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>资产查询</title>
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/icon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link href="../css/select2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/lCalendar.css">
     <link rel="stylesheet" href="../css/index.css">
 
     <style>
-    .cardList li{height:auto;}
+        .cardList li {
+            height: auto;
+        }
     </style>
 </head>
-<body>
-	<nav>
-		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
-		<p class="navCon">资产查询</p>
-	</nav>
-	<div class="content destoryC formEntry ">
-            <div class="cardList">
-                <div class="searchHeader"> 
-                    <p class="clearfix">
-                       <div class="checkTop">
-                            <label class="checkB "><input type="radio" data-name='barCode' class='radio' checked /><span>资产条码:</span></label>
-                            <label class="checkB "><input type="radio"  data-name='assetsCode'  class='radio' /><span>资产编码:</span></label>
-                       </div>
-                       <div class='checkSear'>
-                            <input class="check1" type="text" placeholder="条形码 " name='barCode' required=""> 
-                            <input class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required=""> 
-                       </div>
-                        <i   id="search" class="checkSearch iconfont icon-chaxunxiazai"></i> 
-                    </p>
-                </div>
 
-                <!-- <ul id="list1">
+<body>
+    <nav>
+        <a class="back centery" href="javascript:history.go(-1)">返回</a>
+        <p class="navCon">资产查询</p>
+    </nav>
+    <div class="content destoryC formEntry ">
+        <div class="cardList">
+            <div class="searchHeader">
+                <p class="clearfix">
+                    <div class="checkTop">
+                        <label class="checkB ">
+                            <input type="radio" data-name='barCode' class='radio' id="barCodeRadio" checked />
+                            <span>资产条码:</span>
+                        </label>
+                        <label class="checkB ">
+                            <input type="radio" data-name='assetsCode' id="assetsCodeRadio" class='radio' />
+                            <span>资产编码:</span>
+                        </label>
+                    </div>
+                    <div class='zcCheckSear'>
+                        <input class="check1" type="text" placeholder="条形码 " name='barCode' required="">
+                        <input class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required="">
+                    </div>
+                    <i id="zcSanning" class="checkSearch iconfont icon-icon-"></i>
+
+                    <i id="search" class="checkSearch iconfont icon-chaxunxiazai" style="margin-left: 2rem"></i>
+
+                </p>
+            </div>
+
+            <!-- <ul id="list1">
 
                 </ul> -->
 
-                
 
-                <ul class="nav nav-tabs tabs-two" id="myTab">
-                    <li class="active"  hid="tab1"><a href="javascript:;">基本信息</a></li>
-                    <li hid="tab2"><a href="javascript:;" >盘点记录</a></li> 
-                </ul>
-                <div class="tab-content">
-                    <div class="cardList tab-pane active" id="tab1">
 
-                        <div class="searchRes DesSearchRes borderFBox" id="baseInfo">  
-                            <p name="assetsCode">资产编码:<span></span></p>   
-                            <p name="assetsName">资产名称:<span></span></p>
-                            <p name="departName">所属单位:<span></span></p> 
-                            <p name="remark">备注:<span></span></p> 
-                            <p name="storePlace">存放地点:<span></span></p>
-                            <p name="assetsStandard">规格型号:<span></span></p>  
-                            <p name="licenceNumber">车牌井号:<span></span></p>       
-                            <p name="makeFactory">制造厂家:<span></span></p>    
-                            <p name="departCode"> 所属单位编码:<span></span></p>    
-                            <p name="userPerson">保管人:<span></span></p>
-                            <p name="barCode">编码:<span></span></p> 
-                            <p name="planNumber">出厂编号:<span></span></p>  
-                            <p name="originalValue">原值:<span></span></p>  
-                            <p name="nowValue">净值:<span></span></p>  
-                            <p name="addDepreciate">累计折旧:<span></span></p>  
-                            <p name="devalueValue">减值准备:<span></span></p>  
-                            <p name="usedState">使用状态编码:<span></span></p>    
-                            <p name="usedStateName">使用状态:<span></span></p>     
-                        </div>
+            <ul class="nav nav-tabs tabs-two" id="myTab">
+                <li class="active" hid="tab1">
+                    <a href="javascript:;">基本信息</a>
+                </li>
+                <li hid="tab2">
+                    <a href="javascript:;">盘点记录</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="cardList tab-pane active" id="tab1">
+
+                    <div class="borderTzDetailBox" id="baseInfo">
+                        <p name="assetsCode">资产编码:
+                            <span></span>
+                        </p>
+                        <p name="assetsName">资产名称:
+                            <span></span>
+                        </p>
+                        <p name="departName">所属单位:
+                            <span></span>
+                        </p>
+                        <p name="remark">备注:
+                            <span></span>
+                        </p>
+                        <p name="storePlace">存放地点:
+                            <span></span>
+                        </p>
+                        <p name="assetsStandard">规格型号:
+                            <span></span>
+                        </p>
+                        <p name="licenceNumber">车牌井号:
+                            <span></span>
+                        </p>
+                        <p name="makeFactory">制造厂家:
+                            <span></span>
+                        </p>
+                        <p name="departCode"> 所属单位编码:
+                            <span></span>
+                        </p>
+                        <p name="userPerson">保管人:
+                            <span></span>
+                        </p>
+                        <p name="barCode">编码:
+                            <span></span>
+                        </p>
+                        <p name="planNumber">出厂编号:
+                            <span></span>
+                        </p>
+                        <p name="originalValue">原值:
+                            <span></span>
+                        </p>
+                        <p name="nowValue">净值:
+                            <span></span>
+                        </p>
+                        <p name="addDepreciate">累计折旧:
+                            <span></span>
+                        </p>
+                        <p name="devalueValue">减值准备:
+                            <span></span>
+                        </p>
+                        <p name="usedState">使用状态编码:
+                            <span></span>
+                        </p>
+                        <p name="usedStateName">使用状态:
+                            <span></span>
+                        </p>
                     </div>
-                    <div class="cardList tab-pane" id="tab2">
-                            <div class="searchRes DesSearchRes borderFBox">  
-                                <ul id="list1">
-                    
-                                </ul>
-                                </div>
-                            </div>
-                    </div>
-
                     <div class="cardList" id="">
-                            <div class="searchRes DesSearchRes imgBox" id="pdLogInfo">  
-                                    <p>图片区</p>
-                            <div class="swiper-container" style="height: 700px;">
-                                <div id = "zcpdImgsDiv" class="swiper-wrapper">
+                        <div class="searchRes DesSearchRes imgBox" id="pdLogInfo">
+                            <p>图片区</p>
+                            <div class="swiper-container" style="">
+                                <div id="imgsDiv" class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                            
-                                    </div>                                    
+
+                                    </div>
                                 </div>
                             </div>
-                                </div>
-                            </div>
-                    </div>
-                    <bottom class="bottomFixed">
-                        <div class="center clearfix"> 
-                            <i id="submitBtn" class="iconfont icon-tijiao rightBtn"></i>
                         </div>
-                    </bottom>
-            </div> 
-	</div>
-   
-     <div class="bomb">
-         <div class="bombCon">
-            
-         </div>
-     </div> 
-	<div class="layBoxscan scan1"><span class='center'>加载中...</span></div>
+                    </div>
+                </div>
+                <div class="cardList tab-pane" id="tab2">
+                    <div class="searchRes DesSearchRes borderFBox">
+                        <ul id="list1">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- <bottom class="bottomFixed">
+            <div class="center clearfix">
+                <i id="submitBtn" class="iconfont icon-tijiao rightBtn"></i>
+            </div>
+        </bottom> -->
+    </div>
+    </div>
+
+    <div class="bomb">
+        <div class="bombCon">
+
+        </div>
+    </div>
+    <div class="layBoxscan scan1">
+        <span class='center'>加载中...</span>
+    </div>
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/dialog.js"></script>
-<script src="../js/cookie.js"></script> 
-<script src="../js/lCalendar.js"></script> 
+<script src="../js/cookie.js"></script>
+<script src="../js/lCalendar.js"></script>
 <script src="../js/hotcss.js"></script>
-<script src="../js/doT.js"></script>    
-<script src="../js/fancySelect.js"></script> 
+<script src="../js/doT.js"></script>
+<script src="../js/fancySelect.js"></script>
 <script src="../js/select2.js"></script>
-<script src="../js/main.js"></script>   
+<script src="../js/main.js"></script>
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
         <li class="clearfix">  
@@ -136,40 +192,50 @@
             </span> 
         </li>
     {{~}}
-</script> 
+</script>
 <script>
     //搜索
-    $("#search").click(function(){ 
+    $("#search").click(function () {
         debugger
         $('#scan1').show();
-        if($("input[name='assetsCode']").val().trim()==''&&$("input[name='barCode']").val().trim()==''){
+        if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
             return false;
         }
-        var jsons={
+        var jsons = {
             // userCode: userInfo.usercode,
             // departCode: userInfo.departcode,
-            assetsCode:$("input[name='assetsCode']").val(),
-            barCode:$("input[name='barCode']").val(),
-        } 
-        var getListUrl = getURL()+'/AssetsDataPhone/mobile/cellPhoneController.do?queryLedger';
+            assetsCode: $("input[name='assetsCode']").val(),
+            barCode: $("input[name='barCode']").val(),
+        }
+        var getListUrl = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedger';
 
-        sendPost(getListUrl,jsons,ListA)
+        sendPost(getListUrl, jsons, ListA)
     })
-    function ListA(data){   
-        if(data.success=='true'){  
+    function ListA(data) {
+        if (data.success == 'true') {
             // listAarray.push(data.data); 
             // var reslistAarray = listAarray.unique('barCode');
             // sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
+            if(data.data.length==0) {
+                alert("未查询到结果");
+                return false;
+            }
             dataInfo(data.data, "baseInfo");
 
             template(data.listRecord);
 
+
+            if (data.data[0].remark) {
+                var imgUrl = getURL() + "/AssetsDataPhone" + data.data[0].remark;
+                $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + imgUrl + "\"/>" + "</div>");
+			}
+
             // dataInfo(data.data, "pdLogInfo");
-        }else{
+        } else {
             alert(data.msg)
         }
-    } 
-    
+    }
+
     function template(data) {
         debugger
         var res = {};
@@ -177,65 +243,55 @@
         var tmpl = doT.template($("#listCon1").text());
         $("#list1").html(tmpl(res));
     }
-      
-    function dataInfo(data,id){ 
-        var list =$("#"+id+" p"); 
-        $.each(list,function(){ 
+
+    function dataInfo(data, id) {
+        var list = $("#" + id + " p");
+        $.each(list, function () {
             var target = $(this);
             var key = target.attr("name");
-            var val = data[0][key];            
-            target.find("span").text(val==""||val==null?"--":val);
+            var val = data[0][key];
+            target.find("span").text(val == "" || val == null ? "--" : val);
         })
-    } 
+    }
 
-    $(".checkTop input").click(function(){ 
+    $(".checkTop input").click(function () {
         $(".checkSear input").val('');
-        $(this).parent().siblings(".checkB").find('input').attr("checked",false);
-       var name =$(this).attr("data-name"); 
-       $('.checkSear input').hide(); 
-       $('.checkSear input[name='+name+']').show(); 
-    })  
-    
-//扫描条形码功能    
-$("#scanning").click(function () { 
-    if (window.JsCallback) {
-        //安卓
-        window.JsCallback.onQR();
-    } else {
-        //IOS 
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
-                scanData(responseData);
-            })
+        $(this).parent().siblings(".checkB").find('input').attr("checked", false);
+        var name = $(this).attr("data-name");
+        $('.checkSear input').hide();
+        $('.checkSear input[name=' + name + ']').show();
+    })
 
-        })
+    //扫描条形码功能    
+    $("#zcSanning").click(function () {
+        if (window.JsCallback) {
+            //安卓
+            window.JsCallback.onQR();
+        } else {
+            //IOS 
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('scanQR_AI', function responseCallback(responseData) {
+                    scanData(responseData);
+                })
+
+            })
+        }
+    })
+    function rnSetQRResult(result) {
+        scanData(result);
     }
-})
-function rnSetQRResult(result) {
-    scanData(result);
-}
-function scanData(data) {
-    var scanData = JSON.parse(data);  
-    var list =$("#list1 li");
-    var BARcode='';
-    //barCode
-    if(scanData.QRCodeLPC==undefined){
-        BARcode=scanData.barCode
-    }else{
-        BARcode=scanData.QRCodeLPC
-    }
-    if(list.length>0){
-        var res = list.filter(function(index) {
-                return  $(this).attr("data-barcode")==BARcode;
-            })  
-        if(res.length>0){
-           // alert("明细已扫描");
-            return false;
+    function scanData(data) {
+        debugger
+        var scanData = JSON.parse(data);
+
+        if (scanData.QRCodeLPC) {
+            if ($("#barCodeRadio").attr("checked")) {
+                $("input[name=barCode]").val(scanData.QRCodeLPC);
+            } else {
+                $("input[name=assetsCode]").val(scanData.QRCodeLPC);
+            }
         }
     }
-    $("input[name=barCode]").val(BARcode);
-     $("#search").click(); 
-}
 </script>
-</html>
 
+</html>

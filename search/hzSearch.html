@@ -93,16 +93,15 @@
                 <div class="searchHeader imgBox groupBy" style="margin-top: 60px; height: 800px;">
 
                     <div class="clearfix">
-                        <label for="departName" style="display:inline-block; font-size: 0.64rem">所属单位</label>
-                            <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
+                        <label for="groupSsdw" style="display:inline-block; font-size: 0.64rem">所属单位</label>
+                            <div id="switchSsdw" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
                                 <div class="switch-block"></div>    
                             </div>
                         
-                        <select name="group1" style="display:inline-block; width: 30%; margin-left: 10%" id="group1">
-                            <option value="">三级分组</option>
-                            <option value="">四级分组</option>
-                            <option value="">五级分组</option>
-                            <option value="">六级分组</option>
+                        <select name="groupSsdw" style="display:inline-block; width: 30%; margin-left: 10%" id="groupSsdw">
+                            <option value="5">一级分组</option>
+                            <option value="9">二级分组</option>
+                            <option value="13">三级分组</option>
                         </select>
 
 
@@ -111,7 +110,7 @@
                     <div class="clearfix">
                         <label for="groupZclb" style="display:inline-block; font-size: 0.64rem">资产类别</label>
 
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
+                        <div id="switchZclb" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
                             <div class="switch-block"></div>
                         </div>
                         <select name="groupZclb" style="display:inline-block; width: 30%; margin-left: 10%" id="groupZclb">
@@ -122,28 +121,28 @@
                     <div class="clearfix">
                         <label for="groupJszk" style="display:inline-block; font-size: 0.64rem">技术状况</label>
 
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
+                        <div id="switchJszk" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%">
                             <div class="switch-block"></div>
                         </div>
                     </div>
                     <div class="clearfix">
                         <label for="groupSyzt" style="display:inline-block; font-size: 0.64rem;">使用状态</label>
 
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
+                        <div id="switchSyzt" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
                             <div class="switch-block"></div>
                         </div>
                     </div>
                     <div class="clearfix">
                         <label for="groupZjyy" style="display:inline-block; font-size: 0.64rem;">增加原因</label>
 
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
+                        <div id="switchZjyy" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;margin-top:23px">
                             <div class="switch-block"></div>
                         </div>
                     </div>
                     <div class="clearfix">
                         <label for="groupZjqd" style="display:inline-block; font-size: 0.64rem;">资金渠道</label>
 
-                        <div class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%; margin-top:23px">
+                        <div id="switchZjqd" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%; margin-top:23px">
                             <div class="switch-block"></div>
                         </div>
                     </div>
@@ -194,7 +193,7 @@
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
         <li class="clearfix listli" data-index={{=index}} >  
-            <p class="barCode">分组维度：{{= value.zclbmc }}</p>
+            <p class="barCode">{{= value.zclbmc }}</p>
             <span class="listInfo">
                 <b><i>原值 ：{{= value.yz }}</i>  <i style="float:right">净值 ：{{= value.jz}}</i></b>
                 <b><i>累计折旧 ：{{= value.ljzj }}</i>  <i style="float:right">减值准备 ：{{= value.jzzb}}</i></b>
@@ -305,11 +304,38 @@
     //搜索
     $("#hzSearchBtn").click(function () {
         debugger
+        var groupSsdw;
+        var groupZclb;
+        var groupJszk;
+        var groupSyzt;
+        var groupZjyy;
+        var groupZjqd;
+        
+        if($("#switchSsdw").hasClass("turn-on")) {
+            groupSsdw = $("#groupSsdw").val();
+        } else if ($("#switchZclb").hasClass("turn-on")) {
+            groupZclb = $("#groupZclb").val();
+        } else if ($("#switchJszk").hasClass("turn-on")) {
+            groupJszk = 1;
+        } else if ($("#switchSyzt").hasClass("turn-on")) {
+            groupSyzt = 1;
+        } else if ($("#switchZjyy").hasClass("turn-on")) {
+            groupZjyy = 1;
+        } else if ($("#switchZjqd").hasClass("turn-on")) {
+            groupZjqd = 1;
+        }
+        
+
         var jsons = {
             assetsType: $('input[class="radio"]:checked ').val(),
-            // departCode: $("#departCodeSelect").val(),
-            departCode: 14400,
-            groupZclb: 2
+            departCode: $("#departCodeSelect").val(),
+            // departCode: 14400,
+            groupDepart: groupSsdw,
+            groupZclb: groupZclb,
+            groupJszk: groupJszk,
+            groupSyzt: groupSyzt,
+            groupZjyy: groupZjyy,
+            groupZjqd: groupZjqd
         }
         debugger
         var url = getURL() + '/AssetsDataPhone/mobile/summaryController.do?querySummary';

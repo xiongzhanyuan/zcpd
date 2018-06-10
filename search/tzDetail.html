@@ -85,9 +85,17 @@
             </div>
 
 
-            <div class="cardList" id="tab2">
-                <ul id="list1">
-                </ul>
+            <div class="cardList" id="">
+                <div class="searchRes DesSearchRes imgBox" id="pdLogInfo">
+                    <p>图片区</p>
+                    <div class="swiper-container" style="">
+                        <div id="imgsDiv" class="swiper-wrapper">
+                            <div class="swiper-slide">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -115,7 +123,12 @@
             target.find("span").text(val == "" || val == null ? "--" : val);
         })
     }
-    dataInfo(JSON.parse(sessionStorage.getItem('tzDetailItem')), "baseInfo");
+    var tzDetailItem = JSON.parse(sessionStorage.getItem('tzDetailItem'));
+    dataInfo(tzDetailItem, "baseInfo");
+    if (tzDetailItem.remark) {
+        var imgUrl = getURL() + "/AssetsDataPhone" + tzDetailItem.remark;
+        $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + imgUrl + "\"/>" + "</div>");
+    }
 </script>
 
 </html>
