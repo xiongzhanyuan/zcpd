@@ -437,7 +437,7 @@
 					<input type="text" id="managerDepart" name="managerDepart">
 				</p> 
 				<p>
-					<label for="assetsCode">资产条码:</label>
+					<label for="assetsCode">资产编码:</label>
 					<input type="text"   name="assetsCode">
 				</p>
 				<p>
@@ -1200,8 +1200,13 @@ var pany=0;
 				for (var item in scanData) {
 					if (item == nameData) {  //item 表示Json串中的属性，如'name'  
 						jValue = scanData[item];//key所对应的value  
-						that.val(jValue == "" ? "" : jValue);
-						return;
+						if(nameData == "assetsStatus" && jValue=="") {
+						} else if(nameData == "realcodeStatus" && (jValue=="" || jValue==null || !jValue)) {
+							$('#realcodeStatus').val("0");  
+						} else {
+							that.val(jValue == "" ? "" : jValue);
+							return;
+						}
 					}
 				}
 

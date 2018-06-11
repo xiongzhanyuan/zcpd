@@ -125,8 +125,8 @@
     }
     var tzDetailItem = JSON.parse(sessionStorage.getItem('tzDetailItem'));
     dataInfo(tzDetailItem, "baseInfo");
-    if (tzDetailItem.remark) {
-        var imgUrl = getURL() + "/AssetsDataPhone" + tzDetailItem.remark;
+    if (tzDetailItem.imguUrl) {
+        var imgUrl = getURL() + "/AssetsDataPhone" + tzDetailItem.imguUrl;
         $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + imgUrl + "\"/>" + "</div>");
     }
 </script>

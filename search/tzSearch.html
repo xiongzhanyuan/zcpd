@@ -56,10 +56,16 @@
                         <label for="userPerson">保管人</label>
                         <input type="text" id="userPerson" name="userPerson" placeholder="">
                     </p>
+
+
                 </p>
             </div>
 
-
+            <div class="cardList">
+                <ul>
+                    <li id="totalCount"></li>
+                </ul>
+            </div>
             <div class="cardList" id="tab2">
                 <ul id="list1">
                 </ul>
@@ -99,12 +105,7 @@
 <script type="template" id="listCon1">  
         {{~it.data :value:index}}
         <li class="clearfix" id={{= value.assetsCode }} onclick="enterInfo(this.id)">  
-
-                {{? value.remark==null}}
-                <img src="http://lhsm.weiapp.pw:3575/AssetsDataPhone/media/default.png" style="width: 25%" />
-                {{??}}
-                <img src={{="http://lhsm.weiapp.pw:3575/AssetsDataPhone"+value.remark}} style="width: 25%" />
-                {{?}}
+            <img src={{= value.fullImgUrl}} style="width: 25%" />
             <span class="zcList">
                 <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
                 <b>资产名称 ：<i>{{= value.assetsName}}</i></b>  
@@ -167,6 +168,8 @@
             searchTemplate(data.data);
             tzArray = [];
             tzArray = tzArray.concat(data.data);
+            $("#totalCount").html("");
+            $("#totalCount").html("总条数：" + data.count)
         } else {
             alert(data.msg)
         }
@@ -174,6 +177,15 @@
 
     function searchTemplate(data) {
         debugger
+
+        $.each(data, function (index, i) {
+            if (this.imguUrl == null || this.imguUrl == "") {
+                this.fullImgUrl = "../images/default.png";
+            } else {
+                this.fullImgUrl = getURL() + "/AssetsDataPhone" + this.imguUrl;
+            }
+
+        })
         var res = {};
         res.data = data;
         var tmpl = doT.template($("#listCon1").text());
@@ -192,6 +204,15 @@
 
     function appendTemplate(data) {
         debugger
+        $.each(data, function (index, i) {
+            if (this.imguUrl == null || this.imguUrl == "") {
+                this.fullImgUrl = "../images/default.png";
+            } else {
+                this.fullImgUrl = getURL() + "/AssetsDataPhone" + this.imguUrl;
+            }
+
+        })
+
         var res = {};
         res.data = data;
         var tmpl = doT.template($("#listCon1").text());

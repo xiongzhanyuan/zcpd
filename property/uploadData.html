@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>盘点数据上传</title>
-	<link rel="stylesheet" href="../css/iconfont.css">
-	<link rel="stylesheet" href="../css/icon.css">
-	<link rel="stylesheet" href="../css/bootstrap.css">
-	<link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/icon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/dialog.css">
     <link rel="stylesheet" href="../css/index.css">
-    <style> 
+    <style>
     </style>
 </head>
 
@@ -24,17 +24,17 @@
         </ul>
     </div>
     <bottom class="bottomFixed">
-        <div class="center clearfix"> 
+        <div class="center clearfix">
             <i id="submitBtn" class="iconfont icon-tijiao rightBtn"></i>
         </div>
     </bottom>
 </body>
 <script src="../js/jquery.min.js"></script>
-<script src="../js/dialog.js"></script> 
-<script src="../js/cookie.js"></script> 
+<script src="../js/dialog.js"></script>
+<script src="../js/cookie.js"></script>
 <script src="../js/hotcss.js"></script>
 <script src="../js/doT.js"></script>
-<script src="../js/main.js"></script> 
+<script src="../js/main.js"></script>
 <script type="template" id="dwtTmpl">  
     {{~it.data :value:index}}
             <li class="clearfix">  
@@ -42,17 +42,24 @@
                     <img class="center" src="../images/static.png" alt=""> 
                 </span>  
                 <span class="listInfo"> 
-                    <b>资产编号 ：<i class="barCode">{{= value.barCode }}</i></b>
+                    <b>资产条码 ：<i class="barCode">{{= value.barCode }}</i></b>
+                    <b>资产编码 ：<i class="assetsCode">{{= value.assetsCode }}</i></b>
                     <b>资产名称 ：<i>{{= value.assetsName}}</i></b>
+                    <b>盘点单位 ：<i>{{= value.managerDepartName}}</i></b>
+                    {{? value.userPerson==null}}
+                    <b>保管人 ：<i>--</i></b>  
+                    {{??}}
+                    <b>保管人 ：<i>{{= value.userPerson}}</i></b>  
+                    {{?}}
                 </span> 
             </li>
     {{~}}
 </script>
 <script>  
     var departList = $.cookie('departList');
-    var userInfo = $.cookie('userinfo');   
+    var userInfo = $.cookie('userinfo');
     departList = JSON.parse(departList)[0];
-    userInfo = JSON.parse(userInfo);  
+    userInfo = JSON.parse(userInfo);
     if (window.JsCallback) {
         callbackRes(window.JsCallback.onGetStashedDeviceInfoList());
     } else {
@@ -62,15 +69,15 @@
     }
     var newDate = [];
     function callbackRes(result) {
-      
-        if (result == null || !result) {            
-            alert("暂无数据");   
+
+        if (result == null || !result) {
+            alert("暂无数据");
             return;
         }
         var sendData = JSON.parse(result);
         newDate = [];
         for (i = 0; i < sendData.length; i++) {
-            var data = JSON.parse(sendData[i]); 
+            var data = JSON.parse(sendData[i]);
             newDate.push(data);
         }
         var res = {
@@ -78,50 +85,50 @@
         }
         var tmpl = doT.template($("#dwtTmpl").text());
         $("#TobeArray").html(tmpl(res));
-        $("#submitBtn").click(function () { 
+        $("#submitBtn").click(function () {
 
-            if (window.JsCallback) {   
-             saveData(newDate,JSON.parse(sendData[0]).keyCode);
-            }else{ 
-                var a = window.confirm("数据上传为覆盖上传模式，是否确认上传"); 
-                if(!a){
+            if (window.JsCallback) {
+                saveData(newDate, JSON.parse(sendData[0]).keyCode);
+            } else {
+                var a = window.confirm("数据上传为覆盖上传模式，是否确认上传");
+                if (!a) {
                     return false;
-                }else{ 
-                    if(newDate.length > 0) {
-                        saveData(newDate[0],JSON.parse(sendData[0]).keyCode);
-                        newDate.splice(0,1);
+                } else {
+                    if (newDate.length > 0) {
+                        saveData(newDate[0], JSON.parse(sendData[0]).keyCode);
+                        newDate.splice(0, 1);
                     }
                 }
             }
         })
     }
 
-    function saveData(data,keycode) {  
-        var time =new Date().Format('yyyy-MM-dd').replaceAll("-",''), 
-        time2 = localStorage.getItem("stopDate");
-        if(Number(time)>Number(time2)){
+    function saveData(data, keycode) {
+        var time = new Date().Format('yyyy-MM-dd').replaceAll("-", ''),
+            time2 = localStorage.getItem("stopDate");
+        if (Number(time) > Number(time2)) {
             alert("当前盘点已结束，禁止上传盘点");
             return false;
         }
         var uploadType = 0;
         var uploadFile = "";
-        if(data.zcpdImgs.length > 0) {
+        if (data.zcpdImgs.length > 0) {
             uploadType = 2;
             uploadFile = data.zcpdImgs[0];
         }
-        var uploadUrl = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?uploadcheckplan" 
+        var uploadUrl = getURL() + "/AssetsDataPhone/mobile/cellPhoneController.do?uploadcheckplan"
         var jsonData = [];
         jsonData.push(data);
-        var json = { 
+        var json = {
             userCode: userInfo.usercode,
             uploadType: uploadType,
-            uploadFile: uploadFile, 
-            data:JSON.stringify(jsonData)
+            uploadFile: uploadFile,
+            data: JSON.stringify(jsonData)
         }
         sendPostUpload(uploadUrl, json, callbackA);
     }
 
-    function callbackA(data) { 
+    function callbackA(data) {
         var status = false;
         if (data.success == "true") {
             status = true;
@@ -137,12 +144,12 @@
                     bridge.callHandler('onUnStashDeviceList', data.barCode, callbackUploadResult)
                 });
             }
-        }else{
-            alert(data.msg);   
+        } else {
+            alert(data.msg);
         }
-        if(newDate.length > 0) {
-            saveData(newDate[0],"");
-            newDate.splice(0,1);
+        if (newDate.length > 0) {
+            saveData(newDate[0], "");
+            newDate.splice(0, 1);
         } else {
             history.go(0);
         }

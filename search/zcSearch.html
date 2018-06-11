@@ -31,17 +31,17 @@
                 <p class="clearfix">
                     <div class="checkTop">
                         <label class="checkB ">
-                            <input type="radio" data-name='barCode' class='radio' id="barCodeRadio" checked />
+                            <input type="radio" data-name='barCode' name="radioname" class='radio' id="barCodeRadio" checked="checked" value="条码" />
                             <span>资产条码:</span>
                         </label>
                         <label class="checkB ">
-                            <input type="radio" data-name='assetsCode' id="assetsCodeRadio" class='radio' />
+                            <input type="radio" data-name='assetsCode' name="radioname" id="assetsCodeRadio" class='radio' value="编码" />
                             <span>资产编码:</span>
                         </label>
                     </div>
                     <div class='zcCheckSear'>
-                        <input class="check1" type="text" placeholder="条形码 " name='barCode' required="">
-                        <input class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required="">
+                        <input id="barCodeInput" class="check1" type="text" placeholder="条形码 " name='barCode' required="">
+                        <input id="assetsCodeInput" class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required="">
                     </div>
                     <i id="zcSanning" class="checkSearch iconfont icon-icon-"></i>
 
@@ -194,6 +194,8 @@
     {{~}}
 </script>
 <script>
+    var userInfo = $.cookie('userinfo');
+    userInfo = JSON.parse(userInfo);
     //搜索
     $("#search").click(function () {
         debugger
@@ -201,11 +203,18 @@
         if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
             return false;
         }
+        var assetsCode;
+        var barCode;
+        if ($("#barCodeInput").is(":visible") == true) {
+            barCode = $("input[name='barCode']").val();
+        } else {
+            assetsCode = $("input[name='assetsCode']").val();
+        }
         var jsons = {
             // userCode: userInfo.usercode,
-            // departCode: userInfo.departcode,
-            assetsCode: $("input[name='assetsCode']").val(),
-            barCode: $("input[name='barCode']").val(),
+            departCode: userInfo.departcode,
+            assetsCode: assetsCode,
+            barCode: barCode,
         }
         var getListUrl = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedger';
 
@@ -225,8 +234,8 @@
             template(data.listRecord);
 
 
-            if (data.data[0].remark) {
-                var imgUrl = getURL() + "/AssetsDataPhone" + data.data[0].remark;
+            if (data.data[0].imguUrl) {
+                var imgUrl = getURL() + "/AssetsDataPhone" + data.data[0].imguUrl;
                 $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + imgUrl + "\"/>" + "</div>");
 			}
 
@@ -255,11 +264,13 @@
     }
 
     $(".checkTop input").click(function () {
-        $(".checkSear input").val('');
-        $(this).parent().siblings(".checkB").find('input').attr("checked", false);
+        // debugger
+        // $(".zcCheckSear input").val('');
+        // // $(this).parent().siblings(".checkB").find('input').attr("checked", false);
+        // $(this).checked=true;
         var name = $(this).attr("data-name");
-        $('.checkSear input').hide();
-        $('.checkSear input[name=' + name + ']').show();
+        $('.zcCheckSear input').hide();
+        $('.zcCheckSear input[name=' + name + ']').show();
     })
 
     //扫描条形码功能    
@@ -285,7 +296,7 @@
         var scanData = JSON.parse(data);
 
         if (scanData.QRCodeLPC) {
-            if ($("#barCodeRadio").attr("checked")) {
+            if ($("#barCodeInput").is(":visible") == true) {
                 $("input[name=barCode]").val(scanData.QRCodeLPC);
             } else {
                 $("input[name=assetsCode]").val(scanData.QRCodeLPC);
