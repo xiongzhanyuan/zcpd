@@ -108,7 +108,7 @@
             <span class="zcList">
                 <b>资产编号 ：<i id="planNumber">{{= value.assetsCode }}</i></b>
                 <b>资产名称 ：<i>{{= value.assetsName}}</i></b>  
-                {{? value.remark==null}}  
+                {{? value.userPerson==null}}
                 <b>保管人 ：<i>--</i></b>  
                 {{??}}
                 <b>保管人 ：<i>{{= value.userPerson}}</i></b>  

@@ -231,9 +231,19 @@
     // $("#departCodeSelect").html(str); 
     var userInfo = $.cookie('userinfo');   
     userInfo = JSON.parse(userInfo);  
-
+    var depart = {};
+    depart.departname = userInfo.departname;
+    depart.departcode = userInfo.departcode;
     var strIN="",strINList='';    
-    $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){  
+     var departArray = JSON.parse(localStorage.getItem('selOut'));
+    $.each(departArray, function (index, i) {
+        if (this.departcode == userInfo.departcode) {
+            departArray.splice(i, 1);
+            departArray.unshift(depart);
+            return;
+        }
+    })
+    $.each(departArray,function(index,i){  
         // if(index==0){
         //     $("#createDepartcode").val(this.departcode)
         // }
