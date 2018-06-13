@@ -56,6 +56,7 @@
     {{~}}
 </script>
 <script>  
+    var newDate = [];
     var departList = $.cookie('departList');
     var userInfo = $.cookie('userinfo');
     departList = JSON.parse(departList)[0];
@@ -67,7 +68,7 @@
             bridge.callHandler('getTobesubmitArray', callbackRes)
         })
     }
-    var newDate = [];
+
     function callbackRes(result) {
 
         if (result == null || !result) {
@@ -86,9 +87,11 @@
         var tmpl = doT.template($("#dwtTmpl").text());
         $("#TobeArray").html(tmpl(res));
         $("#submitBtn").click(function () {
-
             if (window.JsCallback) {
-                saveData(newDate, JSON.parse(sendData[0]).keyCode);
+                if (newDate.length > 0) {
+                    saveData(newDate[0], JSON.parse(sendData[0]).keyCode);
+                    newDate.splice(0, 1);
+                }
             } else {
                 var a = window.confirm("数据上传为覆盖上传模式，是否确认上传");
                 if (!a) {
@@ -147,9 +150,10 @@
         } else {
             alert(data.msg);
         }
+        newDate.splice(0, 1);
+
         if (newDate.length > 0) {
             saveData(newDate[0], "");
-            newDate.splice(0, 1);
         } else {
             history.go(0);
         }
