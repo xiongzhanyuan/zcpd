@@ -167,9 +167,7 @@
                     <!-- <p class="destory_p">详细报废原因：</p>  -->
                 <bottom class=" bottomFixed BtnCurrent"> 
                         <button id="submitBtn" class="bottomBtn center  iconfont icon-tijiao"></button> 
-                        <!-- <button id="submitBtn2" class="bottomBtn eam">传EAM</button>  -->
-                        <button id="submitBtnSaveLocal" class="bottomBtn eam">存本地</button> 
-
+                        <button id="submitBtn2" class="bottomBtn eam">传EAM</button> 
                     <button id="scanning" class="bottomBtn   iconfont icon-icon-"></button> 
                 </bottom>
             </div>
@@ -308,12 +306,83 @@
             e.stopPropagation();
         });
         $(".chose.active").unbind( "click");
-        $(".chose").click(function(e){    
-            if($(this).hasClass("active")) {
-                $(this).removeClass("active"); 
-            } else {
-                $(this).addClass("active"); 
-            }   
+        $(".chose").click(function(e){       
+            $(this).addClass("active"); 
+            var thatLi=$(this).closest('li');
+            if($("#discardReasonCode").val()==''||$("#discardReasonCode").val()==null){
+                $("#discardReasonCode").val('01');
+            }
+            if($("#Invoice").val()==null){
+                $("#Invoice").val('020201');
+            }
+            var res={},obj1=$("#form1").serializeObject(),obj2={};
+            debugger
+            obj1.phoneInvoiceNumber=phoneInvoiceNumber;
+            obj2.phoneInvoiceNumber=phoneInvoiceNumber;
+            obj1.userCode=  userInfo.usercode;      
+            obj1.userName=userInfo.username;
+            obj1.departCode	= userInfo.departcode;
+            obj2.departCode	= userInfo.departcode;
+            obj1.departName  =  userInfo.departname ;                                 
+            obj1.invoiceType =$("#Invoice").val();
+            obj1.invoiceName =$("#Invoice").find("option:selected").text();
+            //eamDiscardDetails 明细信息
+            obj2.assetsCode =  thatLi.attr("data-assetsCode");  
+            obj2.barCode = thatLi.attr("data-barCode");  
+            obj2.stopDate=  $("input[name='stopDate']").val();
+          //  obj1.discardTypeCode=$("#dypeCode").val() ; 
+            obj2.discardTypeCode=obj1.invoiceType ; 
+            obj1.sl= $("#countall").val();
+            obj1.originalValue=thatLi.attr('data-num1');
+            obj1.nowValue=thatLi.attr('data-num2');
+            obj1.addDepreciate=thatLi.attr('data-num3');
+            obj1.devalueValueSum=thatLi.attr('data-num4');
+            var nameres='';
+            switch (obj1.invoiceType){
+                case '020201':
+                nameres="正常报废"
+                break;
+                case '020202':
+                nameres="非正常地区公司批复" 
+                break;
+                case '020203':
+                nameres="非正常股份公司批复" 
+                break; 
+            } 
+           // obj1.discardTypeName=nameres;
+            obj2.discardTypeName=nameres;
+            obj2.discardReasonName=$("#discardReasonCode").find("option:selected").text();      
+            obj2.discardReasonCode=$("#discardReasonCode").val();     
+            obj2.discardMark = $("#discardMark").val();
+            obj2.userCode=obj1.userCode;
+            obj2.userName=obj1.userName;
+            obj2.departCode=obj1.departCode;
+            obj2.departName=obj1.departName;
+            var resData ={
+                eamDiscardInvoices:obj1 , 
+                eamDiscardDetails:obj2,
+                assetsCode:obj2.assetsCode,
+            }  
+            if (window.JsCallback) {
+                var data=window.JsCallback.onAddToScrapList(JSON.stringify(resData));   
+                if(data)
+                {
+                    alert("保存本地成功"); 
+                    var data=JSON.parse(window.JsCallback.onGetScrapList());
+                    count(data)
+                    } 
+            }else{
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onAddToScrapList',JSON.stringify(resData),function responseCallback(data) {   
+                        if(data){
+                            alert("保存本地成功");
+                            bridge.callHandler('onGetScrapList',function responseCallback(res) {
+                                count(JSON.parse(res)) 
+                            })
+                        } 
+                    }) 
+                })
+            }  
             e.stopPropagation();
         })
     }
@@ -404,92 +473,6 @@ $("#submitBtn2").click(function(){
         }
     }); 
 })
-
-$("#submitBtnSaveLocal").click(function(){
-    debugger
-    $('div.chose.active').each(function () {
-        $(this).addClass("active"); 
-            var thatLi=$(this).closest('li');
-            if($("#discardReasonCode").val()==''||$("#discardReasonCode").val()==null){
-                $("#discardReasonCode").val('01');
-            }
-            if($("#Invoice").val()==null){
-                $("#Invoice").val('020201');
-            }
-            var res={},obj1=$("#form1").serializeObject(),obj2={};
-            debugger
-            obj1.phoneInvoiceNumber=phoneInvoiceNumber;
-            obj2.phoneInvoiceNumber=phoneInvoiceNumber;
-            obj1.userCode=  userInfo.usercode;      
-            obj1.userName=userInfo.username;
-            obj1.departCode	= userInfo.departcode;
-            obj2.departCode	= userInfo.departcode;
-            obj1.departName  =  userInfo.departname ;                                 
-            obj1.invoiceType =$("#Invoice").val();
-            obj1.invoiceName =$("#Invoice").find("option:selected").text();
-            //eamDiscardDetails 明细信息
-            obj2.assetsCode =  thatLi.attr("data-assetsCode");  
-            obj2.barCode = thatLi.attr("data-barCode");  
-            obj2.stopDate=  $("input[name='stopDate']").val();
-          //  obj1.discardTypeCode=$("#dypeCode").val() ; 
-            obj2.discardTypeCode=obj1.invoiceType ; 
-            obj1.sl= $("#countall").val();
-            obj1.originalValue=thatLi.attr('data-num1');
-            obj1.nowValue=thatLi.attr('data-num2');
-            obj1.addDepreciate=thatLi.attr('data-num3');
-            obj1.devalueValueSum=thatLi.attr('data-num4');
-            var nameres='';
-            switch (obj1.invoiceType){
-                case '020201':
-                nameres="正常报废"
-                break;
-                case '020202':
-                nameres="非正常地区公司批复" 
-                break;
-                case '020203':
-                nameres="非正常股份公司批复" 
-                break; 
-            } 
-           // obj1.discardTypeName=nameres;
-            obj2.discardTypeName=nameres;
-            obj2.discardReasonName=$("#discardReasonCode").find("option:selected").text();      
-            obj2.discardReasonCode=$("#discardReasonCode").val();     
-            obj2.discardMark = $("#discardMark").val();
-            obj2.userCode=obj1.userCode;
-            obj2.userName=obj1.userName;
-            obj2.departCode=obj1.departCode;
-            obj2.departName=obj1.departName;
-            var resData ={
-                eamDiscardInvoices:obj1 , 
-                eamDiscardDetails:obj2,
-                assetsCode:obj2.assetsCode,
-            }  
-            if (window.JsCallback) {
-                var data=window.JsCallback.onAddToScrapList(JSON.stringify(resData));   
-                if(data)
-                {
-                    alert("保存本地成功"); 
-                    var data=JSON.parse(window.JsCallback.onGetScrapList());
-                    count(data)
-                    } 
-            }else{
-                setupWebViewJavascriptBridge(function (bridge) {
-                    bridge.callHandler('onAddToScrapList',JSON.stringify(resData),function responseCallback(data) {   
-                        if(data){
-                            alert("保存本地成功");
-                            bridge.callHandler('onGetScrapList',function responseCallback(res) {
-                                count(JSON.parse(res)) 
-                            })
-                        } 
-                    }) 
-                })
-            } 
-        })
-
-
-})
-
-
 //传送审、
 $("#submitBtn3").click(function(){
     var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?send'; 
