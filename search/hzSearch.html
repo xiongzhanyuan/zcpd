@@ -220,7 +220,11 @@
 </script>
 
 <script>
-    debugger
+    if (window.JsCallback) {  
+		$('#groupSsdw').fancySelect(); 
+		//$('#checkResult').fancySelect();  
+		$('#groupZclb').fancySelect();  
+	}
     // $("#departCodeSelect").html("")
     // var departList = $.cookie('departList');
     // departList = JSON.parse(departList);
