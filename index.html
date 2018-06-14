@@ -246,7 +246,7 @@
 				<li>
 					<div>
 						<div class="con">
-							<a href="transfer/shenpi.html">
+							<a href="" onclick="dbspAbtn()">
 								<i class="appNav iconfont icon-navicon-dbsqdsp"></i>
 								<p>调拨审批</p>
 							</a>
@@ -255,7 +255,7 @@
 				</li> 
 				<li>
 					<div class="con">
-						<a href="transfer/transferOUT.html">
+						<a href="transfer/transferOUT.html" onclick="dcqrAbtn()">
 							<i class="appNav iconfont icon-tiaochu"></i>
 							<p>调出确认</p>
 						</a>
@@ -1569,6 +1569,26 @@ var pany=0;
 			}
 		}
 		window.location.href="transfer/transferList.html";
+	}
+
+	function dbspAbtn() {
+		if (window.JsCallback) {
+			//判断是否开启了飞行模式
+			if (window.JsCallback.onGetIsAirplaneMode()) {
+				
+			}else {
+				alert("请检查网络");
+				return false;
+			}
+		} else {
+			if (window.navigator.onLine == true) {
+				
+			} else {
+				alert("请检查网络");
+				return false;
+			}
+		}
+		window.location.href="transfer/shenpi.html";
 	}
 
 
