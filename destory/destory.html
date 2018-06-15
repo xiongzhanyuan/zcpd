@@ -360,6 +360,16 @@
             var val = data[key];            
             target.find("span").text(val==""||val==null?"--":val);
         })
+        if(data.stopDate) {
+            $("#stopDate").val(data.stopDate);
+        }
+        if(data.discardReasonCode) {
+            $("#discardReasonCode").val(data.discardReasonCode);
+        }
+        if(data.discardMark) {
+            $("#discardMark").val(data.discardMark);
+        }
+
     }   
  
 //保存
