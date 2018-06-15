@@ -42,8 +42,17 @@
                     <img class="center" src="../images/static.png" alt=""> 
                 </span>  
                 <span class="listInfo"> 
+                    {{? value.checkResult==3}}
+                    <b style="color:red">盘盈</b>  
+                    {{??}}
+                    <b style="color:green">盘点</b>
+                    {{?}}
                     <b>资产条码 ：<i class="barCode">{{= value.barCode }}</i></b>
+                    {{? value.assetsCode==null}}
+                    <b>资产编码 ：<i>--</i></b>  
+                    {{??}}
                     <b>资产编码 ：<i class="assetsCode">{{= value.assetsCode }}</i></b>
+                    {{?}}
                     <b>资产名称 ：<i>{{= value.assetsName}}</i></b>
                     <b>盘点单位 ：<i>{{= value.managerDepartName}}</i></b>
                     {{? value.userPerson==null}}
@@ -90,7 +99,7 @@
             if (window.JsCallback) {
                 if (newDate.length > 0) {
                     saveData(newDate[0], JSON.parse(sendData[0]).keyCode);
-                    newDate.splice(0, 1);
+                    // newDate.splice(0, 1);
                 }
             } else {
                 var a = window.confirm("数据上传为覆盖上传模式，是否确认上传");
@@ -99,7 +108,7 @@
                 } else {
                     if (newDate.length > 0) {
                         saveData(newDate[0], JSON.parse(sendData[0]).keyCode);
-                        newDate.splice(0, 1);
+                        // newDate.splice(0, 1);
                     }
                 }
             }

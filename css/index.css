@@ -1317,6 +1317,16 @@ div.fancy-select ul.options li {
   width: auto;
 }
 
+.bottomFixed.BtnCurrent button.saveLocal {
+  font-size: 0.8rem !important;
+  line-height: 1.92rem;
+  height: 1.92rem;
+  float: left;
+  position: static;
+  width: auto;
+  margin-left: 10px;
+}
+
 .BtnCurrent.BtnFont button {
   width: auto;
   height: 1.06667rem;

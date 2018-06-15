@@ -1061,6 +1061,9 @@ div.fancy-select ul.options li{line-height: rem(70);}
     button.eam{ font-size:.8rem!important; line-height:rem(90); height:rem(90);  float: right;
         position: static;
         width: auto;}
+    button.saveLocal{ font-size:.8rem!important; line-height:rem(90); height:rem(90);  float: left;
+        position: static;
+        width: auto;margin-left:10px}   
 }
 .BtnCurrent.BtnFont button{
     width: auto;

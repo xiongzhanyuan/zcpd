@@ -195,6 +195,10 @@
     function pageCallBack(data) {
         debugger
         if (data.success == 'true') {
+            if(data.data.length == 0) {
+                alert("已经到底了~");
+                return false;
+            }
             appendTemplate(data.data);
             tzArray = tzArray.concat(data.data);
         } else {
@@ -264,7 +268,7 @@
             }
             page = page + 1;
             var jsons = {
-                departCode: userInfo.departcode,
+                departCode: $("select[name='departCodeSelect']").val(),
                 assetsType: $('input:radio[class="radio"]:checked').val(),
                 userPerson: $("#userPerson").val(),
                 page: page,

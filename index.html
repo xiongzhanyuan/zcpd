@@ -434,11 +434,11 @@
 				
 				<p>
 					<label for="managerDepart">盘点单位:</label>
-					<input type="text" id="managerDepart" name="managerDepart">
+					<input type="text" id="managerDepart" name="managerDepart" disabled>
 				</p> 
 				<p>
 					<label for="assetsCode">资产编码:</label>
-					<input type="text"   name="assetsCode">
+					<input type="text"   name="assetsCode" disabled>
 				</p>
 				<p>
 					<label class="editStatus" for="assetsStatus">使用状态:</label>
@@ -481,7 +481,7 @@
 				</p> -->
 				<p>
 					<label for="userPerson" class="editStatus">保管人:</label>
-					<input type="text" name="userPerson" id="userPerson">
+					<input type="text" name="userPerson" id="userPerson" disabled>
 				</p>
 				<p>
 					<label class="editStatus" for="realcodeStatus">贴码状态 :</label>
@@ -523,7 +523,9 @@
 					<form class="formEntry " id="formEntry2" > 
 						<p>
 							<label for="managerDepart">盘点单位:</label>
-							<input type="text" name="managerDepart" id = "pyManagerDepart">
+							<input type="text" name="managerDepartName" id = "pyManagerDepart">
+							<input type="hidden" name="departCode" id = "pyDepartCode">
+
 						</p> 
 						<p>
 							<label for="barCode">资产条码:</label>
@@ -587,10 +589,6 @@
 									<option value="07">待处置</option>
 									<option value="08">已处置</option>
 								</select>
-							</p>
-							<p>
-								<label for="assetsStandard">规格型号:</label>
-								<input type="text" name="assetsStandard" >
 							</p>
 							<p>
 								<label for="lossReason" class="editStatus">盘盈原因:</label>
@@ -938,6 +936,7 @@ var pany=0;
 			$(".userInfo .DepartName").text(userInfo.departname);
 			$(".userInfo .UserName").text(userInfo.username); 
 			$("#pyManagerDepart").val(userInfo.departname);
+			$("#pyDepartCode").val(userInfo.departcode);
 		}  
 	}
 	userINFO();
@@ -1257,15 +1256,16 @@ var pany=0;
 			localStorage.setItem("pan_3",Number(pan_3)+1);
 			var clientData = Object.assign(saveData,formData); 
 			clientData.zcpdImgs = zcpdImgs;
+			clientData.fileName = clientData.barCode + new Date().Format('yyyy-MM-dd hh:mm:ss' + ".jpg");
 			debugger
 			clientData = JSON.stringify(clientData);
 		}else{ 
 			formData = $("#formEntry").serializeObject();  
-			if(!formData.assetsStatus || !formData.realcodeStatus || !formData.technicalCondition ||
-				!formData.userPerson) {
-				alert("有必传字段未填写");
-				return false;
-			}
+			// if(!formData.assetsStatus || !formData.realcodeStatus || !formData.technicalCondition ||
+			// 	!formData.userPerson) {
+			// 	alert("有必传字段未填写");
+			// 	return false;
+			// }
 			formData.keyCode=$("#keyCode").val();
 				formData.checkResult=1;
 			if (window.JsCallback) {
@@ -1280,7 +1280,8 @@ var pany=0;
 			} 
 			var clientData = Object.assign(saveData,formData); 
 			clientData.zcpdImgs = zcpdImgs;
-			
+			clientData.fileName = clientData.barCode + new Date().Format('yyyy-MM-dd hh:mm:ss' + ".jpg");
+
 			clientData = JSON.stringify(clientData); 
 		}     
 		if(pany == 1){
