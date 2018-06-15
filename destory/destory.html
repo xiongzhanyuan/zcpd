@@ -124,7 +124,7 @@
 
                 </ul>
                 <div class="borderTzDetailBox" id="dataBox">  
-                    <p name="assetsCode">资产编码：<span></span></p>   
+                    <p id = "assetsCodeP" name="assetsCode">资产编码：<span></span></p>   
                     <p name="assetsName">资产名称：<span></span></p>
                     <p name="departName">所属单位<span></span></p> 
                     <p name="remark">备注<span></span></p> 
@@ -208,15 +208,37 @@
  
 <script>
     //先清除
-    if (window.JsCallback) {
-        window.JsCallback.onClearScrapList();  
-        }else{
-            setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler('onClearScrapList',function responseCallback(data) {  
+    // if (window.JsCallback) {
+    //     window.JsCallback.onClearScrapList();  
+    //     }else{
+    //         setupWebViewJavascriptBridge(function (bridge) {
+    //             bridge.callHandler('onClearScrapList',function responseCallback(data) {  
                      
-                }) 
-            })
-        }
+    //             }) 
+    //         })
+    //     }
+
+    // if (window.JsCallback) {
+    //     var data=JSON.parse(window.JsCallback.onGetScrapList());
+    // }else{
+    //     setupWebViewJavascriptBridge(function (bridge) {
+    //         bridge.callHandler('onGetScrapList',function responseCallback(res) {
+    //             alert(res)
+    //         })
+    //     })
+    // } 
+    function sleep(numberMillis) {    
+        var now = new Date();    
+        var exitTime = now.getTime() + numberMillis;   
+        while (true) { 
+        now = new Date();       
+        if (now.getTime() > exitTime) 
+        return;    
+        } 
+    }
+
+
+
     var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
     var departListStr = $.cookie('departList');
     var userInfo = $.cookie('userinfo');  
@@ -284,6 +306,19 @@
         if(data.success=='true'){  
             listAarray.push(data.data); 
             var reslistAarray = listAarray.unique('barCode');
+            sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
+            template(reslistAarray) 
+        }else{
+            alert(data.msg)
+        }
+    } 
+    var listAarrayNew = [];
+    function ListB(data){   
+        if(data.success=='true'){  
+            listAarray.push(data.data); 
+
+            listAarrayNew.push(data.data); 
+            var reslistAarray = listAarrayNew.unique('barCode');
             sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
             template(reslistAarray) 
         }else{
@@ -362,52 +397,51 @@ function EAdata(data){
         eamDiscardInvoices: JSON.stringify(eamDI) , 
         eamDiscardDetails: JSON.stringify(eamD),
     } 
-        sendPost(addUrl, jsons, resA);
+    sendPostBf(addUrl, jsons, resA);
         function  resA(res){ 
             if(res.success=='true'){
-                $("#list1 .chose.active").closest('li').remove();
-                if (window.JsCallback) {
-                    var data = window.JsCallback.onClearScrapList(); 
-                    if(data){ 
-                        alert("上传成功");
-                        $(".check1").val("");
-                        $(".check2").val("");
-                        $("#dataBox span").text("");
-                    }  
-                }else{
-                    setupWebViewJavascriptBridge(function (bridge) {
-                        bridge.callHandler('onClearScrapList',function responseCallback(data) {  
-                            if(data){ 
-                                alert("上传成功");
-                            }  
-                        }) 
-                    })
-                }
+                // $("#list1 .chose.active").closest('li').remove();
+                saveEam();
             }else{
                 alert(res.msg);
+                if (window.JsCallback) {
+                    window.JsCallback.onHideProgress()
+                }else{
+                    setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('onHideProgress')
+                    })
+                }
             }
 
         }
     } 
 //传EAM、
-$("#submitBtn2").click(function(){
+function saveEam(){
     var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?confirm'; 
     var jsons = {  
             departCode: userInfo.departcode,
             phoneInvoiceNumber: phoneInvoiceNumber,
         }   
     sendPost(updataUrl, jsons, function(data){ 
-        if(data.success=='true'){
-            alert(data.msg)
-        }else{
-            alert(data.msg)
-        }
+        alert(data.msg)
     }); 
-})
+}
 
 $("#submitBtnSaveLocal").click(function(){
-    debugger
-    $('div.chose.active').each(function () {
+
+    //先清除
+    if (window.JsCallback) {
+        window.JsCallback.onClearScrapList();  
+        }else{
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('onClearScrapList',function responseCallback(data) {  
+                     
+                }) 
+            })
+        }
+
+    $('div.chose.active').each(function (index, value) {
+        sleep(500)
         $(this).addClass("active"); 
             var thatLi=$(this).closest('li');
             if($("#discardReasonCode").val()==''||$("#discardReasonCode").val()==null){
@@ -416,10 +450,19 @@ $("#submitBtnSaveLocal").click(function(){
             if($("#Invoice").val()==null){
                 $("#Invoice").val('020201');
             }
-            var res={},obj1=$("#form1").serializeObject(),obj2={};
-            debugger
-            obj1.phoneInvoiceNumber=phoneInvoiceNumber;
-            obj2.phoneInvoiceNumber=phoneInvoiceNumber;
+            var res={},obj1=$("#form1").serializeObject(),obj2={},obj2Array=[];
+            obj2Array = listAarray.filter(function (x) {
+                return x.assetsCode == thatLi.attr("data-assetsCode");
+            });
+            obj2 = obj2Array[0];
+            if(obj2.phoneInvoiceNumber) {
+                obj1.phoneInvoiceNumber=obj2.phoneInvoiceNumber;
+                obj2.phoneInvoiceNumber=obj2.phoneInvoiceNumber;
+            } else {
+                var num = userInfo.usercode+userInfo.departcode+new Date().Format('yyyyMMddhhmmss');
+                obj1.phoneInvoiceNumber=num;
+                obj2.phoneInvoiceNumber=num;
+            }
             obj1.userCode=  userInfo.usercode;      
             obj1.userName=userInfo.username;
             obj1.departCode	= userInfo.departcode;
@@ -468,22 +511,32 @@ $("#submitBtnSaveLocal").click(function(){
                 var data=window.JsCallback.onAddToScrapList(JSON.stringify(resData));   
                 if(data)
                 {
-                    alert("保存本地成功"); 
-                    var data=JSON.parse(window.JsCallback.onGetScrapList());
-                    count(data)
-                    } 
+                    if(index == $('div.chose.active').length-1) {
+                        
+                        alert("保存本地成功");
+                        var data=JSON.parse(window.JsCallback.onGetScrapList());
+                            // count(data)
+                            countAll();
+                        } 
+                    }
+                    
             }else{
                 setupWebViewJavascriptBridge(function (bridge) {
                     bridge.callHandler('onAddToScrapList',JSON.stringify(resData),function responseCallback(data) {   
                         if(data){
-                            alert("保存本地成功");
-                            bridge.callHandler('onGetScrapList',function responseCallback(res) {
-                                count(JSON.parse(res)) 
-                            })
+                            if(index == $('div.chose.active').length-1) {
+                                alert("保存本地成功");
+                                bridge.callHandler('onGetScrapList',function responseCallback(res) {
+                                    // count(JSON.parse(res)) 
+                                    countAll();
+                                })
+                            }
+                            
                         } 
                     }) 
                 })
             } 
+            
         })
 
 
@@ -502,8 +555,19 @@ $("#submitBtn3").click(function(){
         if(data.success=='true'){
             // localStorage.removeItem('bfdjStorage');
             alert(data.msg)
+                //先清除
+            if (window.JsCallback) {
+                window.JsCallback.onClearScrapList();  
+                }else{
+                    setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('onClearScrapList',function responseCallback(data) {  
+                            
+                        }) 
+                    })
+                }
         }else{
             alert(data.msg)
+            return false;
         }
     }); 
 })
@@ -552,9 +616,11 @@ function scanData(data) {
 
 // 价值 进行汇总
 function count(data){
-    var res = data.unique('assetsCode'); 
-    $("#countall").val(res.length); 
+    debugger
     var originalValue=0,nowValue=0,addDepreciate=0,devalueValueSum=0;
+    var res = data.unique('assetsCode'); 
+    
+
     $.each(res,function(){
         var that =this;
         originalValue+=Number(that.eamDiscardInvoices.originalValue);
@@ -568,6 +634,49 @@ function count(data){
     $("input[name=devalueValueSum]").val(devalueValueSum);
 }
 
+function countAll(){
+    debugger
+    var originalValue=0,nowValue=0,addDepreciate=0,devalueValueSum=0;
+    var res = [];
+    if (window.JsCallback) {
+        data=JSON.parse(window.JsCallback.onGetScrapList());
+        res = data.unique('assetsCode');
+                $("#countall").val(res.length); 
+
+                $.each(res,function(){
+                    var that =this;
+                    originalValue+=Number(that.eamDiscardInvoices.originalValue);
+                    nowValue+=Number(that.eamDiscardInvoices.nowValue);
+                    addDepreciate+=Number(that.eamDiscardInvoices.addDepreciate);
+                    devalueValueSum+=Number(that.eamDiscardInvoices.devalueValueSum); 
+                })  
+                $("input[name=originalValue]").val(originalValue);
+                $("input[name=nowValue]").val(nowValue);
+                $("input[name=addDepreciate]").val(addDepreciate);
+                $("input[name=devalueValueSum]").val(devalueValueSum);
+    }else{
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onGetScrapList',function responseCallback(res) {
+                data = JSON.parse(res);
+                res = data.unique('assetsCode');
+                $("#countall").val(res.length); 
+
+                $.each(res,function(){
+                    var that =this;
+                    originalValue+=Number(that.eamDiscardInvoices.originalValue);
+                    nowValue+=Number(that.eamDiscardInvoices.nowValue);
+                    addDepreciate+=Number(that.eamDiscardInvoices.addDepreciate);
+                    devalueValueSum+=Number(that.eamDiscardInvoices.devalueValueSum); 
+                })  
+                $("input[name=originalValue]").val(originalValue);
+                $("input[name=nowValue]").val(nowValue);
+                $("input[name=addDepreciate]").val(addDepreciate);
+                $("input[name=devalueValueSum]").val(devalueValueSum);
+
+            })
+        })
+    } 
+}
 $("#destroyBackBtn").click(function(e) {
     // var bfdjStorage = {};
     // bfdjStorage.countall = $("#countall").val();
@@ -587,7 +696,62 @@ $("#destroyBackBtn").click(function(e) {
 //     $("input[name=addDepreciate]").val(data.addDepreciate);
 //     $("input[name=devalueValueSum]").val(data.devalueValueSum);
 // }
+    if (window.JsCallback) {
+        var data=JSON.parse(window.JsCallback.onGetScrapList());
+        if(data.length > 0) {
+            countAll({});
+            $.each(data,function(index,i){  
+                var data = {};
+                data.success='true';
+                data.data = JSON.parse(res)[index].eamDiscardDetails;
+                ListB(data);
+                phoneInvoiceNumber = data.data.phoneInvoiceNumber;
+            })
+        }
+    }else{
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onGetScrapList',function responseCallback(res) {
+                if(JSON.parse(res).length > 0) {
+                    countAll({});
+                    $.each(JSON.parse(res),function(index,i){  
+                        var data = {};
+                        data.success='true';
+                        data.data = JSON.parse(res)[index].eamDiscardDetails;
+                        ListB(data);
+                        phoneInvoiceNumber = data.data.phoneInvoiceNumber;
+                    })
+                }
+            })
+        })
+    } 
 
+    $("#discardReasonCode").bind("select propertychange change",function(event){
+        var currentAssetsCode = $("#assetsCodeP").find("span").html()
+        var currentArray = [];
+        currentArray = listAarray.filter(function (x) {
+            return x.assetsCode == currentAssetsCode;
+        });
+        currentArray[0].discardReasonCode = $("#discardReasonCode").val();
+        
+    });
+    $("#stopDate").bind("input propertychange change",function(event){
+        var currentAssetsCode = $("#assetsCodeP").find("span").html()
+        var currentArray = [];
+        currentArray = listAarray.filter(function (x) {
+            return x.assetsCode == currentAssetsCode;
+        });
+        currentArray[0].stopDate = $("#stopDate").val();
+        
+    });
+    $("#discardMark").bind("textarea propertychange change",function(event){
+        var currentAssetsCode = $("#assetsCodeP").find("span").html()
+        var currentArray = [];
+        currentArray = listAarray.filter(function (x) {
+            return x.assetsCode == currentAssetsCode;
+        });
+        currentArray[0].discardMark = $("#discardMark").val();
+        
+    });
 </script>
 </html>
 
