@@ -246,7 +246,7 @@
 				<li>
 					<div>
 						<div class="con">
-							<a href="" onclick="dbspAbtn()">
+							<a href="JavaScript:;" onclick="dbspAbtn()">
 								<i class="appNav iconfont icon-navicon-dbsqdsp"></i>
 								<p>调拨审批</p>
 							</a>
@@ -255,7 +255,7 @@
 				</li> 
 				<li>
 					<div class="con">
-						<a href="transfer/transferOUT.html" onclick="dcqrAbtn()">
+						<a href="JavaScript:;" onclick="dcqrAbtn()">
 							<i class="appNav iconfont icon-tiaochu"></i>
 							<p>调出确认</p>
 						</a>
@@ -263,7 +263,7 @@
 				</li> 
 				<li>
 					<div class="con">
-						<a href="transfer/transferIN.html">
+						<a href="JavaScript:;" onclick="drqrAbtn()">
 							<i class="appNav iconfont icon-tiaoru"></i>
 							<p>调入确认</p>
 						</a>
@@ -272,7 +272,7 @@
 				<li>
 					<div>
 						<div class="con">
-							<a href="transfer/DBsearch.html">
+							<a href="JavaScript:;" onclick="dbcxAbtn()">
 								<i class="appNav iconfont icon-diaobo"></i>
 								<p>调拨查询</p>
 							</a>
@@ -283,7 +283,7 @@
 				<li>
 					<div class="con">
 
-						<a href="search/zcSearch.html">
+						<a href="JavaScript:;" onclick="zccxAbtn()">
 							<i class="appNav iconfont icon-chaxuntiaojian"></i>
 							<p>资产查询</p>
 						</a>
@@ -292,7 +292,7 @@
 				<li>
 					<div class="con">
 
-						<a href="search/tzSearch.html">
+						<a href="JavaScript:;" onclick="tzcxAbtn()">
 							<i class="appNav iconfont icon-chaxuntiaojian"></i>
 							<p>台账查询</p>
 						</a>
@@ -301,7 +301,7 @@
 				<li>
 						<div class="con">
 	
-							<a href="search/hzSearch.html">
+							<a href="JavaScript:;" onclick="hzcxAbtn()">
 								<i class="appNav iconfont icon-chaxuntiaojian"></i>
 								<p>汇总查询</p>
 							</a>
@@ -871,7 +871,6 @@ var pany=0;
 
 	//开发调试临时注释掉  -xiongzy
 	$(".outLine").click(function () {
-		alert(123)
 		$(".navCon").html("资产盘点");
 
 		zcpdImgs = [];
@@ -1395,191 +1394,71 @@ var pany=0;
 		setTimeout(function(){ history.go(0)},1200) 			 
 	}
 	function pdcxAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="property/localSearch.html";
+		checkNetwork("property/localSearch.html");
 	}
 
 	function sjxzAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="property/downloadList.html";
+		checkNetwork("property/downloadList.html");
 	}
 
 	function bdxzcxAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="property/propertySearch.html";
+		checkNetwork("property/propertySearch.html");
 	}
 
 	function sjscAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="property/uploadData.html";
+		checkNetwork("property/uploadData.html");
 	}
 
 	function bfsqAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="destory/destory.html";
+		checkNetwork("destory/destory.html");
 	}
 	function bfspAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="destory/shenpiList.html";
+		checkNetwork("destory/shenpiList.html");
 	}
 
 	function bfcxAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="destory/desSearch.html";
+		checkNetwork("destory/desSearch.html");
 	}
 	function dbsqAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="transfer/transferEnter.html";
+		checkNetwork("transfer/transferEnter.html");
 	}
 
 	function dbczAbtn() {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
-				alert("请检查网络");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				
-			} else {
-				alert("请检查网络");
-				return false;
-			}
-		}
-		window.location.href="transfer/transferList.html";
+		checkNetwork("transfer/transferList.html");
 	}
 
 	function dbspAbtn() {
+		checkNetwork("transfer/shenpi.html");
+	}
+	function dcqrAbtn() {
+		checkNetwork("transfer/transferOUT.html");
+	}
+	function drqrAbtn() {
+		checkNetwork("transfer/transferIN.html");
+	}
+	function dbcxAbtn() {
+		checkNetwork("transfer/DBsearch.html");
+	}
+	function zccxAbtn() {
+		checkNetwork("search/zcSearch.html");
+	}
+	function tzcxAbtn() {
+		checkNetwork("search/tzSearch.html");
+	}
+	function hzcxAbtn() {
+		checkNetwork("search/hzSearch.html");
+	}
+	
+	
+
+	function checkNetwork(url) {
 		if (window.JsCallback) {
 			//判断是否开启了飞行模式
 			if (window.JsCallback.onGetIsAirplaneMode()) {
-				
-			}else {
 				alert("请检查网络");
 				return false;
+			}else {
+				
 			}
 		} else {
 			if (window.navigator.onLine == true) {
@@ -1589,7 +1468,7 @@ var pany=0;
 				return false;
 			}
 		}
-		window.location.href="transfer/shenpi.html";
+		window.location.href=url;
 	}
 
 
