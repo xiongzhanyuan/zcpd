@@ -907,6 +907,21 @@ var pany=0;
 	}) 
 
 	$("#pyEntry").click(function () {
+		if (window.JsCallback) {
+			//判断是否开启了飞行模式
+			if (window.JsCallback.onGetIsAirplaneMode()) {
+
+			}else {
+				alert("请切换飞行模式");
+				return false;
+			}
+		} else {
+			if (window.navigator.onLine == true) {
+				alert("请切换飞行模式");
+				return false;
+			}
+		}
+
 		pyFrom = 0;
 		debugger
 		zcpdImgs = [];
@@ -1245,6 +1260,7 @@ var pany=0;
 					if (item == nameData) {  //item 表示Json串中的属性，如'name'  
 						jValue = scanData[item];//key所对应的value  
 						if(nameData == "assetsStatus" && jValue=="") {
+
 						} else if(nameData == "realcodeStatus" && (jValue=="" || jValue==null || !jValue)) {
 							$('#realcodeStatus').val("0");  
 						} else {
@@ -1285,6 +1301,23 @@ var pany=0;
 			
 
 			formData.checkResult=3;
+			formData.departCode = $("#pyDepartCode").val();
+			formData.managerDepart = $("#pyDepartCode").val();
+			
+			var managerDepartName = "";
+			var departList = $.cookie('departList');
+			departList = JSON.parse(departList);
+			$.each(departList,function(){
+				var that = this;   
+				if(that.departcode == $("#pyDepartCode").val()) {
+					$("#pyManagerDepart").val(that.departname);
+					managerDepartName = that.departname;
+					return;
+				}
+			})
+			formData.managerDepartName = managerDepartName;
+			formData.planNumber = localStorage.getItem('plnum');
+
 			localStorage.setItem("pan_3",Number(pan_3)+1);
 			var clientData = Object.assign(saveData,formData); 
 			clientData.zcpdImgs = zcpdImgs;
@@ -1427,7 +1460,7 @@ var pany=0;
 		setTimeout(function(){ history.go(0)},1200) 			 
 	}
 	function pdcxAbtn() {
-		checkNetwork("property/localSearch.html");
+		window.location.href="property/localSearch.html";
 	}
 
 	function sjxzAbtn() {
@@ -1435,7 +1468,7 @@ var pany=0;
 	}
 
 	function bdxzcxAbtn() {
-		checkNetwork("property/propertySearch.html");
+		window.location.href="property/propertySearch.html";
 	}
 
 	function sjscAbtn() {

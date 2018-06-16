@@ -72,7 +72,7 @@
     {{~it.data :value:index}}
         <li class="clearfix" data-index={{=index}} data-ph={{= value.invoiceNumber}} onclick="enterInfo(this)">   
             <span class="listInfo"> 
-                <b>单据编号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>           
+                <b>单据编号 ：<i style="word-wrap:break-word;white-space:normal" class="invoiceNumber">{{= value.invoiceNumber }}</i></b>           
                {{? value.invoiceStatus ==1}} 
                     <b>单据状态 ：<i>新建</i></b>  
                 {{?? value.invoiceStatus ==2}}
@@ -86,7 +86,7 @@
                 {{??}}
                 <b>单据状态 ：<i>全部</i></b> 
                 {{?}}         
-                 <b>制单单位 ：<i>{{= value.departCode}}</i></b>                
+                 <b>制单单位 ：<i>{{= value.departName}}</i></b>                
                 <b>制单日期 ：<i>{{= value.auditDate}}</i></b>                
                 <b> 制单人 ：<i>{{= value.auditUser}}</i></b>               
                 <b> 原值合计 ：<i>{{= value.originalValueSum}}</i></b>               

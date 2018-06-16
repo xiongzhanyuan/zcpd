@@ -30,7 +30,7 @@
             <div class="searchHeader borderTableBox">
                 <p class="clearfix">
                     <div class="checkTop">
-                        <label class="tzRadioCheck ">
+                        <!-- <label class="tzRadioCheck ">
                             <input type="radio" class='radio' value="0101" checked />
                             <span>固定资产</span>
                         </label>
@@ -41,7 +41,21 @@
                         <label class="tzRadioCheck ">
                             <input type="radio" class='radio' value="0106" />
                             <span>投资性房地产</span>
-                        </label>
+                        </label> -->
+                        <p>
+                            <label>资产类型:</label>
+                             <select name="assetsType" value='0101' id="assetsType">
+                                 <option value="0101">固定资产</option>
+                                 <option value="0103">投资性房地产</option>
+                                 <option value="0104">实物长摊</option> 
+                                 <option value="0105">租入资产</option>
+                                 <option value="0106">租出资产</option>
+                                 <option value="0107">低值资产</option>
+                                 <option value="0201">无形资产</option>
+                                 <option value="0301">长待摊费用</option>
+                                 <option value="0108">待处置资产</option> 
+                             </select>
+                        </p> 
                     </div>
                     <p class="sel_p">
                         <label for="departCode">所属单位</label>
@@ -120,6 +134,9 @@
     {{~}}
 </script>
 <script>
+    if (window.JsCallback) { 
+        $('#assetsType').fancySelect(); 
+    }
     var userInfo = $.cookie('userinfo');
     userInfo = JSON.parse(userInfo);
     var depart = {};
@@ -152,7 +169,7 @@
         }
         var jsons = {
             departCode: $("select[name='departCodeSelect']").val(),
-            assetsType: $('input:radio[class="radio"]:checked').val(),
+            assetsType: $("#assetsType").val(),
             userPerson: $("#userPerson").val(),
             page: 1,
             pageSize: 20,
@@ -245,10 +262,10 @@
 
     }
 
-    $(".checkTop input").click(function () {
-        $(".checkSear input").val('');
-        $(this).parent().siblings(".tzRadioCheck").find('input').attr("checked", false);
-    })
+    // $(".checkTop input").click(function () {
+    //     $(".checkSear input").val('');
+    //     $(this).parent().siblings(".tzRadioCheck").find('input').attr("checked", false);
+    // })
     var page = 0;
     $(window).scroll(function () {
         if (page == 0) {

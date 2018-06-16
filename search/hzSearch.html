@@ -98,7 +98,18 @@
                                 <div class="switch-block"></div>    
                             </div>
                         
-                        <select name="groupSsdw" style="display:inline-block; width: 30%; margin-left: 10%" id="groupSsdw">
+                        <!-- <select name="groupSsdw" style="display:inline-block; width: 30%; margin-left: 10%" id="groupSsdw">
+                            <option value="5">一级分组</option>
+                            <option value="9">二级分组</option>
+                            <option value="13">三级分组</option>
+                        </select> -->
+
+
+                    </div>
+
+                    <div class="clearfix" style="margin-top: 80px" id="groupDepartDiv">
+                        <label for="groupSsdw" style="display:inline-block; font-size: 0.64rem">单位分组</label>
+                        <select name="groupSsdw" id="groupSsdw" style="display:inline-block; width: 30%; margin-left: 10%" >
                             <option value="5">一级分组</option>
                             <option value="9">二级分组</option>
                             <option value="13">三级分组</option>
@@ -113,11 +124,21 @@
                         <div id="switchZclb" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
                             <div class="switch-block"></div>
                         </div>
+                        <!-- <select name="groupZclb" style="display:inline-block; width: 30%; margin-left: 10%" id="groupZclb">
+                            <option value="2">大类汇总</option>
+                            <option value="4">中类汇总</option>
+                        </select> -->
+                    </div>
+
+                    <div class="clearfix" style="margin-top: 80px" id="groupTypeDiv">
+                        <label for="groupSsdw" style="display:inline-block; font-size: 0.64rem">类别分组</label>
                         <select name="groupZclb" style="display:inline-block; width: 30%; margin-left: 10%" id="groupZclb">
                             <option value="2">大类汇总</option>
                             <option value="4">中类汇总</option>
                         </select>
                     </div>
+
+
                     <div class="clearfix">
                         <label for="groupJszk" style="display:inline-block; font-size: 0.64rem">技术状况</label>
 
@@ -225,17 +246,13 @@
 		//$('#checkResult').fancySelect();  
 		$('#groupZclb').fancySelect();  
 
-        document.getElementById("groupSsdw").style.display="inline-block";
-        document.getElementById("groupSsdw").style.width="30%";
-        document.getElementById("groupSsdw").setAttribute('margin-left','10%');
-
-        document.getElementById("groupZclb").style.display="inline-block";
-        document.getElementById("groupZclb").style.width="30%";
-        document.getElementById("groupZclb").setAttribute('margin-left','10%');
 
         // style="display:inline-block; width: 30%; margin-left: 10%"
         // style="display:inline-block; width: 30%; margin-left: 10%"
-	}
+	} else {
+        document.getElementById("groupDepartDiv").style.marginTop="40px";
+        document.getElementById("groupTypeDiv").style.marginTop="40px";
+    }
     // $("#departCodeSelect").html("")
     // var departList = $.cookie('departList');
     // departList = JSON.parse(departList);

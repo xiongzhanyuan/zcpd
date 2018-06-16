@@ -487,9 +487,8 @@ $("#submitBtnSaveLocal").click(function(){
                 obj1.phoneInvoiceNumber=obj2.phoneInvoiceNumber;
                 obj2.phoneInvoiceNumber=obj2.phoneInvoiceNumber;
             } else {
-                var num = userInfo.usercode+userInfo.departcode+new Date().Format('yyyyMMddhhmmss');
-                obj1.phoneInvoiceNumber=num;
-                obj2.phoneInvoiceNumber=num;
+                obj1.phoneInvoiceNumber=phoneInvoiceNumber;
+                obj2.phoneInvoiceNumber=phoneInvoiceNumber;
             }
             obj1.userCode=  userInfo.usercode;      
             obj1.userName=userInfo.username;
