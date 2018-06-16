@@ -129,7 +129,7 @@ $("#submitBtn1").click(function(){
         phoneInvoiceNumber:data_ph,
         departCode: userInfo.departcode ,
     };
-    var getInfoUrl=getURL()+"/AssetsDataPhone/mobile/testController.do?getInvoiceDetail";
+    var getInfoUrl=getURL()+"/AssetsDataPhone/mobile/discardController.do?getInvoiceDetail";
     sendPost(getInfoUrl, jsons, function(data){ 
         if(data.data.length<=0){
             alert("暂无明细");

@@ -521,12 +521,17 @@
 			<p>盘点计划编码：<span id="PLnum"></span></p>
 			<div class="indexBox" id='Hbox2' style="height: 90% !important;">
 					<form class="formEntry " id="formEntry2" > 
-						<p>
+						<!-- <p>
 							<label for="managerDepart">盘点单位:</label>
 							<input type="text" name="managerDepartName" id = "pyManagerDepart">
 							<input type="hidden" name="departCode" id = "pyDepartCode">
 
-						</p> 
+						</p>  -->
+						<p>
+							盘点单位：
+							<select  id="pyDepartCode"></select>
+							<input type="hidden" name="managerDepartName" id = "pyManagerDepart">
+						</p>
 						<p>
 							<label for="barCode">资产条码:</label>
 							<input type="text" name="barCode">
@@ -935,11 +940,38 @@ var pany=0;
 			userInfo = JSON.parse(userInfo);  
 			$(".userInfo .DepartName").text(userInfo.departname);
 			$(".userInfo .UserName").text(userInfo.username); 
-			$("#pyManagerDepart").val(userInfo.departname);
-			$("#pyDepartCode").val(userInfo.departcode);
+			// $("#pyManagerDepart").val(userInfo.departname);
+			// $("#pyDepartCode").val(userInfo.departcode);
 		}  
 	}
 	userINFO();
+
+	function getdepartList (){ 
+		var PDdepartlist = $.cookie('PDdepartlist');
+		PDdepartlist = JSON.parse(PDdepartlist);
+		resD(PDdepartlist); 
+	}
+    //单位列表
+    getdepartList ()
+	function resD(data){ 
+		var str='';
+		if(data.length>0){ 
+			$.each(data,function(i,that){ 
+				str+="<option value="+that.departCode+">"+that.departName+"</option>"
+			})
+		}else{
+			var departList = $.cookie('departList');
+			departList = JSON.parse(departList);
+			$.each(departList,function(){ 
+				str+="<option value="+this.departcode+">"+this.shortname+"</option>"
+			})
+		}
+			$("#pyDepartCode").html(str); 
+			if (window.JsCallback) { 
+				$('select').fancySelect(); 
+			}
+	}
+
 	// 搜索
 	$("#search").click(function () {
 		var scanData = "";
@@ -1327,7 +1359,7 @@ var pany=0;
 				var userInfo = JSON.parse($.cookie('userinfo'));  
 				alert("保存成功");
 				document.getElementById("formEntry").reset();
-				$("#pyManagerDepart").val(userInfo.departname);
+				// $("#pyManagerDepart").val(userInfo.departname);
 				$("#lid").val("");
 				zcpdImgs = [];
 				$("#zcpdImgsDiv").html("");
@@ -1347,7 +1379,7 @@ var pany=0;
 						alert("保存成功");
 						document.getElementById("formEntry").reset();
 						document.getElementById("formEntry2").reset();
-						$("#pyManagerDepart").val(userInfo.departname);
+						// $("#pyManagerDepart").val(userInfo.departname);
 						$("#lid").val("");
 						zcpdImgs = [];
 						$("#zcpdImgsDiv").html("");
@@ -1472,7 +1504,18 @@ var pany=0;
 		window.location.href=url;
 	}
 
-
+	$("#pyDepartCode").bind("select propertychange change",function(event){
+        var departList = $.cookie('departList');
+		departList = JSON.parse(departList);
+		$.each(departList,function(){
+			var that = this;   
+			if(that.departcode == $("#pyDepartCode").val()) {
+				$("#pyManagerDepart").val(that.departname);
+				return;
+			}
+		})
+        
+    });
 	
 	
 	

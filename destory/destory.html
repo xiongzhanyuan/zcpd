@@ -111,11 +111,13 @@
                             <label class="checkB "><input type="radio" data-name='barCode' class='radio' checked /><span>资产条码:</span></label>
                             <label class="checkB "><input type="radio"  data-name='assetsCode'  class='radio' /><span>资产编码:</span></label>
                        </div>
-                       <div class='checkSear'>
+                       <div class='zcCheckSear'>
                             <input class="check1" type="text" placeholder="条形码 " name='barCode' required=""> 
                             <input class="check2" type="text" placeholder="资产编码输入" name='assetsCode' required=""> 
                        </div>
-                        <i   id="search" class="checkSearch iconfont icon-chaxunxiazai"></i> 
+                       <i id="zcSanning" class="checkSearch iconfont icon-icon-"></i>
+
+                        <i   id="search" class="checkSearch iconfont icon-chaxunxiazai" style="margin-left: 2rem"></i> 
                     </p>
                 </div>
                 
@@ -285,11 +287,11 @@
     $(".userInfo .UserName").text(userInfo.username);  
     $("input[name='createdate']").val(new Date().Format('yyyy-MM-dd')); 
     $(".checkTop input").click(function(){  
-        $(".checkSear input").val('');
+        $(".zcCheckSear input").val('');
         $(this).parent().siblings(".checkB").find('input').attr("checked",false);
        var name =$(this).attr("data-name"); 
-       $('.checkSear input').hide(); 
-       $('.checkSear input[name='+name+']').show(); 
+       $('.zcCheckSear input').hide(); 
+       $('.zcCheckSear input[name='+name+']').show(); 
     })  
     //搜索
     $("#search").click(function(){   
@@ -398,6 +400,12 @@ function EAdata(data){
         that.eamDiscardInvoices.nowValue=  $("input[name=nowValue]").val();
         that.eamDiscardInvoices.addDepreciate= $("input[name=addDepreciate]").val();
         that.eamDiscardInvoices.devalueValueSum= $("input[name=devalueValueSum]").val();
+
+            that.eamDiscardInvoices.originalValueSum = $("input[name=originalValue]").val();
+            that.eamDiscardInvoices.addDepreciateValueSum=$("input[name=addDepreciate]").val();
+            that.eamDiscardInvoices.detailAmountSum= $("#countall").val();
+            that.eamDiscardInvoices.nowValueSum=$("input[name=nowValue]").val();
+
         eamDI.push(that.eamDiscardInvoices)
         eamD.push(that.eamDiscardDetails) 
     })
@@ -500,7 +508,13 @@ $("#submitBtnSaveLocal").click(function(){
             obj1.originalValue=thatLi.attr('data-num1');
             obj1.nowValue=thatLi.attr('data-num2');
             obj1.addDepreciate=thatLi.attr('data-num3');
+
             obj1.devalueValueSum=thatLi.attr('data-num4');
+            obj1.originalValueSum = thatLi.attr('data-num1');
+            obj1.addDepreciateValueSum=thatLi.attr('data-num3');
+            obj1.detailAmountSum= $("#countall").val();
+            obj1.nowValueSum=thatLi.attr('data-num2');
+
             var nameres='';
             switch (obj1.invoiceType){
                 case '020201':
@@ -594,7 +608,7 @@ $("#submitBtn3").click(function(){
 
 
 //扫描条形码功能    
-$("#scanning").click(function () { 
+$("#zcSanning").click(function () { 
     if (window.JsCallback) {
         //安卓
         window.JsCallback.onQR();
@@ -717,13 +731,13 @@ $("#destroyBackBtn").click(function(e) {
 //     $("input[name=devalueValueSum]").val(data.devalueValueSum);
 // }
     if (window.JsCallback) {
-        var data=JSON.parse(window.JsCallback.onGetScrapList());
-        if(data.length > 0) {
+        var resData=JSON.parse(window.JsCallback.onGetScrapList());
+        if(resData.length > 0) {
             countAll({});
-            $.each(data,function(index,i){  
+            $.each(resData,function(index,i){  
                 var data = {};
                 data.success='true';
-                data.data = JSON.parse(res)[index].eamDiscardDetails;
+                data.data = resData[index].eamDiscardDetails;
                 ListB(data);
                 phoneInvoiceNumber = data.data.phoneInvoiceNumber;
             })
