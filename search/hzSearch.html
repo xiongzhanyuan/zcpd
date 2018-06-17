@@ -66,7 +66,7 @@
                 <div class="searchHeader imgBox">
                     <p class="clearfix">
                         <div class="checkTop">
-                            <label class="hzRadioCheck ">
+                            <!-- <label class="hzRadioCheck ">
                                 <input type="radio" class='radio' value="0101" checked />
                                 <span>固定资产</span>
                             </label>
@@ -77,7 +77,21 @@
                             <label class="hzRadioCheck ">
                                 <input type="radio" class='radio' value="0201" />
                                 <span>投资性房地产</span>
-                            </label>
+                            </label> -->
+                            <p>
+                                <label>资产类型:</label>
+                                 <select name="assetsType" value='0101' id="assetsType">
+                                     <option value="0101">固定资产</option>
+                                     <option value="0103">投资性房地产</option>
+                                     <option value="0104">实物长摊</option> 
+                                     <option value="0105">租入资产</option>
+                                     <option value="0106">租出资产</option>
+                                     <option value="0107">低值资产</option>
+                                     <option value="0201">无形资产</option>
+                                     <option value="0301">长待摊费用</option>
+                                     <option value="0108">待处置资产</option> 
+                                 </select>
+                            </p> 
                         </div>
                         <p>
                             <label for="departCode">所属单位</label>
@@ -94,7 +108,7 @@
 
                     <div class="clearfix">
                         <label for="groupSsdw" style="display:inline-block; font-size: 0.64rem">所属单位</label>
-                            <div id="switchSsdw" class="switch-bg turn-off" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
+                            <div id="switchSsdw" class="switch-bg turn-on" style="display:inline-block; position:relative;top:23px; margin-left: 10%;">
                                 <div class="switch-block"></div>    
                             </div>
                         
@@ -245,7 +259,7 @@
 		$('#groupSsdw').fancySelect(); 
 		//$('#checkResult').fancySelect();  
 		$('#groupZclb').fancySelect();  
-
+        $('#assetsType').fancySelect(); 
 
         // style="display:inline-block; width: 30%; margin-left: 10%"
         // style="display:inline-block; width: 30%; margin-left: 10%"
@@ -338,11 +352,11 @@
     // $(".userInfo .DepartName").text(userInfo.departname);
     // $(".userInfo .UserName").text(userInfo.username);  
     // $("input[name='createdate']").val(new Date().Format('yyyy-MM-dd')); 
-    $(".checkTop input").click(function () {
-        // alert(123)
-        $(".checkSear input").val('');
-        $(this).parent().siblings(".hzRadioCheck").find('input').attr("checked", false);
-    })
+    // $(".checkTop input").click(function () {
+    //     // alert(123)
+    //     $(".checkSear input").val('');
+    //     $(this).parent().siblings(".hzRadioCheck").find('input').attr("checked", false);
+    // })
     //搜索
     $("#hzSearchBtn").click(function () {
         debugger
@@ -369,7 +383,7 @@
         
 
         var jsons = {
-            assetsType: $('input[class="radio"]:checked ').val(),
+            assetsType: $("#assetsType").val(),
             departCode: $("#departCodeSelect").val(),
             // departCode: 14400,
             groupDepart: groupSsdw,

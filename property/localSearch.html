@@ -34,7 +34,7 @@
                 <option value="100">全部</option>
                 <option value="1">存在</option>
                 <option value="0">未盘</option>
-                <option value="2">盘盈</option> 
+                <option value="3">盘盈</option> 
             </select>
         </p>
     </div>
@@ -61,7 +61,11 @@
         <li class="clearfix" data-index={{=index}} onclick="enterInfo(this)">   
             <span class="listInfo">             
                 <b>资产名称 ：<i>{{= value.assetsName}}</i></b> 
+                {{? value.assetsCode==null}}
+                <b>资产编码 ：<i>--</i></b>  
+                {{??}}
                 <b>资产编码 ：<i class="assetsCode">{{= value.assetsCode }}</i></b> 
+                {{?}}
                 <b>规格型号 ：<i>{{= value.assetsStandard}}</i></b>
   
             </span> 
@@ -82,22 +86,60 @@
         var require = JSON.stringify(term);//这个是JSON字符串参数 
         if (window.JsCallback) {
             var res = window.JsCallback.onFindDevicesByDepartCode(require);
-            templateL(res)
+            templateL(res,term)
         }else{
             setupWebViewJavascriptBridge(function (bridge) {
                     bridge.callHandler('onFindDevicesByDepartCode',require, function(resData){
-                        templateL(resData)
+                        templateL(resData, term)
                     })
                 }) 
         }
        
     }
-function templateL(res){
+
+    function searchCount(term){
+        var require = JSON.stringify(term);//这个是JSON字符串参数 
+        if (window.JsCallback) {
+            var res = window.JsCallback.onFindDevicesByDepartCode(require);
+            templateCount(res,term)
+        }else{
+            setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onFindDevicesByDepartCode',require, function(resData){
+                        templateCount(resData, term)
+                    })
+                }) 
+        }
+       
+    }
+function templateCount(res, term){
+    var arr={};
+    arr.data=JSON.parse(res);
+    if(term.checkResult == 100) {
+        $("#pan_all").text(arr.data.length);   
+    } else if(term.checkResult == 1) {
+        $("#pan_1").text(arr.data.length);   
+    } else if(term.checkResult == null) {
+        $("#pan_2").text(arr.data.length);   
+    } else if(term.checkResult == 3) {
+        $("#pan_3").text(arr.data.length);   
+    }
+} 
+
+function templateL(res, term){
     var arr={};
     arr.data=JSON.parse(res);
    // if(JSON.parse(res).length<=0){alert("无相应盘点数据");}
     var tmpl = doT.template($("#tml1").text());  
-    $("#list1").html(tmpl(arr));   
+    $("#list1").html(tmpl(arr));  
+    if(term.checkResult == 100) {
+        $("#pan_all").text(arr.data.length);   
+    } else if(term.checkResult == 1) {
+        $("#pan_1").text(arr.data.length);   
+    } else if(term.checkResult == null) {
+        $("#pan_2").text(arr.data.length);   
+    } else if(term.checkResult == 3) {
+        $("#pan_3").text(arr.data.length);   
+    }
 } 
 function getdepartList (){ 
    var PDdepartlist = $.cookie('PDdepartlist');
@@ -106,39 +148,39 @@ function getdepartList (){
 }
     //单位列表
     getdepartList ()
-    if (window.JsCallback) {
-        //callbackRes 本地总共的
-        callbackRes(window.JsCallback.onGetStashedDeviceInfoList());
-        //单位列表 
-        //总数 
-        var data=window.JsCallback.onGetFileListByPlNum(pdnum);   
-        pan_all=JSON.parse(data).length;
-        $("#pan_all").text(pan_all);    
-        pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1");
-        $("#pan_1").text(pan_1);
-        pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
-        $("#pan_3").text(pan_3);
-        pan_2=Number(pan_all)-Number(pan_1)-Number(pan_3)
-        $("#pan_2").text(pan_2);
-    } else {
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('getTobesubmitArray', function(res){
-                callbackRes(res)
-            })
-        }) 
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('onGetFileListByPlNum', pdnum,function responseCallback(data) {  
-                pan_all=JSON.parse(data).length; 
-                $("#pan_all").text(pan_all);    
-                pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1");
-                $("#pan_1").text(pan_1); 
-                pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
-                $("#pan_3").text(pan_3);
-                pan_2=Number(pan_all)-Number(pan_1)-Number(pan_3)
-                $("#pan_2").text(pan_2);
-            }) 
-        })
-    } 
+    // if (window.JsCallback) {
+    //     //callbackRes 本地总共的
+    //     callbackRes(window.JsCallback.onGetStashedDeviceInfoList());
+    //     //单位列表 
+    //     //总数 
+    //     var data=window.JsCallback.onGetFileListByPlNum(pdnum);   
+    //     pan_all=JSON.parse(data).length;
+    //     $("#pan_all").text(pan_all);    
+    //     pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1");
+    //     $("#pan_1").text(pan_1);
+    //     pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
+    //     $("#pan_3").text(pan_3);
+    //     pan_2=Number(pan_all)-Number(pan_1)-Number(pan_3)
+    //     $("#pan_2").text(pan_2);
+    // } else {
+    //     setupWebViewJavascriptBridge(function (bridge) {
+    //         bridge.callHandler('getTobesubmitArray', function(res){
+    //             callbackRes(res)
+    //         })
+    //     }) 
+    //     setupWebViewJavascriptBridge(function (bridge) {
+    //         bridge.callHandler('onGetFileListByPlNum', pdnum,function responseCallback(data) {  
+    //             pan_all=JSON.parse(data).length; 
+    //             $("#pan_all").text(pan_all);    
+    //             pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1");
+    //             $("#pan_1").text(pan_1); 
+    //             pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
+    //             $("#pan_3").text(pan_3);
+    //             pan_2=Number(pan_all)-Number(pan_1)-Number(pan_3)
+    //             $("#pan_2").text(pan_2);
+    //         }) 
+    //     })
+    // } 
 function resD(data){ 
     var str='';
     if(data.length>0){ 
@@ -167,16 +209,43 @@ function callbackRes(data){
         }) 
 }
 $("#searchBtn").click(function(){
-    var sel2= $("#require2").val()=='0'?null:$("#require2").val(),sel1= $("#require1").val(); 
+    var sel2= $("#require2").val(),sel1= $("#require1").val(); 
+    if(sel2 == 0) {
+        sel2 = null;
+    }
     var term={
         'checkResult':sel2,
         'departCode':sel1,
     }  
     searchList(term) 
 })
+
+
+
+
 $(function(){
     $("#searchBtn").click();
+    searchCount({'checkResult':'1','departCode':$("#require1").val()})
+    searchCount({'checkResult':null,'departCode':$("#require1").val()})
+    searchCount({'checkResult':'3','departCode':$("#require1").val()})
 })
+
+$("#require1").bind("select propertychange change",function(event){
+    $("#searchBtn").click();
+    searchCount({'checkResult':'1','departCode':$("#require1").val()})
+    searchCount({'checkResult':null,'departCode':$("#require1").val()})
+    searchCount({'checkResult':'3','departCode':$("#require1").val()})
+        
+    });
+
+    function enterInfo(even){
+        var target = $(even);  
+        var barCode = target.find(".barCode").text();    
+        $.cookie('barCode', barCode,{ expires: 30, path: '/', secure: false });   
+        self.location="localInfoPd.html";
+    } 
+
+
 </script>
 
 </html>

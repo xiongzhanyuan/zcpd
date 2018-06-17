@@ -268,15 +268,18 @@
     // })
     var page = 0;
     $(window).scroll(function () {
-        if (page == 0) {
+        var scrollTop = $(this).scrollTop();
+
+        if (scrollTop < 10 || page == 0) {
             return false;
         }
         //已经滚动到上面的页面高度
-        var scrollTop = $(this).scrollTop();
+        
         //页面高度
         var scrollHeight = $(document).height();
         //浏览器窗口高度
         var windowHeight = $(this).height();
+
         //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
         if (scrollTop + windowHeight == scrollHeight) {
             if ($("select[name='departCodeSelect']").val() == '') {
@@ -286,7 +289,7 @@
             page = page + 1;
             var jsons = {
                 departCode: $("select[name='departCodeSelect']").val(),
-                assetsType: $('input:radio[class="radio"]:checked').val(),
+                assetsType: $("#assetsType").val(),
                 userPerson: $("#userPerson").val(),
                 page: page,
                 pageSize: 20,

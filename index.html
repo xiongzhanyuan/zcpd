@@ -1303,15 +1303,27 @@ var pany=0;
 			formData.checkResult=3;
 			formData.departCode = $("#pyDepartCode").val();
 			formData.managerDepart = $("#pyDepartCode").val();
+
+			if (window.JsCallback) {
+			 	formData.realcodeStatus =$('#realcodeStatus').next().next().find(".selected").attr("data-raw-value");
+				formData.assetsStatus=$('#assetsStatus').next().next().find(".selected").attr("data-raw-value");
+				formData.assetsStatusName=$('#assetsStatus').next().next().find(".selected").text();
+				
+			}else{ 
+				formData.realcodeStatus =$('#realcodeStatus').val();
+				formData.assetsStatus=$('#assetsStatus').val();
+				formData.assetsStatusName=$('#assetsStatus').find("option:selected").text();
+			} 
 			
 			var managerDepartName = "";
-			var departList = $.cookie('departList');
-			departList = JSON.parse(departList);
-			$.each(departList,function(){
+
+			var PDdepartlist = $.cookie('PDdepartlist');
+			PDdepartlist = JSON.parse(PDdepartlist);
+			$.each(PDdepartlist,function(){
 				var that = this;   
-				if(that.departcode == $("#pyDepartCode").val()) {
-					$("#pyManagerDepart").val(that.departname);
-					managerDepartName = that.departname;
+				if(that.departCode == $("#pyDepartCode").val()) {
+					$("#pyManagerDepart").val(that.departName);
+					managerDepartName = that.departName;
 					return;
 				}
 			})

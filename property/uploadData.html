@@ -141,6 +141,8 @@
         sendPostUpload(uploadUrl, json, callbackA);
     }
 
+    var hasFail = false;
+
     function callbackA(data) {
         var status = false;
         if (data.success == "true") {
@@ -158,6 +160,7 @@
                 });
             }
         } else {
+            hasFail = true;
             alert(data.msg);
         }
         newDate.splice(0, 1);
@@ -166,8 +169,13 @@
             saveData(newDate[0], "");
         } else {
             // history.go(0);
-            alert("上传成功");
-            $("#TobeArray").html("");
+            if(hasFail) {
+                history.go(0);
+            } else {
+                alert("上传成功");
+                $("#TobeArray").html("");
+            }
+            
         }
 
     }

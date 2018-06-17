@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>报废申请</title> 
+    <title>报废审批</title> 
 	<link rel="stylesheet" href="../css/iconfont.css">
 	<link rel="stylesheet" href="../css/icon.css">
 	<link rel="stylesheet" href="../css/dialog.css">
@@ -71,11 +71,13 @@
     {{~it.data :value:index}}
         <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}>   
             <span class="listInfo">
+				<b>条码 ：<i>{{= value.barCode}}</i></b>
                 <b>资产编码 ：<i class="invoiceNumber">{{= value.assetsCode}}</i></b>
-                <b>条码 ：<i>{{= value.barCode}}</i></b>         
+ 				<b>资产名称 ：<i>{{= value.assetsName}}</i></b> 
+				<b>所属单位 ：<i>{{= value.departName}}</i></b>   
                 <b>报废类别 ：<i>{{= value.discardTypeName}}</i></b>
                 <b>报废原因 ：<i>{{= value.discardReasonName}}</i></b>  
-                <b>创建时间 ：<i>{{= value.createdate}}</i></b>      
+                <b>停产日期 ：<i>{{= value.stopDate}}</i></b>      
             </span> 
         </li>
     {{~}}
