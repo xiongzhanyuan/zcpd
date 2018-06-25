@@ -67,6 +67,13 @@
     } 
     function dataInfo(data){
         data = JSON.parse(data);
+        if(data.checkResult == 1) {
+            data.checkResult = "存在";
+        } else if (data.checkResult == 2) {
+            data.checkResult = "盘亏";
+        } else if (data.checkResult == 3) {
+            data.checkResult = "盘盈";
+        }
         var list =$("#dataBox p"); 
         $.each(list,function(){ 
             var target = $(this);

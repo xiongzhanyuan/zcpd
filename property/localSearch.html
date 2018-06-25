@@ -66,7 +66,7 @@
                 {{??}}
                 <b>资产编码 ：<i class="assetsCode">{{= value.assetsCode }}</i></b> 
                 {{?}}
-                <b>规格型号 ：<i>{{= value.assetsStandard}}</i></b>
+                <b>规格型号 ：<i>{{= value.assetsStandard}}</i><input id="barCodeId" type="hidden" value={{= value.barCode}}></i><input id="checkResultId" type="hidden" value={{= value.checkResult}}></i></b>
   
             </span> 
         </li>
@@ -240,9 +240,14 @@ $("#require1").bind("select propertychange change",function(event){
 
     function enterInfo(even){
         var target = $(even);  
-        var barCode = target.find(".barCode").text();    
-        $.cookie('barCode', barCode,{ expires: 30, path: '/', secure: false });   
-        self.location="localInfoPd.html";
+        var barCode = target.find("#barCodeId").val();    
+        var checkResult = target.find("#checkResultId").val();    
+
+        // if(checkResult!=3) {
+            $.cookie('barCode', barCode,{ expires: 30, path: '/', secure: false });   
+            self.location="localInfoPd.html";
+        // }
+        
     } 
 
 

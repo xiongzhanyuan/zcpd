@@ -36,6 +36,8 @@
             <span class="listInfo">
                 <b>盘点计划编码 ：<i class="planNumber">{{= value.planNumber }}</i></b>
                 <b>盘点计划名称 ：<i>{{= value.planName}}</i></b> 
+                <b>结束日期 ：<i>{{= value.stopDate}}</i></b> 
+                <b>单位范围 ：<i>{{= value.names}}</i></b> 
             </span> 
         </li>
    {{~}}
@@ -60,7 +62,17 @@ function resD(data){
     var resData={}; 
     if(data==null){return false;}
     var az_res=JSON.parse(data); 
+    az_res[0].stopDate = localStorage.getItem("stopDate");
+
+    var str="";
+    var departList = $.cookie('departList');
+    departList = JSON.parse(departList);
+    $.each(departList,function(){ 
+        str+=this.shortname + ",";
+    })
+    az_res[0].names = str;
     resData.data=az_res;
+    
     var tmpl = doT.template($("#dwtTmpl").text());  
     $("#dowCard").html(tmpl(resData));
 }

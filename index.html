@@ -1284,6 +1284,12 @@ var pany=0;
 		}  
 
 	}
+	function S4() {
+	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+	}
+	function guid() {
+	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+	}
 	//保存数据 到本机
 	$("#submitBtn").click(function () { 
 		debugger
@@ -1299,7 +1305,7 @@ var pany=0;
 				return false;
 			}
 			
-
+			formData.keyCode=guid();
 			formData.checkResult=3;
 			formData.departCode = $("#pyDepartCode").val();
 			formData.managerDepart = $("#pyDepartCode").val();
@@ -1333,7 +1339,7 @@ var pany=0;
 			localStorage.setItem("pan_3",Number(pan_3)+1);
 			var clientData = Object.assign(saveData,formData); 
 			clientData.zcpdImgs = zcpdImgs;
-			clientData.fileName = clientData.barCode + new Date().Format('yyyy-MM-dd hh:mm:ss' + ".jpg");
+			clientData.fileName = "/mnt/sdcard/assets/" + clientData.barCode +"_"+ new Date().Format('yyyyMMdd-hhmmss')+".jpg";
 			debugger
 			clientData = JSON.stringify(clientData);
 		}else{ 
@@ -1357,7 +1363,7 @@ var pany=0;
 			} 
 			var clientData = Object.assign(saveData,formData); 
 			clientData.zcpdImgs = zcpdImgs;
-			clientData.fileName = clientData.barCode + new Date().Format('yyyy-MM-dd hh:mm:ss' + ".jpg");
+			clientData.fileName = "/mnt/sdcard/assets/" + clientData.barCode +"_"+ new Date().Format('yyyyMMdd-hhmmss')+".jpg";
 
 			clientData = JSON.stringify(clientData); 
 		}     

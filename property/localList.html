@@ -62,8 +62,8 @@
         })
     }
     function template(data){
-        $("#totalCount").html("总条数:" + data.length)
         data = JSON.parse(data)  
+        $("#totalCount").html("总条数:" + data.length)
         sessionStorage.setItem("pan_all",data.length)
         var resData={};
         resData.data=data; 
