@@ -21,7 +21,9 @@
             <p name="assetsCode"><i>资产编码:</i><span></span></p>
             <p name="assetsName"><i>资产名称：</i><span></span></p>   
             <p name="assetsStandard"><i>规格型号:</i><span></span></p>
-            <p name="assetsStatus"><i>资产状态:</i><span></span></p>
+            <!-- <p name="assetsStatus"><i>资产状态:</i><span></span></p> -->
+            <p name="usedStateName"><i>使用状态:</i><span></span></p>
+            <p name="technicalCondition"><i>技术状况:</i><span></span></p>
             <p name="assetsStatusName"><i>资产状态名称:</i><span></span></p>
             <p name="barCode"><i>条码:</i><span></span></p>
             <p name="checkResult"><i>盘点结果:</i><span></span></p>
@@ -74,6 +76,26 @@
         } else if (data.checkResult == 3) {
             data.checkResult = "盘盈";
         }
+
+        
+        if(data.technicalCondition == "01") {
+            data.technicalCondition = "完好";
+        } else if(data.technicalCondition == "02") {
+            data.technicalCondition = "带病运行";
+        } else if(data.technicalCondition == "03") {
+            data.technicalCondition = "在修";
+        } else if(data.technicalCondition == "04") {
+            data.technicalCondition = "待修";
+        } else if(data.technicalCondition == "05") {
+            data.technicalCondition = "待报废";
+        } else if(data.technicalCondition == "06") {
+            data.technicalCondition = "损毁";
+        } else if(data.technicalCondition == "07") {
+            data.technicalCondition = "待处置";
+        } else if(data.technicalCondition == "08") {
+            data.technicalCondition = "已处置";
+        } 
+
         var list =$("#dataBox p"); 
         $.each(list,function(){ 
             var target = $(this);
