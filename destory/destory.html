@@ -500,7 +500,7 @@ $("#submitBtnSaveLocal").click(function(){
             //eamDiscardDetails 明细信息
             obj2.assetsCode =  thatLi.attr("data-assetsCode");  
             obj2.barCode = thatLi.attr("data-barCode");  
-            obj2.stopDate=  $("input[name='stopDate']").val();
+            // obj2.stopDate=  $("input[name='stopDate']").val();
           //  obj1.discardTypeCode=$("#dypeCode").val() ; 
             obj2.discardTypeCode=obj1.invoiceType ; 
             obj1.sl= $("#countall").val();
@@ -529,8 +529,8 @@ $("#submitBtnSaveLocal").click(function(){
            // obj1.discardTypeName=nameres;
             obj2.discardTypeName=nameres;
             obj2.discardReasonName=$("#discardReasonCode").find("option:selected").text();      
-            obj2.discardReasonCode=$("#discardReasonCode").val();     
-            obj2.discardMark = $("#discardMark").val();
+            // obj2.discardReasonCode=$("#discardReasonCode").val();     
+            // obj2.discardMark = $("#discardMark").val();
             obj2.userCode=obj1.userCode;
             obj2.userName=obj1.userName;
             obj2.departCode=obj1.departCode;
