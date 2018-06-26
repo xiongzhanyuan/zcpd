@@ -1562,7 +1562,25 @@ var pany=0;
 		})
         
     });
-	
+
+
+	if (window.JsCallback) {
+        //安卓            
+        callbackGetServerConfig(window.JsCallback.onGetServerConfig());
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('getCurrentServerConfig', callbackGetServerConfig)
+        })
+    }
+	function callbackGetServerConfig(result) { 
+		debugger
+        // if (result!= null&&result!= "") {  
+		// 	var urlResultJson = JSON.parse(result);    
+        //     var pUrl =  urlResultJson.server1+"://" + urlResultJson.server2 + ":" + urlResultJson.server3;
+		// 	$.cookie('postUrl', pUrl, { expires: 7, path: '/', secure: false });
+        // }
+    }
 	
 	
 	
