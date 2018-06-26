@@ -649,7 +649,6 @@ function scanData(data) {
 
 // 价值 进行汇总
 function count(data){
-    debugger
     var originalValue=0,nowValue=0,addDepreciate=0,devalueValueSum=0;
     var res = data.unique('assetsCode'); 
     
@@ -668,7 +667,6 @@ function count(data){
 }
 
 function countAll(){
-    debugger
     var originalValue=0,nowValue=0,addDepreciate=0,devalueValueSum=0;
     var res = [];
     if (window.JsCallback) {

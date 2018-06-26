@@ -180,7 +180,6 @@
     })
     var tzArray = [];
     function clickSearchCallBack(data) {
-        debugger
         if (data.success == 'true') {
             searchTemplate(data.data);
             tzArray = [];
@@ -193,7 +192,6 @@
     }
 
     function searchTemplate(data) {
-        debugger
 
         $.each(data, function (index, i) {
             if (this.imguUrl == null || this.imguUrl == "") {
@@ -210,7 +208,6 @@
     }
 
     function pageCallBack(data) {
-        debugger
         if (data.success == 'true') {
             if(data.data.length == 0) {
                 alert("已经到底了~");
@@ -224,7 +221,6 @@
     }
 
     function appendTemplate(data) {
-        debugger
         $.each(data, function (index, i) {
             if (this.imguUrl == null || this.imguUrl == "") {
                 this.fullImgUrl = "../images/default.png";
@@ -251,7 +247,6 @@
     }
 
     function enterInfo(id) {
-        debugger
         tzArray.forEach(function (value, index) {
             if (value.assetsCode == id) {
                 sessionStorage.setItem('tzDetailItem', JSON.stringify(value));

@@ -923,7 +923,6 @@ var pany=0;
 		}
 
 		pyFrom = 0;
-		debugger
 		zcpdImgs = [];
 		$(".navCon").html("盘盈录入");
 		$("#pyImgsDiv").html("");
@@ -1143,7 +1142,6 @@ var pany=0;
         }
         context.drawImage(image, 0, 0,image.width, image.height);
 		var base64 = cvs.toDataURL('image/jpeg', quality/100);
-		debugger
 		//获取识别结果
 			zcpdImgs.unshift(base64);
 			$("#zcpdImgsDiv").html("");
@@ -1292,7 +1290,6 @@ var pany=0;
 	}
 	//保存数据 到本机
 	$("#submitBtn").click(function () { 
-		debugger
 		var pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1"),  
 		pan_3=localStorage.getItem("pan_3")==undefined?0:localStorage.getItem("pan_3");
 		var formBox = {};
@@ -1340,7 +1337,6 @@ var pany=0;
 			var clientData = Object.assign(saveData,formData); 
 			clientData.zcpdImgs = zcpdImgs;
 			clientData.fileName = "/mnt/sdcard/assets/" + clientData.barCode +"_"+ new Date().Format('yyyyMMdd-hhmmss')+".jpg";
-			debugger
 			clientData = JSON.stringify(clientData);
 		}else{ 
 			formData = $("#formEntry").serializeObject();  
@@ -1424,7 +1420,6 @@ var pany=0;
 		} else {
 			setupWebViewJavascriptBridge(function (bridge) {
 				bridge.callHandler('saveTobesubmit', clientData, function responseCallback(result) {
-					debugger
 					if (result) {
 						var userInfo = JSON.parse($.cookie('userinfo'));  
 						alert("保存成功");

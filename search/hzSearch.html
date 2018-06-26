@@ -238,7 +238,6 @@
 </script>
 <script>  
     $(".switch-bg").click(function () {
-        debugger
         if ($(this).hasClass("turn-off")) {
             $(this).removeClass("turn-off");
             var turnOn = $(".turn-on");
@@ -359,7 +358,6 @@
     // })
     //搜索
     $("#hzSearchBtn").click(function () {
-        debugger
         var groupSsdw;
         var groupZclb;
         var groupJszk;
@@ -393,13 +391,11 @@
             groupZjyy: groupZjyy,
             groupZjqd: groupZjqd
         }
-        debugger
         var url = getURL() + '/AssetsDataPhone/mobile/summaryController.do?querySummary';
 
         sendPost(url, jsons, ListA)
     })
     function ListA(data) {
-        debugger
         if (data.success == 'true') {
             // listAarray.push(data.data);
             // var reslistAarray = listAarray.unique('barCode');
@@ -556,7 +552,6 @@
         }
     }
     function template(data) {
-        debugger
         var res = {};
         res.data = data;
         var tmpl = doT.template($("#listCon1").text());

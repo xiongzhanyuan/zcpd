@@ -198,7 +198,6 @@
     userInfo = JSON.parse(userInfo);
     //搜索
     $("#search").click(function () {
-        debugger
         $('#scan1').show();
         if ($("input[name='assetsCode']").val().trim() == '' && $("input[name='barCode']").val().trim() == '') {
             return false;
@@ -246,7 +245,6 @@
     }
 
     function template(data) {
-        debugger
         var res = {};
         res.data = data;
         var tmpl = doT.template($("#listCon1").text());
@@ -292,7 +290,6 @@
         scanData(result);
     }
     function scanData(data) {
-        debugger
         var scanData = JSON.parse(data);
 
         if (scanData.QRCodeLPC) {

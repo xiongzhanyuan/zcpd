@@ -73,7 +73,6 @@ function getURL(){
     return postUrl;
 }
 function sendPostUpload(reqUrl, jsonObj, callbackFun) {
-    debugger
     if (window.JsCallback) {
         window.JsCallback.onShowProgress();
         $.ajax({
@@ -178,7 +177,6 @@ function sendPostUpload(reqUrl, jsonObj, callbackFun) {
     
 }
 function sendPost(reqUrl, jsonObj, callbackFun) {
-    debugger
     if (window.JsCallback) {
         window.JsCallback.onShowProgress();
         $.ajax({
@@ -276,7 +274,6 @@ function sendPost(reqUrl, jsonObj, callbackFun) {
 }
 
 function sendPostBf(reqUrl, jsonObj, callbackFun) {
-    debugger
     if (window.JsCallback) {
         window.JsCallback.onShowProgress();
         $.ajax({
