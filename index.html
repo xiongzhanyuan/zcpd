@@ -858,6 +858,27 @@
 
 <!-- chart结束 -->
 <script> 
+
+//请求数据
+if (window.JsCallback) {
+        //安卓            
+        callbackGetServerConfig(window.JsCallback.onGetServerConfig());
+    } else {
+        //IOS 
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('getCurrentServerConfig', callbackGetServerConfig)
+        })
+    }
+
+    function callbackGetServerConfig(result) { 
+        if (result!= null&&result!= "") {            
+            var urlJson = JSON.parse(result);
+			var pUrl =  urlJson.server1+"://" + urlJson.server2 + ":" + urlJson.server3;
+            sessionStorage.setItem('postUrl',pUrl)
+            $.cookie('postUrl', pUrl, { expires: 7, path: '/', secure: false });
+        }
+    }
+
 //select 
 var saveData={}; 
 var pany=0;
@@ -962,8 +983,10 @@ var pany=0;
 
 	function getdepartList (){ 
 		var PDdepartlist = $.cookie('PDdepartlist');
-		PDdepartlist = JSON.parse(PDdepartlist);
-		resD(PDdepartlist); 
+		if(PDdepartlist) {
+			PDdepartlist = JSON.parse(PDdepartlist);
+			resD(PDdepartlist); 
+		}
 	}
     //单位列表
     getdepartList ()
