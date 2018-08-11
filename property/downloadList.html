@@ -154,7 +154,8 @@
                             that.removeClass("downBtn").html("已下载"); 
                             that.closest(".listBtn").addClass("current")
                             $(".scan2").hide();
-                            $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                            // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                            localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
                         }
                     } else { 
                         //IOS  
@@ -166,7 +167,8 @@
                                     localStorage.setItem("stopDate",that.closest("li").attr("stopdata").replaceAll("-",''))
                                     localStorage.setItem("plnum",that.closest("li").find(".planNumber").text());
                                     $(".scan2").hide();
-                                    $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                                    // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                                    localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
                                 }
                             })
                         });
@@ -200,7 +202,9 @@
                         that.removeClass("downBtn").html("已下载"); 
                         that.closest(".listBtn").addClass("current")
                         $(".scan2").hide();
-                        $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                        // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                        localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
+
                     }
                 } else { 
                     //IOS  
@@ -212,7 +216,9 @@
                                 localStorage.setItem("stopDate",that.closest("li").attr("stopdata").replaceAll("-",''))
                                 localStorage.setItem("plnum",that.closest("li").find(".planNumber").text());
                                 $(".scan2").hide();
-                                $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                                // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
+                                localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
+
                             }
                         })
                     });

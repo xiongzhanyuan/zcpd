@@ -142,7 +142,8 @@ function templateL(res, term){
     }
 } 
 function getdepartList (){ 
-   var PDdepartlist = $.cookie('PDdepartlist');
+//    var PDdepartlist = $.cookie('PDdepartlist');
+   var PDdepartlist = localStorage.getItem('PDdepartlist');
    PDdepartlist = JSON.parse(PDdepartlist);
    resD(PDdepartlist); 
 }

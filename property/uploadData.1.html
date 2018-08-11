@@ -10,77 +10,66 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/dialog.css">
     <link rel="stylesheet" href="../css/index.css">
+    <!-- <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
+
     <style>
-        .fl {
-            float: left;
-        }
-
-        .fr {
-            float: right;
-        }
-
-        .apply {
-            display: block;
-            height: 3.1rem;
-            border-bottom: 1px solid #eee;
-            position: relative;
-            zoom: 1;
-            overflow: hidden;
-            padding: 0 .75rem;
-        }
-
-        .apply .item div {
-            font-size: .7rem;
-        }
-
-        .apply .pic {
-            width: 2.25rem;
-            height: 2.25rem;
-            margin-top: .35rem;
-            float: left;
-        }
-
-        .apply .pic img {
-            width: 100%;
-            height: 2.25rem;
-        }
-
-        .apply .name2 {
-            margin-left: 2.75rem;
-            padding-top: .6rem;
-        }
-
-        .apply .name2 span {
-            display: block;
-        }
-
-        .addit {
-            height: 100%;
-            position: absolute;
-            right: 0rem;
-            width: 0rem;
-            top: 0;
-            background: red;
-            color: #fff;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ui-loader-default {
-            display: none
-        }
-
-        .ui-mobile-viewport {
-            border: none;
-        }
-
-        .ui-page {
-            padding: 0;
-            margin: 0;
-            outline: 0
-        }
     </style>
+    <style>
+    .fl {
+        float: left;
+    }
+
+    .fr {
+        float: right;
+    }
+
+    .apply {
+        display: block;
+        height: 3.1rem;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        zoom: 1;
+        overflow: hidden;
+        padding: 0 .75rem;
+    }
+
+    .apply .item div {
+        font-size: .7rem;
+    }
+
+    .apply .pic {
+        width: 2.25rem;
+        height: 2.25rem;
+        margin-top: .35rem;
+        float: left;
+    }
+
+    .apply .pic img {
+        width: 100%;
+        height: 2.25rem;
+    }
+
+    .apply .name2 {
+        margin-left: 2.75rem;
+        padding-top: .6rem;
+    }
+
+    .apply .name2 span {
+        display: block;
+    }
+
+    .addit {
+        height: 3.1rem;
+        line-height: 3.1rem;
+        position: absolute;
+        right: 0rem;
+        width: 0rem;
+        top: 0;
+        background: red;
+        color: #fff;
+        text-align: center;
+    }
+</style>
 </head>
 
 <body>
@@ -88,44 +77,27 @@
         <a class="back centery" href="javascript:history.go(-1)">返回</a>
         <p class="navCon">盘点数据上传</p>
     </nav>
-    <div class="content">
-        <ul class="cardList" id="TobeArray">
-            <!-- <li class="clearfix">
-                <div class="moveClass">
-                    <span class="listImg">
-                        <img class="center" src="../images/static.png" alt="">
-                    </span>
-                    <span class="listInfo">
-                        <b style="color:red">盘盈</b>
-                        <b style="color:green">盘点</b>
-                        <b>资产条码 ：
-                            <i class="barCode">barCode</i>
-                        </b>
-                        <b>资产编码 ：
-                            <i>--</i>
-                        </b>
-                        <b>资产编码 ：
-                            <i class="assetsCode">barCode</i>
-                        </b>
-                        <b>资产名称 ：
-                            <i>barCodebarCodebarCode</i>
-                        </b>
-                        <b>盘点单位 ：
-                            <i>barCodebarCode</i>
-                        </b>
-                        <b>保管人 ：
-                            <i>--</i>
-                        </b>
-                        <b>保管人 ：
-                            <i>barCode</i>
-                        </b>
-                    </span>
-                </div>
-                <div class="addit delete">删除</div>
+    <div style="" id="swipeBody">
 
-
-            </li> -->
-            <!-- <li class="clearfix">  
+        <div class="content">
+            <ul class="cardList" id="TobeArray">
+                    <li class="clearfix">  
+                            <span class="listImg"> 
+                                <img class="center" src="../images/static.png" alt=""> 
+                            </span>  
+                            <span class="listInfo"> 
+                                <b style="color:red">盘盈</b>  
+                                <b style="color:green">盘点</b>
+                                <b>资产条码 ：<i class="barCode">barCode</i></b>
+                                <b>资产编码 ：<i>--</i></b>  
+                                <b>资产编码 ：<i class="assetsCode">barCode</i></b>
+                                <b>资产名称 ：<i>barCodebarCodebarCode</i></b>
+                                <b>盘点单位 ：<i>barCodebarCode</i></b>
+                                <b>保管人 ：<i>--</i></b>  
+                                <b>保管人 ：<i>barCode</i></b>  
+                            </span> 
+                        </li>
+                        <li class="clearfix">  
                                 <span class="listImg"> 
                                     <img class="center" src="../images/static.png" alt=""> 
                                 </span>  
@@ -140,8 +112,10 @@
                                     <b>保管人 ：<i>--</i></b>  
                                     <b>保管人 ：<i>barCode</i></b>  
                                 </span> 
-                            </li> -->
-        </ul>
+                            </li>
+            </ul>
+        </div>
+        <div class="addit delete">删除</div>
     </div>
     <bottom class="bottomFixed">
         <div class="center clearfix">
@@ -151,6 +125,7 @@
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/jquery.mobile-1.4.5.min.js"></script>
+
 <script src="../js/dialog.js"></script>
 <script src="../js/cookie.js"></script>
 <script src="../js/hotcss.js"></script>
@@ -159,7 +134,6 @@
 <script type="template" id="dwtTmpl">  
     {{~it.data :value:index}}
             <li class="clearfix">  
-                <div class="moveClass">
                 <span class="listImg"> 
                     <img class="center" src="../images/static.png" alt=""> 
                 </span>  
@@ -183,15 +157,25 @@
                     <b>保管人 ：<i>{{= value.userPerson}}</i></b>  
                     {{?}}
                 </span> 
-                </div>
-                <div class="addit delete">删除</div>
             </li>
     {{~}}
 </script>
 <script>  
 
-
-
+    $("li").on("swipeleft", function () {//左滑显示隐藏按键
+        // console.log("lll")
+        $(this).animate({left: '-3rem'}, 200, 'linear');
+        $(this).siblings('.addit').animate({width: '3rem'}, 200, 'linear');
+        // $(this).parent('li').siblings('li').find('.apply').animate({left: '0'}, 200).siblings('.addit').animate({width: '0'}, 200);
+    });
+    $('.clearfix').on("swiperight", function () {//右滑恢复
+        $(this).animate({left: '0'}, 200, 'linear');
+        $(this).siblings('.addit').animate({width: '0rem'}, 200, 'linear');
+    });
+    $('.clearfix').on("tap", function () { //删除
+        $(this).parent().remove();
+    });
+    
 
 
 
@@ -226,39 +210,6 @@
         }
         var tmpl = doT.template($("#dwtTmpl").text());
         $("#TobeArray").html(tmpl(res));
-
-        $(".moveClass").on("swipeleft", function () {//左滑显示隐藏按键
-            // console.log("lll")
-            $(this).parent().find(".delete").css('display', 'flex');
-            $(this).animate({ left: '-3rem' }, 200, 'linear');
-            $(this).siblings('.addit').animate({ width: '3rem' }, 200, 'linear');
-            // $(this).parent('li').siblings('li').find('.apply').animate({left: '0'}, 200).siblings('.addit').animate({width: '0'}, 200);
-        });
-        $('.moveClass').on("swiperight", function () {//右滑恢复
-            $(this).animate({ left: '0' }, 200, 'linear');
-            $(this).siblings('.addit').animate({ width: '0rem' }, 200, 'linear', function () {
-                $(this).parent().find(".delete").css('display', 'none');
-
-            });
-        });
-
-        $(".delete").on("click", function () {
-            var barCode = $(this).parent().find(".barCode").text();
-            if (window.JsCallback) {
-                var responseData = window.JsCallback.onUnStashDeviceList(barCode);
-                alert("删除成功");
-                history.go(0);
-            } else {
-                setupWebViewJavascriptBridge(function (bridge) {
-                    bridge.callHandler('onUnStashDeviceList', barCode, function deleteOne() {
-                        
-                    })
-                });
-                alert("删除成功");
-                history.go(0);
-            }
-        })
-
         $("#submitBtn").click(function () {
             if (window.JsCallback) {
                 if (newDate.length > 0) {
@@ -333,20 +284,20 @@
             saveData(newDate[0], "");
         } else {
             // history.go(0);
-            if (hasFail) {
+            if(hasFail) {
                 history.go(0);
             } else {
                 alert("上传成功");
                 $("#TobeArray").html("");
             }
-
+            
         }
 
     }
 
     function callbackUploadResult(responseData) {
 
-    }
+    } 
 </script>
 
 </html>

@@ -982,7 +982,8 @@ var pany=0;
 	userINFO();
 
 	function getdepartList (){ 
-		var PDdepartlist = $.cookie('PDdepartlist');
+		// var PDdepartlist = $.cookie('PDdepartlist');
+		var PDdepartlist = localStorage.getItem('PDdepartlist');
 		if(PDdepartlist) {
 			PDdepartlist = JSON.parse(PDdepartlist);
 			resD(PDdepartlist); 
@@ -1343,7 +1344,8 @@ var pany=0;
 			
 			var managerDepartName = "";
 
-			var PDdepartlist = $.cookie('PDdepartlist');
+			// var PDdepartlist = $.cookie('PDdepartlist');
+			var PDdepartlist = localStorage.getItem('PDdepartlist');
 			PDdepartlist = JSON.parse(PDdepartlist);
 			$.each(PDdepartlist,function(){
 				var that = this;   
