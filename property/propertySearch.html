@@ -45,7 +45,9 @@
 <!-- 将类型设置为template，标识为doT.JS -->  
      
 <script>  
- var departList = $.cookie('departList');
+//  var departList = $.cookie('departList');
+var departList = localStorage.getItem('departList');
+
 var userInfo = $.cookie('userinfo');   
     //  取出本地已经下载
 if (window.JsCallback) { 
@@ -65,7 +67,9 @@ function resD(data){
     az_res[0].stopDate = localStorage.getItem("stopDate");
 
     var str="";
-    var departList = $.cookie('departList');
+    // var departList = $.cookie('departList');
+    var departList = localStorage.getItem('departList');
+
     departList = JSON.parse(departList);
     $.each(departList,function(){ 
         str+=this.shortname + ",";

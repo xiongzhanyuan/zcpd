@@ -73,7 +73,9 @@
     {{~}}
 </script>
 <script>
-    var departList = $.cookie('departList');
+    // var departList = $.cookie('departList');
+    var departList = localStorage.getItem('departList');
+
     var userInfo = $.cookie('userinfo');   
     departList = JSON.parse(departList)[0];
     userInfo = JSON.parse(userInfo);  
@@ -189,7 +191,9 @@ function resD(data){
             str+="<option value="+that.departCode+">"+that.departName+"</option>"
         })
     }else{
-        var departList = $.cookie('departList');
+        // var departList = $.cookie('departList');
+        var departList = localStorage.getItem('departList');
+
         departList = JSON.parse(departList);
         $.each(departList,function(){ 
             str+="<option value="+this.departcode+">"+this.shortname+"</option>"

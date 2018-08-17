@@ -244,7 +244,9 @@
 
 
     var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
-    var departListStr = $.cookie('departList');
+    // var departListStr = $.cookie('departList');
+    var departListStr = localStorage.getItem('departList');
+
     var userInfo = $.cookie('userinfo');  
     departList = JSON.parse(departListStr)[0];
     userInfo = JSON.parse(userInfo); 

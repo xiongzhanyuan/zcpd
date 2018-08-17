@@ -87,7 +87,9 @@
 <script>
     //待审批单据查询
     var listUrl = getURL()+"/AssetsDataPhone/mobile/discardController.do?queryApproveInvoice" 
-    var departList = $.cookie('departList');
+    // var departList = $.cookie('departList');
+    var departList = localStorage.getItem('departList');
+
     var userInfo = $.cookie('userinfo'); 
     departList = JSON.parse(departList)[0];
     userInfo = JSON.parse(userInfo);   

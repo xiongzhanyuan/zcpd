@@ -54,7 +54,9 @@
 <script> 
 //取cookie 
 $("#unit").html("")
-var departList = $.cookie('departList');
+// var departList = $.cookie('departList');
+var departList = localStorage.getItem('departList');
+
 var userInfo = $.cookie('userinfo');   
 var selectData = getURL()+"/AssetsDataPhone/mobile/allotController.do?getDeparts";
 departList = JSON.parse(departList);

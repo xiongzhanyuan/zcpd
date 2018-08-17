@@ -30,18 +30,83 @@
       // 给客户端传
 	if (window.JsCallback) {
 		var res = window.JsCallback.onGetLoginJSON();
-		judgmentUrl(res, "login.html"); 
+		if (res && JSON.parse(res).hasOwnProperty("token") && JSON.parse(res).get("token")) {
+			loginByEmail();
+		} else {
+			judgmentUrl(res, "login.html"); 
+		}
 	} else {
 		setupWebViewJavascriptBridge(function (bridge) {
 			bridge.callHandler('onGetLoginJSON', function responseCallback(res) { 
-              if (res) {
-            $.cookie('userinfo', res, { expires: 30, path: '/', secure: false });
+			if (res && JSON.parse(res).hasOwnProperty("token") && JSON.parse(res).get("token")) {
+				$.cookie('userinfo', res, { expires: 30, path: '/', secure: false });
 							localStorage.setItem("userinfo",res);
-	userINFO();
-              }
+				userINFO();
+				loginByEmail();
+			} else {
 				judgmentUrl(res, "login.html"); 
+			}
 			})
 		});
+	}
+
+	function loginByEmail(){
+		var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?loginByEmail";   
+    var json={
+        "mail":"chenxi@cnpc.com.cn",
+        "password":"262eb34f-5614-4662-9873-4aa84995a524"
+    }  
+    sendPost(registUrl,json,callbackB);
+    function callbackB(data){     
+        if(data.success!="true"){           
+            alert(data.msg);   
+            return;
+        }else{
+            // 存cookie
+            var  user = data.data[0].user;
+            var departs = data.data[1].depart;
+            var func = data.data[2].func;
+            
+            var user_info = {
+                "account":user.account,
+                "mail":user.mail,
+                "usercode":user.usercode,
+                "userid":user.userid,                
+                "username":user.username,
+            } ;
+            // 公司
+            var departList=[];
+            $.each(departs,function(){
+                var lis={
+                    "departname":this.departname,
+                    "shortname":this.shortname,
+                    "departcode":this.departcode,
+                    "usabledate":this.usabledate,
+                    "creatorid":this.creatorid,
+                    "departid":this.departid,
+                }
+                departList.push(lis);
+            }) 
+            departList= JSON.stringify(departList); 
+            user_info= JSON.stringify(user_info);  
+            $.cookie('userinfo', user_info, { expires: 30, path: '/', secure: false });
+            $.cookie('departList', departList, { expires: 30, path: '/', secure: false });
+            localStorage.setItem("userinfo",user_info);
+            localStorage.setItem("departList",departList);
+            // 给客户端传数据
+           if (window.JsCallback) {
+                window.JsCallback.onHideProgress()
+                self.location='unit.html';
+             }else{
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onHideProgress') 
+                    self.location='unit.html';
+                })
+            }
+             // 先跳转
+        　  
+        }
+    }
 	}
 
 	</script>
@@ -460,16 +525,16 @@
 				</p>
 				<p>
 					<label for="assetsStandard">规格型号:</label>
-					<input type="text" name="assetsStandard" id="assetsStandard" disabled>
+					<input type="text" name="assetsStandard" id="assetsStandard">
 				</p>
 				
 				<p>
 					<label for="licenceNumber">车牌井号:</label>
-					<input type="text" name="licenceNumber" id="licenceNumber" disabled>
+					<input type="text" name="licenceNumber" id="licenceNumber">
 				</p> 
 				<p>
 					<label for="storePlaceName">存放地点:</label>
-					<input type="text" name="storePlaceName" id="storePlaceName" disabled>
+					<input type="text" name="storePlaceName" id="storePlaceName">
 				</p>
 				<!-- <p>
 					<label for="checkResult">盘点状态:</label>
@@ -481,7 +546,7 @@
 				</p> -->
 				<p>
 					<label for="userPerson" class="editStatus">保管人:</label>
-					<input type="text" name="userPerson" id="userPerson" disabled>
+					<input type="text" name="userPerson" id="userPerson">
 				</p>
 				<p>
 					<label class="editStatus" for="realcodeStatus">贴码状态 :</label>
@@ -890,7 +955,8 @@ var pany=0;
 	//$('#checkResult').val("1");  
 	$('#realcodeStatus').val("0");  
 	if (window.JsCallback) {  
-		$('select').fancySelect();  
+		// $('select').fancySelect(); 
+		$('#technicalCondition').fancySelect();  
 	}
 
 	//开发调试临时注释掉  -xiongzy
@@ -968,7 +1034,9 @@ var pany=0;
 <script>
 	// 判断是否登陆
 	function userINFO(){
-		var departListStr = $.cookie('departList');
+		// var departListStr = $.cookie('departList');
+		var departListStr = localStorage.getItem('departList');
+
 		var userInfo = $.cookie('userinfo'); 
 		if(departListStr&&userInfo && departListStr !== "null"){ 
 			departList = JSON.parse(departListStr)[0];
@@ -998,7 +1066,9 @@ var pany=0;
 				str+="<option value="+that.departCode+">"+that.departName+"</option>"
 			})
 		}else{
-			var departList = $.cookie('departList');
+			// var departList = $.cookie('departList');
+			var departList = localStorage.getItem('departList');
+
 			departList = JSON.parse(departList);
 			$.each(departList,function(){ 
 				str+="<option value="+this.departcode+">"+this.shortname+"</option>"
@@ -1021,7 +1091,8 @@ var pany=0;
 			return false;
 		}
 		if (window.JsCallback) {
-			renderData($("#formEntry"), window.JsCallback.onGetDeviceById(lid));
+			var data=window.JsCallback.onGetDeviceById(lid);  
+			renderData($("#formEntry"), data);
 		} else {
 			setupWebViewJavascriptBridge(function (bridge) {
 				bridge.callHandler('getJSONWithDeviceId', lid, function responseCallback(result) {
@@ -1259,7 +1330,7 @@ var pany=0;
 	function renderData(dom, data) { 
 		var scanData = JSON.parse(data); 
 		saveData=scanData;
-		if(scanData.QRCodeLPC){
+		if(!data || scanData.QRCodeLPC){
 			pyFrom = 1;
 			$(".navCon").html("盘盈录入");
 			$(".scrollCon2").show();
@@ -1576,7 +1647,9 @@ var pany=0;
 	}
 
 	$("#pyDepartCode").bind("select propertychange change",function(event){
-        var departList = $.cookie('departList');
+        // var departList = $.cookie('departList');
+		var departList = localStorage.getItem('departList');
+
 		departList = JSON.parse(departList);
 		$.each(departList,function(){
 			var that = this;   

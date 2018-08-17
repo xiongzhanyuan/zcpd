@@ -62,7 +62,9 @@
 <script>       
     var qustString = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?phonecheckplandownload";
     var dowStr = getURL()+"/AssetsDataPhone/mobile/cellPhoneController.do?phonecheckplandetail" 
-    var departList = $.cookie('departList');
+    // var departList = $.cookie('departList');
+    var departList = localStorage.getItem('departList');
+
     var userInfo = $.cookie('userinfo'); 
     departList = JSON.parse(departList)[0];
     userInfo = JSON.parse(userInfo); 
