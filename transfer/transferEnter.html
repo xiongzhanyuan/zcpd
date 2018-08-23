@@ -95,7 +95,7 @@
 
                     <p>
                         <label for="createDepart">申请单位</label>
-                        <input type="text" name="createDepart" readonly="readonly" placeholder="申请单位"> 
+                        <input type="text" name="createDepart" readonly="readonly" placeholder="制单时间"> 
                     </p>
 
 
@@ -209,7 +209,7 @@
     // 调出
     var strOUT="";  
     $.each(JSON.parse(localStorage.getItem('selOut')),function(index,i){   
-        strOUT+="<option value="+this.departcode+">"+this.departname+"</option>"
+        strOUT+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
     })    
     //调入
     var strIN="",strINList='';    
@@ -217,17 +217,17 @@
         // if(index==0){
         //     $("#createDepartcode").val(this.departcode)
         // }
-        strIN+="<option dp_code="+this.departcode+" value="+this.departcode+">"+this.departname+"</option>"
+        strIN+= "<option value="+this.departcode+">"+this.departname+"</option>"
     })   
     
-    $("#DInvoice").html(strIN);
-    $("#Outvoice").html(strOUT);
+    $("#DInvoice").html(strOUT);
+    $("#Outvoice").html(strIN);
     $("#DInvoice").select2();
     $("#Outvoice").select2();
     if (window.JsCallback) {  
         //$('.select').fancySelect();  
     }
-    $("input[name='createTime']").val(new Date().Format('yyyy/MM/dd')); 
+    $("input[name='createTime']").val(new Date().Format('yyyy/mm/dd')); 
     $(".checkTop input").click(function(){ 
         $(".checkSear input").val('');
         $(this).parent().siblings(".checkB").find('input').attr("checked",false);
@@ -253,10 +253,10 @@
         $('#scan1').hide();
         if(data.success=='true'){ 
             var OutDepart = $("#Outvoice").val();
-            if(OutDepart != data.data.departCode){
+            /* if(OutDepart != data.data.departCode){
                 alert("该数据不属于此单位");
                 return false;
-            }
+            } */
             listAarray.push(data.data);
             var reslistAarray = listAarray.unique('assetsCode');
             sessionStorage.setItem("form1", JSON.stringify(reslistAarray)); 
@@ -327,10 +327,6 @@ $("#submitBtn").click(function(){
     var res={},obj1={},obj2={};
     var phoneInvoiceNumber = userInfo.usercode+userInfo.departcode+new Date().Format('yyyyMMddhhmmss');
     obj1 =$("#form1").serializeObject(); 
-    if (!obj1.reason) {
-        alert("请填写调拨原因");
-        return false;
-    }
     obj1.phoneInvoiceNumber=phoneInvoiceNumber;
     obj2.phoneInvoiceNumber=phoneInvoiceNumber; 
     obj1.createDepartcode	= userInfo.departcode;
