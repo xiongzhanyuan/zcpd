@@ -95,7 +95,7 @@
 
                     <p>
                         <label for="createDepart">申请单位</label>
-                        <input type="text" name="createDepart" readonly="readonly" placeholder="制单时间"> 
+                        <input type="text" name="createDepart" readonly="readonly" placeholder="申请单位"> 
                     </p>
 
 
@@ -227,7 +227,7 @@
     if (window.JsCallback) {  
         //$('.select').fancySelect();  
     }
-    $("input[name='createTime']").val(new Date().Format('yyyy/mm/dd')); 
+    $("input[name='createTime']").val(new Date().Format('yyyy/MM/dd')); 
     $(".checkTop input").click(function(){ 
         $(".checkSear input").val('');
         $(this).parent().siblings(".checkB").find('input').attr("checked",false);
@@ -327,6 +327,10 @@ $("#submitBtn").click(function(){
     var res={},obj1={},obj2={};
     var phoneInvoiceNumber = userInfo.usercode+userInfo.departcode+new Date().Format('yyyyMMddhhmmss');
     obj1 =$("#form1").serializeObject(); 
+    if (!obj1.reason) {
+        alert("请填写调拨原因");
+        return false;
+    }
     obj1.phoneInvoiceNumber=phoneInvoiceNumber;
     obj2.phoneInvoiceNumber=phoneInvoiceNumber; 
     obj1.createDepartcode	= userInfo.departcode;

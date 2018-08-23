@@ -446,6 +446,17 @@
 
 					</div>
 				</li> 
+				<li>
+					<div>
+						<div class="con updateDepart">
+							<i class="appNav iconfont icon-msnui-cloud-download"></i>
+							<a href="javascript:;">
+								<p>更新字典</p>
+							</a>
+						</div>
+
+					</div>
+				</li> 
 			</ul>
 		</div>
 	</div>
@@ -1383,6 +1394,12 @@ var pany=0;
 	function guid() {
 	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 	}
+	function guid() {
+		function S4() {
+		return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+		}
+		return (S4()+S4()+S4()+S4()+S4()+S4()+S4()+S4());
+	}
 	//保存数据 到本机
 	$("#submitBtn").click(function () { 
 		var pan_1=localStorage.getItem("pan_1")==undefined?0:localStorage.getItem("pan_1"),  
@@ -1391,6 +1408,9 @@ var pany=0;
 		if($("#formEntry").is(":hidden")){ 
 			pany=1;
 			formData = $("#formEntry2").serializeObject();
+			if (!formData.barCode) {
+				formData.barCode = guid();
+			}
 			if(!formData.assetsName || !formData.storePlaceName || !formData.technicalCondition ||
 				!formData.userPerson || !formData.assetsStatus || !formData.lossReason) {
 				alert("有必传字段未填写");
@@ -1543,6 +1563,46 @@ var pany=0;
 
 		$(".indexBox").removeClass("active");
 	})
+	var qustString = getURL()+"/AssetsDataPhone/mobile/allotController.do?getDeparts";
+
+	var departList = localStorage.getItem('departList');
+
+    var userInfo = $.cookie('userinfo'); 
+    departList = JSON.parse(departList)[0];
+    userInfo = JSON.parse(userInfo); 
+	$(".updateDepart").click(function () {    
+		var jsons = {
+            userCode: userInfo.usercode,
+            departCode: userInfo.departcode 
+        } ;  
+		sendPost(qustString, jsons, updateDepartCallBack)
+	})
+
+	function updateDepartCallBack(data) {
+		if (data.data) {
+			var res =JSON.stringify(data.data);
+			if (window.JsCallback) {
+				var result = window.JsCallback.onSaveDeparts(res);
+				if(result){
+					alert("更新成功");
+				}
+			} else {
+				setupWebViewJavascriptBridge(function (bridge) {
+					bridge.callHandler('onSaveDeparts',res,function responseCallback(result) {
+						if(result){
+							alert("更新成功");
+						}
+					})
+				})
+			}
+		} else {
+			alert("未查询到更新的单位信息")
+		}
+		
+	}
+
+
+
 	$(".delateData").click(function () {    
 		if (window.JsCallback) {
 			var result = window.JsCallback.onClearCache();
