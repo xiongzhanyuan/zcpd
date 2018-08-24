@@ -1572,8 +1572,8 @@ var pany=0;
     userInfo = JSON.parse(userInfo); 
 	$(".updateDepart").click(function () {    
 		var jsons = {
-            userCode: userInfo.usercode,
-            departCode: userInfo.departcode 
+            userCode: userInfo.usercode
+            // departCode: userInfo.departcode 
         } ;  
 		sendPost(qustString, jsons, updateDepartCallBack)
 	})
