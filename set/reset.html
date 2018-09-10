@@ -69,7 +69,7 @@ $("#resetBtn").click(function(){
     if(!$("#resetForm").validate()){
         return false;
     } 
-    var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?modifyPassword";
+    var registUrl=getURL()+"/mobile/appLoginController.do?modifyPassword";
     var userInfo=$.cookie('userinfo');
     userInfo= JSON.parse(userInfo);
     console.log(userInfo);

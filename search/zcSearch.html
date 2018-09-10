@@ -215,7 +215,7 @@
             assetsCode: assetsCode,
             barCode: barCode,
         }
-        var getListUrl = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedger';
+        var getListUrl = getURL() + '/mobile/cellPhoneController.do?queryLedger';
 
         sendPost(getListUrl, jsons, ListA)
     })
@@ -234,7 +234,7 @@
 
 
             if (data.data[0].imguUrl) {
-                var imgUrl = getURL() + "/AssetsDataPhone" + data.data[0].imguUrl;
+                var imgUrl = getURL() + data.data[0].imguUrl;
                 $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + imgUrl + "\"/>" + "</div>");
 			}
 

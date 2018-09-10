@@ -215,7 +215,7 @@
                 }) 
             })
         }
-    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+    var getListUrl = getURL()+'/mobile/discardController.do?queryByCodeOrBar';
     // var departListStr = $.cookie('departList');
     var departListStr = localStorage.getItem('departList');
     var userInfo = $.cookie('userinfo');  
@@ -410,7 +410,7 @@ $("#submitBtn").click(function(){
     } 
 }) 
 function EAdata(data){
-    var addUrl =getURL()+'/AssetsDataPhone/mobile/discardController.do?add'; 
+    var addUrl =getURL()+'/mobile/discardController.do?add'; 
     var eamDI=[],eamD=[];
     $.each(data,function(){
         var that = this;   
@@ -460,7 +460,7 @@ function EAdata(data){
     } 
 //传EAM、
 $("#submitBtn2").click(function(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?confirm'; 
+    var updataUrl=getURL()+'/mobile/discardController.do?confirm'; 
     var jsons = {  
             departCode: userInfo.departcode,
             phoneInvoiceNumber: phoneInvoiceNumber,
@@ -475,7 +475,7 @@ $("#submitBtn2").click(function(){
 })
 //传送审、
 $("#submitBtn3").click(function(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?send'; 
+    var updataUrl=getURL()+'/mobile/discardController.do?send'; 
     var jsons = {  
             departCode: userInfo.departcode,
             userCode:userInfo.usercode,

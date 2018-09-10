@@ -30,6 +30,10 @@
                 <label for="server3">服务器端口:</label>
                 <input type="text" name="server3" id="server3">
             </p>
+            <p>
+                <label for="server4">服务器名称:</label>
+                <input type="text" name="server4" id="server4">
+            </p>
         </form>
 
         <button class="orange server_save">保存</button>
@@ -57,7 +61,7 @@
         if (result!= null&&result!= "") {            
             formData($("#serverForm"), JSON.parse(result));
         }else{
-            result=['http','lhsm.weiapp.pw','3575'];
+            result=['http','lhsm.weiapp.pw','3575','AssetsDataPhone'];
             formData($("#serverForm"), result);
         }
     }
@@ -87,7 +91,7 @@
 
     function callbackChangeServerConfig(responseData) {
         if (responseData) {
-            var pUrl =  $("#server1").val()+"://" + $("#server2").val() + ":" + $("#server3").val();
+            var pUrl =  $("#server1").val()+"://" + $("#server2").val() + ":" + $("#server3").val()+"/"+$("#server4").val();
             sessionStorage.setItem('postUrl',pUrl)
             $.cookie('postUrl', pUrl, { expires: 7, path: '/', secure: false });
             postUrl=pUrl; 

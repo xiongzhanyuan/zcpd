@@ -1622,4 +1622,9 @@ div.hide {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.borderDbDetailBox {
+  border: 0.04267rem solid white;
+  overflow-y: auto;
+  margin: 0px 20px 0px 20px;
+}
 /*# sourceMappingURL=index.css.map */

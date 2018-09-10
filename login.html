@@ -139,7 +139,7 @@ $("#registBtn").click(function(){
     if(!$("#register").validate()){
         return false;
     }
-    var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?register";
+    var registUrl=getURL()+"/mobile/appLoginController.do?register";
     var json={
         "userCode":$("#register input[name=userCode]").val(),
         "userNmae":$("#register input[name=userNmae]").val(),
@@ -164,7 +164,7 @@ $("#loginBtn").click(function(){
     if(!$("#login").validate()){
         return false;
     }     
-    var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?login";   
+    var registUrl=getURL()+"/mobile/appLoginController.do?login";   
     var json={
         "usercode":$("#login input[name=usercode]").val(), 
         "mail":$("#login input[name=mail]").val(),

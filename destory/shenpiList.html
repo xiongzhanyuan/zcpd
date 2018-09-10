@@ -78,15 +78,16 @@
                 <b>报废类别 ：<i>{{= value.discardTypeName}}</i></b>
                 <b>报废原因 ：<i>{{= value.discardReasonName}}</i></b>  
                 <b>停产日期 ：<i>{{= value.stopDate}}</i></b>   
-                <b>单据类型 ：<i>{{= value.invoiceType}}</i></b>   
-                <b>申请单位 ：<i>{{= value.createDepart}}</i></b>
+                <b>单据类型 ：<i>{{= value.invoiceName}}</i></b>   
+                <b>明细数量 ：<i>{{= value.detailAmountSum}}</i></b>   
+                <b>申请单位 ：<i>{{= value.departName}}</i></b>
             </span> 
         </li>
     {{~}}
 </script>
 <script>
     //待审批单据查询
-    var listUrl = getURL()+"/AssetsDataPhone/mobile/discardController.do?queryApproveInvoice" 
+    var listUrl = getURL()+"/mobile/discardController.do?queryApproveInvoice" 
     // var departList = $.cookie('departList');
     var departList = localStorage.getItem('departList');
 
@@ -135,7 +136,7 @@ $("#submitBtn1").click(function(){
         phoneInvoiceNumber:data_ph,
         departCode: userInfo.departcode ,
     };
-    var getInfoUrl=getURL()+"/AssetsDataPhone/mobile/discardController.do?getInvoiceDetail";
+    var getInfoUrl=getURL()+"/mobile/discardController.do?getInvoiceDetail";
     sendPost(getInfoUrl, jsons, function(data){ 
         if(data.data.length<=0){
             alert("暂无明细");
@@ -153,7 +154,7 @@ $("#submitBtn2").click(function(){
         alert("请填写驳回原因");
         return false;
     }
-    var approveUrl=getURL()+"/AssetsDataPhone/mobile/discardController.do?approve"
+    var approveUrl=getURL()+"/mobile/discardController.do?approve"
     var jsons = {
         userCode: userInfo.usercode,
         departCode: userInfo.departcode,

@@ -127,8 +127,8 @@
     var userInfo = $.cookie('userinfo');   
     departList = JSON.parse(departList)[0];
     userInfo = JSON.parse(userInfo);  
-    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?getInvoice';
-    var getDetailUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?getDetail';
+    var getListUrl = getURL()+'/mobile/discardController.do?getInvoice';
+    var getDetailUrl = getURL()+'/mobile/discardController.do?getDetail';
     $(".nav-tabs li").unbind('click');
     if (window.JsCallback) { 
 	        $('#invoiceStatus').fancySelect(); 

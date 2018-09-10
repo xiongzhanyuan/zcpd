@@ -174,7 +174,7 @@
             page: 1,
             pageSize: 20,
         }
-        var url = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedgerList';
+        var url = getURL() + '/mobile/cellPhoneController.do?queryLedgerList';
 
         sendPost(url, jsons, clickSearchCallBack)
     })
@@ -197,7 +197,7 @@
             if (this.imguUrl == null || this.imguUrl == "") {
                 this.fullImgUrl = "../images/default.png";
             } else {
-                this.fullImgUrl = getURL() + "/AssetsDataPhone" + this.imguUrl;
+                this.fullImgUrl = getURL() + this.imguUrl;
             }
 
         })
@@ -225,7 +225,7 @@
             if (this.imguUrl == null || this.imguUrl == "") {
                 this.fullImgUrl = "../images/default.png";
             } else {
-                this.fullImgUrl = getURL() + "/AssetsDataPhone" + this.imguUrl;
+                this.fullImgUrl = getURL() + this.imguUrl;
             }
 
         })
@@ -289,7 +289,7 @@
                 page: page,
                 pageSize: 20,
             }
-            var url = getURL() + '/AssetsDataPhone/mobile/cellPhoneController.do?queryLedgerList';
+            var url = getURL() + '/mobile/cellPhoneController.do?queryLedgerList';
 
             sendPost(url, jsons, pageCallBack)
         }

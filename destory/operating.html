@@ -134,7 +134,7 @@ getDateTab3();
         $("#List1").append("<li class='nodate center'>暂无数据</li>")
      }
  } 
-var addUrl =getURL()+'/AssetsDataPhone/mobile/testController.do?add'; 
+var addUrl =getURL()+'/mobile/testController.do?add'; 
 $("#submitBtn1").click(function(){   
     if($("#List1 .chose.active").length<=0){
         alert("请选择单据");
@@ -195,7 +195,7 @@ $("#submitBtn2").click(function(){
         alert("请选择单据");
         return false;
     }
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/testController.do?confirm';
+    var updataUrl=getURL()+'/mobile/testController.do?confirm';
     var paArr=[];
     var arr =$("#List2 .chose.active").closest("li");
     $.each(arr,function(){
@@ -223,7 +223,7 @@ $("#submitBtn3").click(function(){
         alert("请选择单据");
         return false;
     }
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/testController.do?send';
+    var updataUrl=getURL()+'/mobile/testController.do?send';
     var paArr='';
     var arr =$("#List3 .chose.active").closest("li");
     $.each(arr,function(){
@@ -252,7 +252,7 @@ function check(event){
 //获取待送审数据 
 function getDateTab2(){
 
-    var updataUrl =getURL()+'/AssetsDataPhone/mobile/testController.do?queryToConfirmInvoice';
+    var updataUrl =getURL()+'/mobile/testController.do?queryToConfirmInvoice';
 
     var jsons = {  
         departCode: userInfo.departcode,
@@ -273,7 +273,7 @@ function getDateTab2(){
 }
 function getDateTab3(){
 
-    var updataUrl =getURL()+'/AssetsDataPhone/mobile/testController.do?queryDiscardInvoice';
+    var updataUrl =getURL()+'/mobile/testController.do?queryDiscardInvoice';
 
     var jsons = {  
         departCode: userInfo.departcode,

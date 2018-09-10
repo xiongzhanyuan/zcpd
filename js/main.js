@@ -63,9 +63,9 @@ String.prototype.replaceAll  = function(s1,s2){
 }
 function getURL(){
     if($.cookie('postUrl')==''||$.cookie('postUrl')==undefined){
-        sessionStorage.setItem('postUrl','http://lhsm.weiapp.pw:3575');
-        $.cookie('postUrl', "http://lhsm.weiapp.pw:3575", { expires: 7, path: '/', secure: false });
-        var postUrl='http://lhsm.weiapp.pw:3575'
+        sessionStorage.setItem('postUrl','http://lhsm.weiapp.pw:3575/AssetsDataPhone');
+        $.cookie('postUrl', "http://lhsm.weiapp.pw:3575/AssetsDataPhone", { expires: 7, path: '/', secure: false });
+        var postUrl='http://lhsm.weiapp.pw:3575/AssetsDataPhone'
     }else {
         //postUrl=sessionStorage.getItem('postUrl');
         var postUrl=$.cookie('postUrl');

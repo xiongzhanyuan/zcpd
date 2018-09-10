@@ -308,7 +308,7 @@
     //         })
     //     })
     // }
-    // var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+    // var getListUrl = getURL()+'/mobile/discardController.do?queryByCodeOrBar';
     // var departListStr = $.cookie('departList');
     // var userInfo = $.cookie('userinfo');  
     // departList = JSON.parse(departListStr)[0];
@@ -391,7 +391,7 @@
             groupZjyy: groupZjyy,
             groupZjqd: groupZjqd
         }
-        var url = getURL() + '/AssetsDataPhone/mobile/summaryController.do?querySummary';
+        var url = getURL() + '/mobile/summaryController.do?querySummary';
 
         sendPost(url, jsons, ListA)
     })
@@ -579,11 +579,11 @@
         //         })
         //     })
         // }
-        var url = getURL() + '/AssetsDataPhone/mobile/summaryController.do?querySummary';
+        var url = getURL() + '/mobile/summaryController.do?querySummary';
 
     })
     function EAdata() {
-        var addUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?add';
+        var addUrl = getURL() + '/mobile/discardController.do?add';
         var eamDI = [], eamD = [];
         $.each(data, function () {
             var that = this;
@@ -633,7 +633,7 @@
     }
     //传EAM、
     $("#submitBtn2").click(function () {
-        var updataUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?confirm';
+        var updataUrl = getURL() + '/mobile/discardController.do?confirm';
         var jsons = {
             departCode: userInfo.departcode,
             phoneInvoiceNumber: phoneInvoiceNumber,
@@ -648,7 +648,7 @@
     })
     //传送审、
     $("#submitBtn3").click(function () {
-        var updataUrl = getURL() + '/AssetsDataPhone/mobile/discardController.do?send';
+        var updataUrl = getURL() + '/mobile/discardController.do?send';
         var jsons = {
             departCode: userInfo.departcode,
             userCode: userInfo.usercode,

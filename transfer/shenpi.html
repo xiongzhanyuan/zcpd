@@ -89,7 +89,7 @@
 </script>
 <script>
     //待审批单据查询
-    var listUrl = getURL()+"/AssetsDataPhone/mobile/allotController.do?queryApproveInvoice" 
+    var listUrl = getURL()+"/mobile/allotController.do?queryApproveInvoice" 
     // var departList = $.cookie('departList');
     var departList = localStorage.getItem('departList');
 
@@ -127,7 +127,7 @@
                         phoneInvoiceNumber: phon,
                         departCode: userInfo.departcode 
                     } 
-                var inforUrl=getURL()+'/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber'
+                var inforUrl=getURL()+'/mobile/allotController.do?getByPhoneInvoiceNumber'
                 sendPost(inforUrl, jsons, function(data){ 
                     var tmpl = doT.template($("#listCon2").text());  
                     var res ={}; 
@@ -154,7 +154,7 @@
 
 function getInfo(event){
     var that =$(event);
-    var Purl =  getURL()+"/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber";
+    var Purl =  getURL()+"/mobile/allotController.do?getByPhoneInvoiceNumber";
     var jsons={
         phoneInvoiceNumber:that.attr("data-ph"),
         departCode: userInfo.departcode ,
@@ -171,7 +171,7 @@ function getInfo(event){
 }
 
 $("#submitBtn1").click(function(){
-   var URL =  getURL()+"/AssetsDataPhone/mobile/allotController.do?allotAudit";
+   var URL =  getURL()+"/mobile/allotController.do?allotAudit";
    var jsons={
         userCode: userInfo.usercode,
         departCode: userInfo.departcode , 

@@ -195,8 +195,8 @@
     {{~}}
 </script> 
 <script>
-    var qustString = getURL()+"/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber"; 
-    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+    var qustString = getURL()+"/mobile/allotController.do?getByPhoneInvoiceNumber"; 
+    var getListUrl = getURL()+'/mobile/discardController.do?queryByCodeOrBar';
     var userInfo = $.cookie('userinfo'); 
     var listAarray=[];
     var list2Aarray=[]; 
@@ -346,7 +346,7 @@ $("#submitBtn").click(function(){
     var array2=[];
     array1.push(obj1);
     array2.push(obj2);
-    var URL =  getURL()+"/AssetsDataPhone/mobile/allotController.do?add"; 
+    var URL =  getURL()+"/mobile/allotController.do?add"; 
     var resData ={ 
         userCode: userInfo.usercode,
         departCode: userInfo.departcode , 

@@ -162,7 +162,7 @@
                         <option value="11">安全、环保</option>
                         <option value="10">其他</option>
                     </select>   
-                    <textarea placeholder="详细报废原因" id="discardMark" name="discardMark" id="destoryText" cols="30" rows="10"></textarea>
+                    <textarea placeholder="详细报废原因" id="discardMark" name="discardMark" cols="30" rows="10"></textarea>
 
                 </div>
                 
@@ -243,7 +243,7 @@
 
 
 
-    var getListUrl = getURL()+'/AssetsDataPhone/mobile/discardController.do?queryByCodeOrBar';
+    var getListUrl = getURL()+'/mobile/discardController.do?queryByCodeOrBar';
     // var departListStr = $.cookie('departList');
     var departListStr = localStorage.getItem('departList');
 
@@ -340,9 +340,9 @@
         $(".listli").click(function(e){ 
             var target = $(this);
             var barCode = target.find(".barCode").text(); 
-            var list  =  sessionStorage.getItem("form1"); 
-            list = JSON.parse(list);
-            var res = list.filter(function(index) {
+            // var list  =  sessionStorage.getItem("form1"); 
+            // list = JSON.parse(list);
+            var res = listAarray.filter(function(index) {
                     return  index.barCode==barCode;
                 })  
             dataInfo(res[0],'dataBox');
@@ -368,9 +368,13 @@
         })
         if(data.stopDate) {
             $("#stopDate").val(data.stopDate);
+        } else {
+            $("#stopDate").val(new Date().Format('yyyy-MM-dd')) 
         }
         if(data.discardReasonCode) {
             $("#discardReasonCode").val(data.discardReasonCode);
+        } else {
+            $("#discardReasonCode").val("01");
         }
         if(data.discardMark) {
             $("#discardMark").val(data.discardMark);
@@ -392,7 +396,7 @@ $("#submitBtn").click(function(){
     } 
 }) 
 function EAdata(data){
-    var addUrl =getURL()+'/AssetsDataPhone/mobile/discardController.do?add'; 
+    var addUrl =getURL()+'/mobile/discardController.do?add'; 
     var eamDI=[],eamD=[];
     $.each(data,function(){
         var that = this;   
@@ -433,7 +437,7 @@ function EAdata(data){
     } 
 //传EAM、
 function saveEam(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?confirm'; 
+    var updataUrl=getURL()+'/mobile/discardController.do?confirm'; 
     var jsons = {  
             departCode: userInfo.departcode,
             phoneInvoiceNumber: phoneInvoiceNumber,
@@ -443,7 +447,7 @@ function saveEam(){
     }); 
 }
 $("#submitBtn2").click(function(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?confirm'; 
+    var updataUrl=getURL()+'/mobile/discardController.do?confirm'; 
     var jsons = {  
             departCode: userInfo.departcode,
             phoneInvoiceNumber: phoneInvoiceNumber,
@@ -580,7 +584,7 @@ $("#submitBtnSaveLocal").click(function(){
 
 //传送审、
 $("#submitBtn3").click(function(){
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/discardController.do?send'; 
+    var updataUrl=getURL()+'/mobile/discardController.do?send'; 
     var jsons = {  
             departCode: userInfo.departcode,
             userCode:userInfo.usercode,

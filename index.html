@@ -29,37 +29,42 @@
 	<script>
       // 给客户端传
 	if (window.JsCallback) {
+		debugger
 		var res = window.JsCallback.onGetLoginJSON();
-		if (res && JSON.parse(res).hasOwnProperty("token") && JSON.parse(res).get("token")) {
-			loginByEmail();
-		} else {
-			judgmentUrl(res, "login.html"); 
+		if (!res) {
+			judgmentUrl(null, "login.html"); 
 		}
+		if (res && JSON.parse(res).hasOwnProperty("token")) {
+			loginByEmail(JSON.parse(res));
+		} 
 	} else {
+		debugger
 		setupWebViewJavascriptBridge(function (bridge) {
 			bridge.callHandler('onGetLoginJSON', function responseCallback(res) { 
-			if (res && JSON.parse(res).hasOwnProperty("token") && JSON.parse(res).get("token")) {
+			if (!res) {
+				judgmentUrl(null, "login.html"); 
+			}
+			if (res && JSON.parse(res).hasOwnProperty("token")) {
 				$.cookie('userinfo', res, { expires: 30, path: '/', secure: false });
 							localStorage.setItem("userinfo",res);
-				userINFO();
-				loginByEmail();
-			} else {
-				judgmentUrl(res, "login.html"); 
+				loginByEmail(JSON.parse(res));
 			}
 			})
 		});
 	}
 
-	function loginByEmail(){
-		var registUrl=getURL()+"/AssetsDataPhone/mobile/appLoginController.do?loginByEmail";   
+	function loginByEmail(loginData){
+		loginData.mail=loginData.username.replaceAll('____','@')
+		var registUrl=getURL()+"/mobile/appLoginController.do?loginByEmail";   
     var json={
-        "mail":"chenxi@cnpc.com.cn",
-        "password":"262eb34f-5614-4662-9873-4aa84995a524"
-    }  
+        "mail":loginData.mail,
+        "token":loginData.token
+	}  
     sendPost(registUrl,json,callbackB);
     function callbackB(data){     
         if(data.success!="true"){           
             alert(data.msg);   
+			judgmentUrl(null, "login.html"); 
             return;
         }else{
             // 存cookie
@@ -195,7 +200,27 @@
 					<canvas id="chart-0"></canvas>
 			</div> 
 			<div class="charts"> 
-					<canvas id="chart-1"></canvas>
+					<!-- <canvas id="chart-1"></canvas> -->
+					<div class="cardList" id="tab2">
+						<div class="borderDbDetailBox">
+							<ul id="dblist">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>报废</i></b>
+										<b>待办数量 ：<i>18</i></b>
+									</span> 
+								</li>
+							</ul>
+							<ul id="dblist">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>调拨</i></b>
+										<b>待办数量 ：<i>20</i></b>
+									</span> 
+								</li>
+							</ul>
+						</div>
+					</div>
 			</div>
 		</div>
 		<div class="mytabs tab2">
@@ -949,7 +974,7 @@ if (window.JsCallback) {
     function callbackGetServerConfig(result) { 
         if (result!= null&&result!= "") {            
             var urlJson = JSON.parse(result);
-			var pUrl =  urlJson.server1+"://" + urlJson.server2 + ":" + urlJson.server3;
+			var pUrl =  urlJson[0]+"://" + urlJson[1] + ":" + urlJson[2] + "/" + urlJson[3];
             sessionStorage.setItem('postUrl',pUrl)
             $.cookie('postUrl', pUrl, { expires: 7, path: '/', secure: false });
         }
@@ -1563,7 +1588,7 @@ var pany=0;
 
 		$(".indexBox").removeClass("active");
 	})
-	var qustString = getURL()+"/AssetsDataPhone/mobile/allotController.do?getDeparts";
+	var qustString = getURL()+"/mobile/allotController.do?getDeparts";
 
 	var departList = localStorage.getItem('departList');
 

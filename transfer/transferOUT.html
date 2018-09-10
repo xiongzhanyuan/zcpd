@@ -100,7 +100,7 @@ $("#submitBtn1").click(function(){
         alert("请选择单据");
         return false;
     }
-    var updataUrl=getURL()+'/AssetsDataPhone/mobile/allotController.do?allotOut';
+    var updataUrl=getURL()+'/mobile/allotController.do?allotOut';
     var paArr='';
     var arr =$("#list .chose.active").closest("li");
     $.each(arr,function(){
@@ -126,7 +126,7 @@ $("#submitBtn1").click(function(){
 function check(event){
     $(event).siblings().find(".chose").removeClass("active");
     $(event).find(".chose").addClass("active");
-    var Purl =  getURL()+"/AssetsDataPhone/mobile/allotController.do?getByPhoneInvoiceNumber";
+    var Purl =  getURL()+"/mobile/allotController.do?getByPhoneInvoiceNumber";
     var jsons={
         phoneInvoiceNumber:$(event).attr("data-ph"),
         departCode: userInfo.departcode ,
@@ -172,7 +172,7 @@ function check2(event){
 }
 //获取. 列表
 function getDate(){ 
-    var updataUrl =getURL()+'/AssetsDataPhone/mobile/allotController.do?queryAllotOut'; 
+    var updataUrl =getURL()+'/mobile/allotController.do?queryAllotOut'; 
     var jsons = {  
         departCode: userInfo.departcode,
         userCode: userInfo.usercode,
