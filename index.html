@@ -56,62 +56,62 @@
 	function loginByEmail(loginData){
 		loginData.mail=loginData.username.replaceAll('____','@')
 		var registUrl=getURL()+"/mobile/appLoginController.do?loginByEmail";   
-    var json={
-        "mail":loginData.mail,
-        "token":loginData.token
-	}  
-    sendPost(registUrl,json,callbackB);
-    function callbackB(data){     
-        if(data.success!="true"){           
-            alert(data.msg);   
-			judgmentUrl(null, "login.html"); 
-            return;
-        }else{
-            // 存cookie
-            var  user = data.data[0].user;
-            var departs = data.data[1].depart;
-            var func = data.data[2].func;
-            
-            var user_info = {
-                "account":user.account,
-                "mail":user.mail,
-                "usercode":user.usercode,
-                "userid":user.userid,                
-                "username":user.username,
-            } ;
-            // 公司
-            var departList=[];
-            $.each(departs,function(){
-                var lis={
-                    "departname":this.departname,
-                    "shortname":this.shortname,
-                    "departcode":this.departcode,
-                    "usabledate":this.usabledate,
-                    "creatorid":this.creatorid,
-                    "departid":this.departid,
-                }
-                departList.push(lis);
-            }) 
-            departList= JSON.stringify(departList); 
-            user_info= JSON.stringify(user_info);  
-            $.cookie('userinfo', user_info, { expires: 30, path: '/', secure: false });
-            $.cookie('departList', departList, { expires: 30, path: '/', secure: false });
-            localStorage.setItem("userinfo",user_info);
-            localStorage.setItem("departList",departList);
-            // 给客户端传数据
-           if (window.JsCallback) {
-                window.JsCallback.onHideProgress()
-                self.location='unit.html';
-             }else{
-                setupWebViewJavascriptBridge(function (bridge) {
-                    bridge.callHandler('onHideProgress') 
-                    self.location='unit.html';
-                })
-            }
-             // 先跳转
-        　  
-        }
-    }
+		var json={
+			"mail":loginData.mail,
+			"token":loginData.token
+		}  
+		sendPost(registUrl,json,callbackB);
+		function callbackB(data){     
+			if(data.success!="true"){           
+				alert(data.msg);   
+				judgmentUrl(null, "login.html"); 
+				return;
+			}else{
+				// 存cookie
+				var  user = data.data[0].user;
+				var departs = data.data[1].depart;
+				var func = data.data[2].func;
+				
+				var user_info = {
+					"account":user.account,
+					"mail":user.mail,
+					"usercode":user.usercode,
+					"userid":user.userid,                
+					"username":user.username,
+				} ;
+				// 公司
+				var departList=[];
+				$.each(departs,function(){
+					var lis={
+						"departname":this.departname,
+						"shortname":this.shortname,
+						"departcode":this.departcode,
+						"usabledate":this.usabledate,
+						"creatorid":this.creatorid,
+						"departid":this.departid,
+					}
+					departList.push(lis);
+				}) 
+				departList= JSON.stringify(departList); 
+				user_info= JSON.stringify(user_info);  
+				$.cookie('userinfo', user_info, { expires: 30, path: '/', secure: false });
+				$.cookie('departList', departList, { expires: 30, path: '/', secure: false });
+				localStorage.setItem("userinfo",user_info);
+				localStorage.setItem("departList",departList);
+				// 给客户端传数据
+			if (window.JsCallback) {
+					window.JsCallback.onHideProgress()
+					self.location='unit.html';
+				}else{
+					setupWebViewJavascriptBridge(function (bridge) {
+						bridge.callHandler('onHideProgress') 
+						self.location='unit.html';
+					})
+				}
+				// 先跳转
+			　  
+			}
+		}
 	}
 
 	</script>
@@ -203,19 +203,59 @@
 					<!-- <canvas id="chart-1"></canvas> -->
 					<div class="cardList" id="tab2">
 						<div class="borderDbDetailBox">
-							<ul id="dblist">
+							<ul id="dblist" onclick="javascript:window.location.href='property/localSearch.html?value=0'">
 								<li class="clearfix">  
 									<span class="listInfo">
-										<b>待办类型 ：<i>报废</i></b>
-										<b>待办数量 ：<i>18</i></b>
+										<b>待办类型 ：<i>正在盘点</i></b>
+										<b>待办数量 ：<i id="zzpdCount">0</i></b>
 									</span> 
 								</li>
 							</ul>
-							<ul id="dblist">
+							<ul id="dblist" onclick="javascript:window.location.href='property/downloadList.html'">
 								<li class="clearfix">  
 									<span class="listInfo">
-										<b>待办类型 ：<i>调拨</i></b>
-										<b>待办数量 ：<i>20</i></b>
+										<b>待办类型 ：<i>未盘计划</i></b>
+										<b>待办数量 ：<i id="wpjhCount">0</i></b>
+									</span> 
+								</li>
+							</ul>
+							<!-- <ul id="dblist" onclick="javascript:window.location.href='transfer/transferList.html?value=0'">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>调拨上报</i></b>
+										<b>待办数量 ：<i id="dbsbCount">0</i></b>
+									</span> 
+								</li>
+							</ul> -->
+							<ul id="dblist" onclick="javascript:window.location.href='transfer/shenpi.html'">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>调拨审批</i></b>
+										<b>待办数量 ：<i id="dbspCount">0</i></b>
+									</span> 
+								</li>
+							</ul>
+							<ul id="dblist" onclick="javascript:window.location.href='transfer/transferOUT.html'">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>调出确认</i></b>
+										<b>待办数量 ：<i id="dcqrCount">0</i></b>
+									</span> 
+								</li>
+							</ul>
+							<ul id="dblist" onclick="javascript:window.location.href='transfer/transferIN.html'">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>调入确认</i></b>
+										<b>待办数量 ：<i id="drqrCount">0</i></b>
+									</span> 
+								</li>
+							</ul>
+							<ul id="dblist" onclick="javascript:window.location.href='destory/shenpiList.html'">
+								<li class="clearfix">  
+									<span class="listInfo">
+										<b>待办类型 ：<i>报废审批</i></b>
+										<b>待办数量 ：<i id="bfspCount">0</i></b>
 									</span> 
 								</li>
 							</ul>
@@ -1763,9 +1803,75 @@ var pany=0;
         //     var pUrl =  urlResultJson.server1+"://" + urlResultJson.server2 + ":" + urlResultJson.server3;
 		// 	$.cookie('postUrl', pUrl, { expires: 7, path: '/', secure: false });
         // }
+	}
+	
+	function dbFunction() {
+		var countUrl = getURL() + '/mobile/toDoController.do?tododetailcounts';
+		var countReqJson = {
+			userCode: userInfo.usercode,
+			departCode: userInfo.departcode 
+		}
+		sendPostAsync(countUrl, countReqJson, countResfunc)
+	}
+
+	
+	function countResfunc(data) {
+		if (window.JsCallback) {
+			window.JsCallback.onHideProgress()
+		}else{
+			setupWebViewJavascriptBridge(function (bridge) {
+				bridge.callHandler('onHideProgress') 
+			})
+		}
+        if (data.success == 'true') {
+			searchWpCount({'checkResult':null,'departCode':$("#pyDepartCode").val()})	
+			if ( localStorage.getItem("pdjhCount")) {
+				$("#wpjhCount").html(data.data[0].PDJH-1)
+			} else {
+				$("#wpjhCount").html(data.data[0].PDJH)
+			}
+			
+			// $("#dbsbCount").html(data.data[0].ZCDB)
+			$("#dbspCount").html(data.data[0].ZCDB)
+			$("#drqrCount").html(data.data[0].ZCDR)
+			$("#dcqrCount").html(data.data[0].ZCDC)
+			$("#bfspCount").html(data.data[0].ZCBF)
+		}
+	}
+
+	function searchWpCount(term){
+        var require = JSON.stringify(term);//这个是JSON字符串参数 
+        if (window.JsCallback) {
+            var res = window.JsCallback.onFindDevicesByDepartCode(require);
+            templateWpCount(res,term)
+        }else{
+            setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('onFindDevicesByDepartCode',require, function(resData){
+                        templateWpCount(resData, term)
+                    })
+                }) 
+        }
+       
     }
-	
-	
+function templateWpCount(res, term){
+    var arr={};
+    arr.data=JSON.parse(res);
+    if(term.checkResult == null) {
+		$("#zzpdCount").html(arr.data.length)
+    }
+} 
+
+window.onload=function (){
+
+dbFunction();
+
+}
+// $(function(){
+    
+//     dbFunction();
+    
+// });
+
 	
 </script>
 
@@ -1777,5 +1883,4 @@ var pany=0;
 		observeParents:true//修改swiper的父元素时，自动初始化swiper
 	});
 </script>
-
 </html>

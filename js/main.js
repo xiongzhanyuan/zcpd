@@ -273,6 +273,103 @@ function sendPost(reqUrl, jsonObj, callbackFun) {
     
 }
 
+function sendPostAsync(reqUrl, jsonObj, callbackFun) {
+    if (window.JsCallback) {
+        window.JsCallback.onShowProgress();
+        $.ajax({
+            async : true,
+            url : reqUrl,
+            type : "POST",
+            data : jsonObj,
+            dataType : "json",
+            cache : false,
+        beforeSend: function(){
+        },
+            error : function(request) {
+                if (window.JsCallback) {
+                    window.JsCallback.onHideProgress()
+                }else{
+                    setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('onHideProgress')
+                    })
+                }
+                alert("网络错误");
+            },
+            success : function(data) {
+                callbackFun(data);
+                if (window.JsCallback) {
+                    window.JsCallback.onHideProgress()
+                }else{
+                    setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('onHideProgress')
+                    })
+                }
+            },
+            complete :function(XMLHttpRequest,status){
+                if(status=='timeout'){//超时,status还有success,error等值的情况
+                    　　　　　  alert("请求超时");
+                    　　　　}
+                if (window.JsCallback) {
+                    window.JsCallback.onHideProgress()
+                }else{
+                    setupWebViewJavascriptBridge(function (bridge) {
+                        bridge.callHandler('onHideProgress')
+                    })
+                }
+            }
+        });
+    }else{
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('onShowProgress','',function(){
+                $.ajax({
+                    async : true,
+                    url : reqUrl,
+                    type : "POST",
+                    data : jsonObj,
+                    dataType : "json",
+                    timeout : 0,
+                    cache : false,
+                beforeSend: function(){
+                },
+                    error : function(request) {
+                        if (window.JsCallback) {
+                            window.JsCallback.onHideProgress()
+                        }else{
+                            setupWebViewJavascriptBridge(function (bridge) {
+                                bridge.callHandler('onHideProgress')
+                            })
+                        }
+                        alert("网络错误");
+                    },
+                    success : function(data) {
+                        callbackFun(data);
+                        if (window.JsCallback) {
+                            window.JsCallback.onHideProgress()
+                        }else{
+                            setupWebViewJavascriptBridge(function (bridge) {
+                                bridge.callHandler('onHideProgress')
+                            })
+                        }
+                    },
+                    complete :function(XMLHttpRequest,status){
+                        if(status=='timeout'){//超时,status还有success,error等值的情况
+                            　　　　　  alert("请求超时");
+                            　　　　}
+                        if (window.JsCallback) {
+                            window.JsCallback.onHideProgress()
+                        }else{
+                            setupWebViewJavascriptBridge(function (bridge) {
+                                bridge.callHandler('onHideProgress')
+                            })
+                        }
+                    }
+                });
+            })
+        })
+    }
+    
+}
+
 function sendPostBf(reqUrl, jsonObj, callbackFun) {
     if (window.JsCallback) {
         window.JsCallback.onShowProgress();

@@ -89,6 +89,7 @@
                 Pagelist=responce.data;
                 this.setupWebViewJavascriptBridge(function (bridge) {
                 bridge.callHandler('fileNamesArray', function (resdata) {
+                        localStorage.setItem("pdjhCount",1);
                         template(resdata, responce); 
                     })
                 })
@@ -108,6 +109,7 @@
             if(data==undefined){
                 template(null, responce);
             }else{
+                localStorage.setItem("pdjhCount",1);
                 template( JSON.parse(data), responce);
             }
         $('.dialog-open').remove();

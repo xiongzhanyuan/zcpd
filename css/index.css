@@ -92,12 +92,14 @@ button.orange {
 .centerx {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
 }
 
 .centery {
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   position: absolute;
 }
 
@@ -108,7 +110,8 @@ button.orange {
 .center {
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 nav {
@@ -136,7 +139,8 @@ nav .back {
 .scancontent {
   background: #fff;
   padding: 1.87733rem 0 0 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-size: 0.64rem;
   padding-bottom: 1.70667rem;
   z-index: 20;
@@ -148,7 +152,8 @@ nav .back {
 
 .content {
   padding: 2.34667rem 0.53333rem 0 0.53333rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-size: 0.64rem;
   padding-bottom: 1.70667rem;
 }
@@ -176,7 +181,8 @@ nav .back {
 
 .navFooter ul li {
   width: 33.333%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   display: inline-block;
   text-align: center;
   float: left;
@@ -195,14 +201,16 @@ nav .back {
 
 .linkView {
   width: 100%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   margin-top: -0.46933rem;
 }
 
 .linkView li {
   float: left;
   width: 33.333%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .linkView li .con {
@@ -211,7 +219,8 @@ nav .back {
   border-top: none;
   border-left: 0px;
   padding: 0.32rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   text-align: center;
 }
 
@@ -246,7 +255,8 @@ nav .back {
   margin-bottom: 0.42667rem;
   border-radius: 0.21333rem;
   padding-left: 0.21333rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .listLink li a {
@@ -255,14 +265,16 @@ nav .back {
 
 .cardList {
   width: 100%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .cardList li {
   width: 100%;
   border: 1px solid #aaa;
   height: auto;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border-radius: 3px;
   padding: 0.21333rem 0;
   margin-bottom: 0.42667rem;
@@ -407,7 +419,8 @@ label {
 }
 
 .formEntry input {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 0.10667rem;
 }
 
@@ -510,7 +523,8 @@ label {
 }
 
 .bottomFixed.bottombgNone button:active, .bottomFixed.bottombgNone button:focus {
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
   border: none !important;
   background: none !important;
 }
@@ -561,7 +575,8 @@ label {
 .propertyMessage {
   margin-top: 0.64rem;
   margin-bottom: 0.64rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border: 1px solid #aaa;
   border-radius: 0.08533rem;
   width: 100%;
@@ -572,7 +587,8 @@ label {
 .propertyMessage li {
   width: 49%;
   display: inline-block;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding-right: 0.21333rem;
   margin-top: 0.42667rem;
 }
@@ -604,8 +620,10 @@ label {
   left: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 200;
+  -webkit-transition: all .5s;
   transition: all .5s;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 0.64rem;
 }
 
@@ -623,7 +641,8 @@ label {
   border-radius: 0.17067rem;
   overflow-y: auto;
   font-size: 0.64rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .bomb .bombCon li {
@@ -646,7 +665,8 @@ label {
 .border_box {
   border: 0.02133rem solid #999;
   border-radius: 0.128rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 0.42667rem;
 }
 
@@ -680,7 +700,8 @@ label {
   border: 0.064rem solid #aaa;
   padding: 0.21333rem;
   margin-bottom: 0.64rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .appNav {
@@ -710,14 +731,16 @@ button.server_save {
 }
 
 * {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-family: inherit;
 }
 
 .wrapper {
   margin: 0 auto;
   width: 100%;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   height: 100%;
   position: fixed;
   bottom: 0;
@@ -757,8 +780,11 @@ button.server_save {
   left: 0;
   width: 100%;
   height: 100%;
-  transform-origin: top left;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background: -webkit-gradient(linear, left top, left bottom, from(#0091d2), to(#0091d2));
   background: linear-gradient(#0091d2, #0091d2);
   background-position: top center;
   background-attachment: fixed;
@@ -795,6 +821,18 @@ form.loginform > input, form.loginform select {
 
 form.loginform > input:focus, form.loginform select:focus {
   outline: none;
+}
+
+form.loginform > input::-webkit-input-placeholder, form.loginform select::-webkit-input-placeholder {
+  color: #999;
+}
+
+form.loginform > input:-ms-input-placeholder, form.loginform select:-ms-input-placeholder {
+  color: #999;
+}
+
+form.loginform > input::-ms-input-placeholder, form.loginform select::-ms-input-placeholder {
+  color: #999;
 }
 
 form.loginform > input::placeholder, form.loginform select::placeholder {
@@ -880,7 +918,8 @@ form.loginform div.fancy-select {
 .search-wrapper input:focus {
   outline: 0;
   background: #fff;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
 }
 
 .search-wrapper input::-webkit-input-placeholder {
@@ -1110,7 +1149,8 @@ form.loginform div.fancy-select {
   height: 0.32rem;
   border-right: 1.5px solid #0091d2;
   border-bottom: 1px solid #0091d2;
-  transform: rotate(34deg) skew(51deg);
+  -webkit-transform: rotate(34deg) skew(51deg);
+          transform: rotate(34deg) skew(51deg);
   left: 2.13333rem;
   bottom: -0.192rem;
   z-index: -1;
@@ -1367,7 +1407,8 @@ div.fancy-select {
 div.fancy-select div.trigger:after {
   border-width: 0.42667rem;
   top: 50%;
-  transform: translateY(-25%);
+  -webkit-transform: translateY(-25%);
+          transform: translateY(-25%);
 }
 
 div.fancy-select div.trigger.open {
@@ -1506,7 +1547,8 @@ div.fancy-select div.trigger.open {
   background: #0091d2;
   border-radius: 0.08533rem;
   padding: 0.21333rem;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 div.hide {
@@ -1563,7 +1605,9 @@ div.hide {
   height: 60px;
   background: #76d95c;
   border-radius: 50px;
-  box-shadow: inset 0px 0px 3px;
+  -webkit-box-shadow: inset 0px 0px 3px;
+          box-shadow: inset 0px 0px 3px;
+  -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 
@@ -1575,7 +1619,9 @@ div.hide {
   position: relative;
   top: 1px;
   left: 1px;
-  box-shadow: 1px 3px 5px;
+  -webkit-box-shadow: 1px 3px 5px;
+          box-shadow: 1px 3px 5px;
+  -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 
@@ -1622,6 +1668,7 @@ div.hide {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 .borderDbDetailBox {
   border: 0.04267rem solid white;
   overflow-y: auto;
