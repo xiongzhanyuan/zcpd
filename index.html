@@ -203,7 +203,7 @@
 					<!-- <canvas id="chart-1"></canvas> -->
 					<div class="cardList" id="tab2">
 						<div class="borderDbDetailBox">
-							<ul id="dblist" onclick="javascript:window.location.href='property/localSearch.html?value=0'">
+							<ul id="dblist" onclick="checkNetwork('property/localSearch.html?value=0')">
 								<li class="clearfix">  
 									<span class="listInfo">
 										<b>待办类型 ：<i>正在盘点</i></b>
@@ -211,7 +211,7 @@
 									</span> 
 								</li>
 							</ul>
-							<ul id="dblist" onclick="javascript:window.location.href='property/downloadList.html'">
+							<ul id="dblist" onclick="checkNetwork('property/downloadList.html')">
 								<li class="clearfix">  
 									<span class="listInfo">
 										<b>待办类型 ：<i>未盘计划</i></b>
@@ -227,7 +227,7 @@
 									</span> 
 								</li>
 							</ul> -->
-							<ul id="dblist" onclick="javascript:window.location.href='transfer/shenpi.html'">
+							<ul id="dblist" onclick="checkNetwork('transfer/shenpi.html')">
 								<li class="clearfix">  
 									<span class="listInfo">
 										<b>待办类型 ：<i>调拨审批</i></b>
@@ -235,7 +235,7 @@
 									</span> 
 								</li>
 							</ul>
-							<ul id="dblist" onclick="javascript:window.location.href='transfer/transferOUT.html'">
+							<ul id="dblist" onclick="checkNetwork('transfer/transferOUT.html')">
 								<li class="clearfix">  
 									<span class="listInfo">
 										<b>待办类型 ：<i>调出确认</i></b>
@@ -243,7 +243,7 @@
 									</span> 
 								</li>
 							</ul>
-							<ul id="dblist" onclick="javascript:window.location.href='transfer/transferIN.html'">
+							<ul id="dblist" onclick="checkNetwork('transfer/transferIN.html')">
 								<li class="clearfix">  
 									<span class="listInfo">
 										<b>待办类型 ：<i>调入确认</i></b>
@@ -251,7 +251,7 @@
 									</span> 
 								</li>
 							</ul>
-							<ul id="dblist" onclick="javascript:window.location.href='destory/shenpiList.html'">
+							<ul id="dblist" onclick="checkNetwork('destory/shenpiList.html')">
 								<li class="clearfix">  
 									<span class="listInfo">
 										<b>待办类型 ：<i>报废审批</i></b>
@@ -1806,6 +1806,24 @@ var pany=0;
 	}
 	
 	function dbFunction() {
+
+		if (window.JsCallback) {
+			//判断是否开启了飞行模式
+			if (window.JsCallback.onGetIsAirplaneMode()) {
+				alert("请检查网络");
+				return false;
+			}else {
+				
+			}
+		} else {
+			if (window.navigator.onLine == true) {
+				
+			} else {
+				alert("请检查网络");
+				return false;
+			}
+		}
+
 		var countUrl = getURL() + '/mobile/toDoController.do?tododetailcounts';
 		var countReqJson = {
 			userCode: userInfo.usercode,
