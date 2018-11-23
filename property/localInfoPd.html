@@ -7,6 +7,11 @@
 	<title>盘点详情</title>
 	<link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/index.css"> 
+    <link rel="stylesheet" href="css/swiper.min.css">
+
+
+
+
     <style>
         .cardList li {height:auto;} 
     </style>
@@ -20,33 +25,50 @@
         <div id="dataBox">
             <p name="assetsCode"><i>资产编码:</i><span></span></p>
             <p name="assetsName"><i>资产名称：</i><span></span></p>   
-            <p name="assetsStandard"><i>规格型号:</i><span></span></p>
-            <!-- <p name="assetsStatus"><i>资产状态:</i><span></span></p> -->
-            <p name="usedStateName"><i>使用状态:</i><span></span></p>
-            <p name="technicalCondition"><i>技术状况:</i><span></span></p>
-            <p name="assetsStatusName"><i>资产状态名称:</i><span></span></p>
-            <p name="barCode"><i>条码:</i><span></span></p>
+            <p name="barCode"><i>资产条码:</i><span></span></p>
             <p name="checkResult"><i>盘点结果:</i><span></span></p>
-            <p name="departCode"><i>单位编码:</i><span></span></p>
-            <!-- <p name="keyCode"><i>keyCode:</i><span></span></p> -->
-            <p name="licenceNumber"><i>井号:</i><span></span></p>   
             <p name="lossReason"><i>盈亏原因:</i><span></span></p>  
-            <p name="makeFactory"><i>制造厂家:</i><span></span></p>   
+            <p name="assetsStandard"><i>规格型号:</i><span></span></p>
+            <p name="licenceNumber"><i>车牌井号:</i><span></span></p>   
+            <p name="userPerson"><i>保管人：</i><span></span></p>
+            <p name="storePlaceName"><i>存放地点:</i><span></span></p> 
+            <p name="partDepartCode"><i>出厂编号:</i><span></span></p>     
+            <p name="assetsStatus"><i>资产状态:</i><span></span></p>
+            <p name="assetsStatusName"><i>资产状态名称:</i><span></span></p>
+            <p name="usedState"><i>使用状态:</i><span></span></p>
+            <p name="usedStateName"><i>使用状态名称:</i><span></span></p>
+            <p name="technicalCondition"><i>技术状况:</i><span></span></p>
+            <p name="makeFactory"><i>制造厂家:</i><span></span></p>
+            <p name="remark"><i>备注:</i><span></span></p>
+            <p name="nowValue"><i>净值:</i><span></span></p>    
+            <p name="originalValue"><i>原值:</i><span></span></p>
+            <p name="departCode"><i>所属单位编码:</i><span></span></p>
+            <p name="departName"><i>所属单位名称:</i><span></span></p>
+
+<!-- 
+            <p name="technicalCondition"><i>技术状况:</i><span></span></p>
+            <p name="departCode"><i>单位编码:</i><span></span></p>
             <p name="managerDepart"><i>盘点单位:</i><span></span></p>  
             <p name="managerDepartName"><i>盘点单位名称:</i><span></span></p> 
-            <p name="nowValue"><i>净值:</i><span></span></p>    
             <p name="operateDate"><i>投产日期:</i><span></span></p>  
-            <p name="originalValue"><i>原值:</i><span></span></p>
             <p name="planName"><i>盘点计划名称:</i><span></span></p> 
             <p name="planNumber"><i>盘点计划编码:</i><span></span></p>
             <p name="operateDate"><i>投产日期:</i><span></span></p>
             <p name="operateDate"><i>投产日期:</i><span></span></p>   
-            <p name="userPerson"><i>保管人：<span></span></p>
-            <p name="remark"><i>备注:</i><span></span></p>
             <p name="storePlace"><i>存放地点编码:</i><span></span></p>
-            <p name="storePlaceName"><i>存放地点:</i><span></span></p> 
-            <p name="barCode"><i>编码:</i><span></span></p> 
-            <p name="partDepartCode"><i>出厂编号:</i><span></span></p>      
+            <p name="barCode"><i>编码:</i><span></span></p>  -->
+        </div>
+        <div class="cardList" id="">
+            <div class="searchRes DesSearchRes imgBox" id="pdLogInfo">
+                <p>图片区</p>
+                <div class="swiper-container" style="">
+                    <div id="imgsDiv" class="swiper-wrapper">
+                        <div class="swiper-slide">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 	</div>
 </body>
@@ -55,6 +77,8 @@
 <script src="../js/doT.js"></script>
 <script src="../js/cookie.js"></script>
 <script src="../js/main.js"></script>  
+<script src="../js/swiper.min.js"></script>
+
 <script>
     var barCode = $.cookie('barCode'); 
     if (window.JsCallback) {
@@ -103,6 +127,20 @@
             var val = data[key];            
             target.find("span").text(val==""||val==null?"--":val);
         })
+        if (data.imguUrl) {
+            var imgUrl = data.imguUrl;
+            $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + imgUrl + "\"/>" + "</div>");
+        } else if (data.zcpdImgs && data.zcpdImgs.length > 0) {
+            $("#imgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + data.zcpdImgs[0] + "\"/>" + "</div>");
+        }
     } 
+</script>
+<script>
+
+	// var swiper = new Swiper('.swiper-container', {
+	// 	initialSlide :0,
+	// 	observer:true,//修改swiper自己或子元素时，自动初始化swiper
+	// 	observeParents:true//修改swiper的父元素时，自动初始化swiper
+	// });
 </script>
 </html>

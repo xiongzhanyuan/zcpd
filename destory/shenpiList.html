@@ -61,7 +61,10 @@
     <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}>   
         <span class="listInfo">
             <b>单据号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>
-            <b>申请人 ：<i>{{= value.userName}}</i></b>         
+            <b>申请人 ：<i>{{= value.userName}}</i></b>    
+            <b>单据类型 ：<i>{{= value.invoiceName}}</i></b>  
+            <b>明细数量 ：<i>{{= value.detailAmountSum}}</i></b>   
+            <b>申请单位 ：<i>{{= value.departName}}</i></b>       
         </span> 
         <div class=" chose bottomBtn iconfont icon-tijiao" onclick='check(this)'></div> 
     </li>

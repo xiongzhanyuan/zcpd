@@ -14,21 +14,17 @@
     <p class="navCon">盘点查询</p>
 </nav> 
 <div class="content destoryC formEntry">
-    <p>汇总</p>
-    <div class="All">
-        <p>全部:<span id="pan_all">0</span></p>
-        <p>存在:<span id="pan_1">0</span></p>
-        <p>未盘:<span id="pan_2">0</span></p>
-        <p>盘盈:<span id="pan_3">0</span></p> 
-    </div>
-    <h2 style="font-weight: bold; padding-bottom:1rem;">当前盘点计划：<span id="PDnum"></span></h2>
-        
+    <h2 style="font-weight: bold; padding-bottom:1rem;">盘点计划编号:&nbsp;&nbsp;&nbsp;<span id="PDnum"></span></h2>
+    <h2 style="font-weight: bold; padding-bottom:1rem;">盘点计划名称:&nbsp;&nbsp;&nbsp;<span id="planName"></span></h2>
+    <h2 style="font-weight: bold; padding-bottom:1rem;">计划下达日期:&nbsp;&nbsp;&nbsp;<span id="planStartDate"></span></h2>
+    <h2 style="font-weight: bold; padding-bottom:1rem;">计划结束日期:&nbsp;&nbsp;&nbsp;<span id="planStopDate"></span></h2>
+    <h2 style="font-weight: bold; padding-bottom:1rem;">操作人:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="caozuoren"></span></h2>
     <div class="searchBox">
         <p>
             盘点单位：
             <select  id="require1"></select>
         </p>
-        <p>
+        <!-- <p>
             盘点状态：
             <select  value="100"  id="require2">
                 <option value="100">全部</option>
@@ -36,7 +32,13 @@
                 <option value="0">未盘</option>
                 <option value="3">盘盈</option> 
             </select>
-        </p>
+        </p> -->
+    </div>
+    <h2 style="font-weight: bold; padding-bottom:1rem;">资产总数:<span id="pan_all">0</span></h2>
+    <div class="All" style="color: #0088cc">
+        <p onclick="searchBtn('1')">存在:<a style="color: #0088cc" id="pan_1">0</a></p>
+        <p onclick="searchBtn(0)">未盘:<a style="color: #0088cc" id="pan_2">0</a></p>
+        <p onclick="searchBtn('3')">盘盈:<a style="color: #0088cc" id="pan_3">0</a></p> 
     </div>
     <div class="content">
         <ul class="cardList" id="list1">
@@ -44,11 +46,11 @@
         </ul>
     </div>
 </div> 
-<bottom class="bottomFixed">
+<!-- <bottom class="bottomFixed">
         <div class="center clearfix" style="position: absolute;"> 
             <i id="searchBtn" > 搜索</i>
         </div>
-    </bottom>
+    </bottom> -->
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/hotcss.js"></script>
@@ -80,7 +82,31 @@
     departList = JSON.parse(departList)[0];
     userInfo = JSON.parse(userInfo);  
     var pdnum = localStorage.getItem('plnum'); 
-    $("#PDnum").text(pdnum)
+    if (pdnum) {
+        $("#PDnum").text(pdnum);
+    } else {
+        $("#PDnum").text("");
+    }
+    var planName = localStorage.getItem('planName'); 
+    if (planName) {
+        $("#planName").text(planName)
+    } else {
+        $("#planName").text("");
+    }
+    var planStartDate = localStorage.getItem('planStartDate'); 
+    if (planStartDate) {
+        $("#planStartDate").text(planStartDate)
+    } else {
+        $("#planStartDate").text("");
+    }
+    var planStopDate = localStorage.getItem('planStopDate'); 
+    if (planStopDate) {
+        $("#planStopDate").text(planStopDate)
+    } else {
+        $("#planStopDate").text("");
+    }
+    
+    $("#caozuoren").text(userInfo.username);
     var departLocalList = [],
     pan_all=0, pan_1=0, pan_2=0,pan_3=0;    
     //搜索/盘点
@@ -113,18 +139,23 @@
         }
        
     }
+var panAllCount = 0;
 function templateCount(res, term){
     var arr={};
     arr.data=JSON.parse(res);
-    if(term.checkResult == 100) {
-        $("#pan_all").text(arr.data.length);   
-    } else if(term.checkResult == 1) {
+    // if(term.checkResult == 100) {
+    //     $("#pan_all").text(arr.data.length);   
+    // } else 
+    if(term.checkResult == 1) {
         $("#pan_1").text(arr.data.length);   
     } else if(term.checkResult == null) {
         $("#pan_2").text(arr.data.length);   
     } else if(term.checkResult == 3) {
+        debugger
         $("#pan_3").text(arr.data.length);   
     }
+    panAllCount = panAllCount + arr.data.length;
+    $("#pan_all").text(panAllCount);   
 } 
 
 function templateL(res, term){
@@ -133,15 +164,15 @@ function templateL(res, term){
    // if(JSON.parse(res).length<=0){alert("无相应盘点数据");}
     var tmpl = doT.template($("#tml1").text());  
     $("#list1").html(tmpl(arr));  
-    if(term.checkResult == 100) {
-        $("#pan_all").text(arr.data.length);   
-    } else if(term.checkResult == 1) {
-        $("#pan_1").text(arr.data.length);   
-    } else if(term.checkResult == null) {
-        $("#pan_2").text(arr.data.length);   
-    } else if(term.checkResult == 3) {
-        $("#pan_3").text(arr.data.length);   
-    }
+    // if(term.checkResult == 100) {
+    //     $("#pan_all").text(arr.data.length);   
+    // } else if(term.checkResult == 1) {
+    //     $("#pan_1").text(arr.data.length);   
+    // } else if(term.checkResult == null) {
+    //     $("#pan_2").text(arr.data.length);   
+    // } else if(term.checkResult == 3) {
+    //     $("#pan_3").text(arr.data.length);   
+    // }
 } 
 function getdepartList (){ 
 //    var PDdepartlist = $.cookie('PDdepartlist');
@@ -213,30 +244,44 @@ function callbackRes(data){
             departLocalList.push(JSON.parse(this).data)
         }) 
 }
-$("#searchBtn").click(function(){
-    var sel2= $("#require2").val(),sel1= $("#require1").val(); 
-    if(sel2 == 0) {
-        sel2 = null;
+
+function searchBtn(value) {
+    var sel1= $("#require1").val();
+    if(value == 0) {
+        value = null;
     }
     var term={
-        'checkResult':sel2,
+        'checkResult':value,
         'departCode':sel1,
     }  
     searchList(term) 
-})
+}
+
+// $("#searchBtn").click(function(){
+//     var sel2= $("#require2").val(),sel1= $("#require1").val(); 
+//     if(sel2 == 0) {
+//         sel2 = null;
+//     }
+//     var term={
+//         'checkResult':sel2,
+//         'departCode':sel1,
+//     }  
+//     searchList(term) 
+// })
 
 
 
 
 $(function(){
-    $("#searchBtn").click();
+    // $("#searchBtn").click();
     searchCount({'checkResult':'1','departCode':$("#require1").val()})
     searchCount({'checkResult':null,'departCode':$("#require1").val()})
     searchCount({'checkResult':'3','departCode':$("#require1").val()})
 })
 
 $("#require1").bind("select propertychange change",function(event){
-    $("#searchBtn").click();
+    panAllCount = 0;
+    // $("#searchBtn").click();
     searchCount({'checkResult':'1','departCode':$("#require1").val()})
     searchCount({'checkResult':null,'departCode':$("#require1").val()})
     searchCount({'checkResult':'3','departCode':$("#require1").val()})
@@ -254,18 +299,20 @@ $("#require1").bind("select propertychange change",function(event){
         // }
         
     } 
-    function getUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-            if (r != null) return unescape(r[2]); return null; //返回参数值
-        }
+    // function getUrlParam(name) {
+    //         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    //         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    //         if (r != null) return unescape(r[2]); return null; //返回参数值
+    //     }
 
     window.onload = function(){
-        if(0 == getUrlParam("value")) {
-            $("#require2").val('0');
-            $("#searchBtn").click();
+        // if(0 == getUrlParam("value")) {
+        //     $("#require2").val('0');
+        //     $("#searchBtn").click();
+        // }
+        if (window.JsCallback) {  
+            $('select').fancySelect(); 
         }
-        $('select').fancySelect(); 
 
     }
 

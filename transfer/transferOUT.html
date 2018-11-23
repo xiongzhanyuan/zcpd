@@ -64,10 +64,10 @@
 <script src="../js/main.js"></script>   
 <script type="template" id="listCon1">  
     {{~it.data :value:index}}
-        <li class="clearfix" data-ph={{= value.phoneInvoiceNumber }} data-index={{=index}} onclick='check(this)'>  
+        <li class="clearfix" data-ph={{= value.invoiceNumber }} data-index={{=index}} onclick='check(this)'>  
            <span class="listInfo">
-                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
-                <b>申请人 ：<i>{{= value.createuserid}}</i></b>       
+                <b>单据号 ：<i class="phoneNumber">{{= value.invoiceNumber }}</i></b>
+                <b>申请人 ：<i>{{= value.operateUser}}</i></b>       
             </span> 
             <div class=" chose bottomBtn iconfont icon-tijiao" '></div> 
         </li>
@@ -75,10 +75,11 @@
 </script> 
 <script type="template" id="listCon2">  
     {{~it.data :value:index}}
-        <li class="clearfix" data-ph={{= value.phoneInvoiceNumber }} data-id={{= value.id}} onclick='check2(this)'>  
-            <span class="listInfo">
-                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
-                <b>申请人 ：<i>{{= value.createuserid}}</i></b>       
+        <li class="clearfix" data-ph={{= value.invoiceNumber }} data-id={{= value.id}} onclick='check2(this)'>  
+ 			<span class="listInfo"> 
+                <b>资产编码 ：<i class="">{{?value.assetsCode==null}} -- {{??}} {{= value.assetsCode}}{{? }}</i></b>
+                <b>资产名称：<i>{{?value.assetsName==null}} -- {{??}} {{= value.assetsName}}{{? }}</i></b>  
+                <b>所属单位<i>{{?value.departName==null}} -- {{??}} {{= value.departName}}{{? }}</i></b>  
             </span> 
             <div class=" chose bottomBtn iconfont icon-tijiao" '></div> 
         </li>
@@ -91,7 +92,7 @@ var departList = localStorage.getItem('departList');
 var userInfo = $.cookie('userinfo');  
 departList = JSON.parse(departList)[0];
 userInfo = JSON.parse(userInfo); 
-var ScrapList=[] ;
+var ScrapList=[] ,invoiceList=[];
 getDate();
  
 $("#submitBtn1").click(function(){ 
@@ -101,16 +102,17 @@ $("#submitBtn1").click(function(){
         return false;
     }
     var updataUrl=getURL()+'/mobile/allotController.do?allotOut';
-    var paArr='';
+//     var paArr='';
+    var invoiceDatas = [];
     var arr =$("#list .chose.active").closest("li");
     $.each(arr,function(){
-        paArr+=$(this).attr("data-ph")+',' 
+    	invoiceDatas.push(invoiceList[$(this).attr("data-index")]); 
     })
     var jsons = {  
             departCode: userInfo.departcode,
             userCode:userInfo.usercode,
             userName:userInfo.username,
-            phoneInvoiceNumber: paArr,
+            invoiceDatas: JSON.stringify(invoiceDatas)
         }   
     sendPost(updataUrl, jsons, res); 
     function res(res){
@@ -133,9 +135,9 @@ function check(event){
     }
     sendPost(Purl, jsons, function(data){  
         var res={};
-        $.each(data.data,function(){
-            this.createuserid=$(event).find("b").last().find("i").text();
-        })
+//         $.each(data.data,function(){
+//             this.operateUser=$(event).find("b").last().find("i").text();
+//         })
         res.data = data.data;
         ScrapList = data.data; 
         var tmpl = doT.template($("#listCon2").text()); 
@@ -177,7 +179,7 @@ function getDate(){
         departCode: userInfo.departcode,
         userCode: userInfo.usercode,
         userName:userInfo.username,
-        phoneInvoiceNumber:$(".chose.active").closest('li').attr("data-ph"),
+//         phoneInvoiceNumber:$(".chose.active").closest('li').attr("data-ph"),
     }    
     sendPost(updataUrl, jsons, tab2F); 
     function tab2F(data){  
@@ -186,7 +188,8 @@ function getDate(){
             return false;
         }
         var resData={};
-        resData.data=data.data; 
+        resData.data=data.data;
+        invoiceList = data.data;
         var tmpl = doT.template($("#listCon1").text());  
         if(data.data.length>0){   
             //userName

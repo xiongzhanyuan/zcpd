@@ -168,6 +168,41 @@ nav .back{
         color:$icon;
     }
 }
+.linkView2{
+    width:100%;
+    box-sizing: border-box;
+    margin-top: rem(-22)
+}
+.linkView2 li{
+    float: left;
+    width:50%;
+    box-sizing: border-box;  
+}
+.linkView2 li .con{
+    width:100%; 
+    border:1px solid #dedede;
+    border-top:none;
+    border-left:0px;
+    padding:rem(15);
+    box-sizing: border-box; 
+    text-align: center;
+}
+.linkView2 li .con p{
+    font-size:$fsizem;
+}
+
+.linkView2 li .con i{
+    font-size:rem(70);
+}
+.linkView2 li a{
+    color:#777;
+    font-size: $fsizen;
+    display: block;
+    line-height: rem(70);
+    i{
+        color:$icon;
+    }
+}
 .listLink{
     width:100%;
     li{
@@ -927,7 +962,8 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
     border-bottom: 1px solid #aaa;
     padding: .3rem 0;
     span{padding-left:rem(20); line-height: 1.3; width:70%;display: inline-block;overflow: hidden;vertical-align: middle;}
-    i{display: inline-block;vertical-align: middle;width:25%;}
+    // i{display: inline-block;vertical-align: middle;width:25%;}
+    i{display: inline-block;vertical-align: middle;}
 }
 .bottomLogin{
     height:rem(150);
@@ -1003,7 +1039,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
     border: 0px;
 }
 .destoryC .bottomFixed div button{width:auto;padding:rem(10) rem(20);}
-.destoryC .All p{display: inline-block; width:48%;} 
+.destoryC .All p{display: inline-block; width:30%;} 
 div.fancy-select div.trigger,.select2-container--default .select2-selection--single .select2-selection__rendered{
 padding:rem(10) rem(25) rem(10) rem(10); 
 width: rem(450); line-height: rem(50);font-size: $fsizen;
@@ -1029,8 +1065,8 @@ div.fancy-select ul.options.open{
     z-index: 10;
 } 
 .select2-container .select2-selection--single{    height: 1.5rem;}
-.select2-container{    z-index: 100;}
-.select2-container--default .select2-results>.select2-results__options{height:13rem; max-height:13rem}
+// .select2-container{    z-index: 100;}
+.select2-container--default .select2-results>.select2-results__options{height:6rem; max-height:13rem}
 .select2-container--default .select2-search--dropdown .select2-search__field{height:1.3rem;font-size:$fsizel;}
 div.fancy-select ul.options li,.select2-results__option{color:#565656;margin: 0;padding:0;border-color:#999; }
 div.fancy-select ul.options li{line-height: rem(70);}
@@ -1253,6 +1289,152 @@ div.hide{display: none;}
     overflow-y: auto;
     margin: 0px 20px 0px 20px;
   }
+  .linkViewDisplay {
+      display: none;
+  }
 
 
+/*
+-----------------------------formEntry3 周检表开始----------------------
+*/
+.formEntry3 p {
+    margin-bottom: 0.55333rem;
+    margin-top: 30px;
+    margin-left: 10px;
+  }
+  
+  .formEntry3 p label {
+    width: 3.41333rem;
+    font-size: 0.64rem;
+  }
+  
+  .formEntry3 label {
+    display: inline-block;
+  }
+  
+  .formEntry3 label.editStatus {
+    color: red;
+  }
+  
+  .formEntry3 select, .formEntry3 input, .formEntry3 textarea {
+    display: inline-block;
+    width: 12.6rem;
+    height: 1.49333rem;
+    padding: 0;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-width: 0.04267rem;
+    border-radius: 0.08533rem;
+    margin-left: 40px;
+  }
+  
+  .formEntry3 .Markarea {
+    width: 100%;
+    display: block;
+    padding: 0.32rem;
+    font-size: 0.64rem;
+  }
+  
+  .formEntry3 .radio {
+    width: 0.74667rem;
+    margin-right: 0.32rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .formEntry3 .checkB {
+    width: 4.26667rem;
+    display: inline-block;
+  }
+  
+  .formEntry3 .checkB span {
+    font-size: 0.64rem;
+  }
+  
+  .formEntry3 .tzRadioCheck {
+    display: inline-block;
+  }
+  
+  .formEntry3 .tzRadioCheck span {
+    font-size: 0.64rem;
+  }
+  
+  .formEntry3 .check2 {
+    display: none;
+  }
+  
+  .formEntry3 input {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0.10667rem;
+  }
+  
+  .formEntry3 input[type='file'] {
+    width: 4.26667rem;
+    overflow: visible;
+  }
+  
+  .formEntry3 .checkSear {
+    display: inline-block;
+  }
+  
+  .formEntry3 #search.checkSearch {
+    display: inline-block;
+    padding: 0;
+    margin-left: 0.42667rem;
+    font-size: 1.92rem;
+  }
+  
+  .formEntry3.serverForm p label {
+    width: 4.26667rem;
+  }
+  
+  /* ----------------------------------周检表结束------------------------ */
+  #Hbox3 {
+    padding: 0.42667rem;
+    background: #fff;
+    z-index: 101;
+  }
+  #formEntry3 {
+    padding-top: 2.3rem;
+  }    
 
+  .box{
+    position:relative;
+    width:200px;
+    height:200px;
+    border:1px dashed #d9d9d9;
+    border-radius:6px;
+    background-color:#fff;
+    cursor:pointer;
+    margin-left: 40px;
+  }
+  .box:hover{
+    border-color:#409EFF;
+  }
+  .box::after,.box::before{
+    content:'';
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    background-color:#8c939d;
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .box::before{
+    width:30px;
+    height:2px;
+  }
+  .box::after{
+    width:2px;
+    height:30px;
+  }
+
+  .yzglSpan{
+      color: red;
+  }
+
+  #saveBtnYzgl{color: #0091d2;font-size: 0.8rem ;}
+
+  

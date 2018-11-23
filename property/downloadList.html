@@ -89,7 +89,9 @@
                 Pagelist=responce.data;
                 this.setupWebViewJavascriptBridge(function (bridge) {
                 bridge.callHandler('fileNamesArray', function (resdata) {
-                        localStorage.setItem("pdjhCount",1);
+                        if (resdata) {
+                            localStorage.setItem("pdjhCount",1);
+                        }
                         template(resdata, responce); 
                     })
                 })
@@ -159,7 +161,11 @@
                             that.closest(".listBtn").addClass("current")
                             $(".scan2").hide();
                             // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
-                            localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
+                            localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments));
+
+                            localStorage.setItem("planName",dep.planName);
+                            localStorage.setItem("planStartDate",dep.startDate);
+                            localStorage.setItem("planStopDate",dep.stopDate);
                         }
                     } else { 
                         //IOS  
@@ -172,7 +178,12 @@
                                     localStorage.setItem("plnum",that.closest("li").find(".planNumber").text());
                                     $(".scan2").hide();
                                     // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
-                                    localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
+                                    localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments));
+
+                                    localStorage.setItem("planName",dep.planName);
+                                    localStorage.setItem("planStartDate",dep.startDate);
+                                    localStorage.setItem("planStopDate",dep.stopDate);
+
                                 }
                             })
                         });
@@ -208,6 +219,11 @@
                         $(".scan2").hide();
                         // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
                         localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
+                        localStorage.setItem("pdjhCount",1);
+
+                        localStorage.setItem("planName",dep.planName);
+                        localStorage.setItem("planStartDate",dep.startDate);
+                        localStorage.setItem("planStopDate",dep.stopDate);
 
                     }
                 } else { 
@@ -222,7 +238,10 @@
                                 $(".scan2").hide();
                                 // $.cookie("PDdepartlist",JSON.stringify(dep.departments), { expires: 30, path: '/', secure: false })
                                 localStorage.setItem("PDdepartlist", JSON.stringify(dep.departments))
-
+                                localStorage.setItem("pdjhCount",1);
+                                localStorage.setItem("planName",dep.planName);
+                                localStorage.setItem("planStartDate",dep.startDate);
+                                localStorage.setItem("planStopDate",dep.stopDate);
                             }
                         })
                     });

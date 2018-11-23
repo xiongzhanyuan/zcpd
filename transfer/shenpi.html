@@ -67,10 +67,10 @@
 <script src="../js/main.js"></script>   
 <script type="template" id="listCon1">  
     {{~it.data :value:index}}
-    <li class="clearfix getListINfo"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}">   
+    <li class="clearfix getListINfo"  data-ph={{=value.invoiceNumber}} data-index={{=index}}>   
         <span class="listInfo">
             <b>单据号 ：<i class="invoiceNumber">{{= value.invoiceNumber }}</i></b>
-            <b>申请人 ：<i>{{= value.auditUser}}</i></b>         
+            <b>申请人 ：<i>{{= value.operateUser}}</i></b>         
         </span> 
         <div class=" chose bottomBtn iconfont icon-tijiao"></div> 
     </li>
@@ -78,7 +78,7 @@
 </script>
 <script type="template" id="listCon2">  
     {{~it.data :value:index}}
-        <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}} onclick="getInfo(this)">   
+        <li class="clearfix"  data-ph={{=value.invoiceNumber}} data-index={{=index}} onclick="getInfo(this)">   
             <span class="listInfo"> 
                 <b>资产编码 ：<i class="">{{?value.assetsCode==null}} -- {{??}} {{= value.assetsCode}}{{? }}</i></b>
                 <b>资产名称：<i>{{?value.assetsName==null}} -- {{??}} {{= value.assetsName}}{{? }}</i></b>  
@@ -96,7 +96,7 @@
     var userInfo = $.cookie('userinfo'); 
     departList = JSON.parse(departList)[0];
     userInfo = JSON.parse(userInfo);  
-    var shenpiL=[],data_ph='';
+    var shenpiL=[],data_ph='',detailL=[];
     getINfo();
     function getINfo(){
         if (userInfo == "" || !userInfo || departList == "" || !departList) {
@@ -131,8 +131,14 @@
                 sendPost(inforUrl, jsons, function(data){ 
                     var tmpl = doT.template($("#listCon2").text());  
                     var res ={}; 
+                    detailL = data.data;
                     res.data=data.data;
                     $("#list2").html(tmpl(res));  
+                    $(".chose2").click(function(e){ 
+                        $("#list2 .chose2").removeClass("active"); 
+                        $(this).toggleClass("active");
+                        e.stopPropagation(); 
+                    }) 
                     $(".destory-updata").show();
                     $(".updataList").hide(); 
                     $(".back").hide();
@@ -154,31 +160,27 @@
 
 function getInfo(event){
     var that =$(event);
-    var Purl =  getURL()+"/mobile/allotController.do?getByPhoneInvoiceNumber";
-    var jsons={
-        phoneInvoiceNumber:that.attr("data-ph"),
-        departCode: userInfo.departcode ,
-    }
-    sendPost(Purl, jsons, function(data){  
+    var detailIndex = that.attr("data-index");
         var list =$("#dataBox p"); 
         $.each(list,function(){ 
             var target = $(this);
             var key = target.attr("name");
-            var val = data.data[0][key];            
+            var val =  detailL[detailIndex][key];            
             target.find("span").text(val==""||val==null?"--":val);
         })
-    }) 
+//     }) 
 }
 
 $("#submitBtn1").click(function(){
    var URL =  getURL()+"/mobile/allotController.do?allotAudit";
+   var invoiceIndex = $(".chose.active").closest('li').attr("data-index");
    var jsons={
         userCode: userInfo.usercode,
         departCode: userInfo.departcode , 
         userName:userInfo.username,
-        phoneInvoiceNumber:$(".chose.active").closest('li').attr("data-ph"),
         approveResult:$('input[type="radio"][name="approveResult"]:checked').val(),
         opinion:$("#opinion").val(),
+        invoiceData:JSON.stringify(shenpiL[invoiceIndex])
    };
    
    sendPost(URL, jsons, function(data){

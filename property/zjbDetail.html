@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>周检表详情</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/index.css"> 
+    <link rel="stylesheet" href="css/swiper.min.css">
+
+    <style>
+        .cardList li {height:auto;} 
+    </style>
+</head>
+<body> 
+	<nav>
+		<a class="back centery" href="javascript:history.go(-1)">返回</a> 
+		<p class="navCon">周检表详情</p>
+	</nav>
+	<div class="content" id = "detailDiv"> 
+        <div id="dataBox">
+            
+        </div>
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/hotcss.js"></script>
+<script src="../js/cookie.js"></script>
+<script src="../js/main.js"></script>  
+
+
+<script>
+    if (window.JsCallback) {
+        callbackRes(window.JsCallback.getZjb());
+    } else {
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('getZjb', callbackRes)
+        })
+    }
+
+    var keyNameStore = localStorage.getItem("keyNameStore");  
+    keyNameStore = JSON.parse(keyNameStore);  
+    function callbackRes(result) {
+
+        if (result == null || !result) {
+            alert("暂无数据");
+            return;
+        }
+        var sendData = JSON.parse(result);
+        newDate = [];
+        
+        var data = sendData[0];
+        var htmlStr = "";
+
+        $.each(data,function(name,value) {
+			if (value) {
+
+                if(name.indexOf('textarea') == -1 && name.indexOf('uploadTableName')==-1 && name.indexOf('zcpdImgs') == -1
+                    &&name.indexOf('yzglCameraUrl') == -1) {
+                    htmlStr +=  "<p><i>" + keyNameStore[name] + ":</i><span>" + value + "</span></p>";
+                }
+			}
+		});
+        $("#dataBox").html(htmlStr)
+       
+    }
+
+</script>
+
+</html>

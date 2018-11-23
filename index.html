@@ -10,16 +10,20 @@
 	<link rel="stylesheet" href="css/iconfont.css">
 	<link rel="stylesheet" href="css/dialog.css"> 
 	 <link rel="stylesheet" href="css/bootstrap.css"> 
+	<link href="css/select2.css" rel="stylesheet" /> 
+	<link rel="stylesheet" href="css/lCalendar.css">   
 	<link rel="stylesheet" href="css/index.css"> 
 	<link rel="stylesheet" href="css/swiper.min.css">
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/cookie.js"></script>
 	<script src="js/dialog.js"></script>
+	<script src="js/lCalendar.js"></script> 
 	<script src="js/hotcss.js"></script>
 	<script src="js/doT.js"></script>
 	<script src="js/chart.js"></script> 
 	<script src="js/fancySelect.js"></script> 
+	<script src="js/select2.js"></script>
 	<script src="js/main.js"></script> 
 	<script src="js/swiper.min.js"></script>
 	<script src="js/exif.js"></script>
@@ -29,7 +33,6 @@
 	<script>
       // 给客户端传
 	if (window.JsCallback) {
-		debugger
 		var res = window.JsCallback.onGetLoginJSON();
 		if (!res) {
 			judgmentUrl(null, "login.html"); 
@@ -38,7 +41,6 @@
 			loginByEmail(JSON.parse(res));
 		} 
 	} else {
-		debugger
 		setupWebViewJavascriptBridge(function (bridge) {
 			bridge.callHandler('onGetLoginJSON', function responseCallback(res) { 
 			if (!res) {
@@ -114,6 +116,8 @@
 		}
 	}
 
+	
+
 	</script>
 	<style>
 		.mytabs {
@@ -152,6 +156,7 @@
 
 <body>
 	<nav>
+		<a class="back centery linkViewDisplay" id = "indexGoBack" onclick="indexGoBack()">返回</a> 
 		<p class="navCon">应用</p>
 	</nav>
 	<div class="scancontent" style="height: 100%; overflow: auto">
@@ -177,7 +182,7 @@
 				</li>
 				<li>
 					<div class="con">
-						<a href="transfer/transferEnter.html">
+						<a href="JavaScript:;" onclick="dbsqAbtn()">
 							<i class="appNav iconfont icon-navicon-dbd"></i>
 							<p>调拨申请</p>
 						</a>
@@ -186,7 +191,7 @@
 				<li>
 					<div class="con">
 
-						<a href="destory/destory.html">
+						<a href="JavaScript:;" onclick="bfsqAbtn()">
 							<i class="appNav iconfont icon-empty"></i>
 							<p>报废申请</p>
 						</a>
@@ -273,7 +278,192 @@
 							<p class="DepartName"></p>
 						</div>
 					</div>
-			<ul class="linkView clearfix">
+			<ul class="linkView2 clearfix">
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" class="" onclick="zcpdLinkViewShow()">
+							<i class="appNav iconfont icon-icon-"></i>
+							<p>资产盘点</p>
+
+						</a>
+					</div>
+				</li> 
+				<!-- <li>
+					<div>
+						<div class="con">
+							<a href="JavaScript:;" onclick="pdcxAbtn()">
+								<i class="appNav iconfont icon-diaobo"></i>
+								<p>盘点查询</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+
+							<a href="JavaScript:;" onclick="sjxzAbtn()">
+								<i class="appNav iconfont icon-msnui-cloud-download"></i>
+								<p>数据下载</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div class="con">
+						<a data-prefetch="true" href="JavaScript:;" onclick="bdxzcxAbtn()">
+							<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>本地下载查询</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="sjscAbtn()">
+							<i class="appNav iconfont icon-shangchuan"></i>
+							<p>数据上传</p>
+						</a>
+					</div>
+				</li> -->
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="bfglLinkViewShow()">
+							<i class="appNav iconfont icon-cloud-scrap"></i>
+							<p>报废管理</p>
+						</a>
+					</div>
+				</li>
+				<!-- <li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="bfspAbtn()">
+							<i class="appNav iconfont icon-shenpi"></i>
+							<p>报废审批</p>
+						</a>
+					</div>
+				</li>
+				 <li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="bfcxAbtn()">
+							<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>报废查询</p>
+						</a>
+					</div>
+				</li>  -->
+				<li>
+					<div>
+						<div class="con">
+							<a href="JavaScript:;" onclick="dbglLinkViewShow()">
+								<i class="appNav iconfont icon-navicon-dbd"></i>
+								<p>调拨管理</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<!-- <li>
+					<div>
+						<div class="con">
+							<a href="JavaScript:;" onclick="dbczAbtn()">
+								<i class="appNav iconfont icon-caozuo1"></i>
+								<p>调拨操作</p>
+							</a>
+						</div>
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<a href="JavaScript:;" onclick="dbspAbtn()">
+								<i class="appNav iconfont icon-navicon-dbsqdsp"></i>
+								<p>调拨审批</p>
+							</a>
+						</div> 
+					</div>
+				</li> 
+				<li>
+					<div class="con">
+						<a href="JavaScript:;" onclick="dcqrAbtn()">
+							<i class="appNav iconfont icon-tiaochu"></i>
+							<p>调出确认</p>
+						</a>
+					</div>
+				</li> 
+				<li>
+					<div class="con">
+						<a href="JavaScript:;" onclick="drqrAbtn()">
+							<i class="appNav iconfont icon-tiaoru"></i>
+							<p>调入确认</p>
+						</a>
+					</div>
+				</li>
+				<li>
+					<div>
+						<div class="con">
+							<a href="JavaScript:;" onclick="dbcxAbtn()">
+								<i class="appNav iconfont icon-diaobo"></i>
+								<p>调拨查询</p>
+							</a>
+						</div>
+
+					</div>
+				</li>  -->
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="tjcxLinkViewShow()">
+							<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>统计查询</p>
+						</a>
+					</div>
+				</li> 
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" class="" onclick="jyzglLinkViewShow()">
+							<i class="appNav iconfont icon-caozuo1"></i>
+							<p>加油站管理</p>
+						</a>
+					</div>
+				</li> 
+				<!-- <li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="tzcxAbtn()">
+							<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>台账查询</p>
+						</a>
+					</div>
+				</li> 
+				<li>
+						<div class="con">
+	
+							<a href="JavaScript:;" onclick="hzcxAbtn()">
+								<i class="appNav iconfont icon-chaxuntiaojian"></i>
+								<p>汇总查询</p>
+							</a>
+						</div>
+					</li> 
+				<li>
+					<div class="con">
+
+							<a href="JavaScript:;" id = "pyEntry">
+									<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>盘盈录入</p>
+						</a>
+					</div>
+				</li>  -->
+			</ul>
+
+
+			<ul class="linkView clearfix linkViewDisplay" id = "zcpdLinkView">
 				<li>
 					<div class="con">
 
@@ -327,6 +517,18 @@
 				<li>
 					<div class="con">
 
+							<a href="JavaScript:;" id = "pyEntry">
+									<i class="appNav iconfont icon-chaxuntiaojian"></i>
+							<p>盘盈录入</p>
+						</a>
+					</div>
+				</li> 
+			</ul>
+
+			<ul class="linkView clearfix linkViewDisplay" id = "bfglLinkView">
+				<li>
+					<div class="con">
+
 						<a href="JavaScript:;" onclick="bfsqAbtn()">
 							<i class="appNav iconfont icon-cloud-scrap"></i>
 							<p>报废申请</p>
@@ -351,6 +553,9 @@
 						</a>
 					</div>
 				</li> 
+			</ul>
+
+			<ul class="linkView clearfix linkViewDisplay" id = "dbglLinkView">
 				<li>
 					<div>
 						<div class="con">
@@ -410,6 +615,9 @@
 
 					</div>
 				</li> 
+			</ul>
+
+			<ul class="linkView clearfix linkViewDisplay" id = "tjcxLinkView">
 				<li>
 					<div class="con">
 
@@ -437,16 +645,31 @@
 							</a>
 						</div>
 					</li> 
+				
+			</ul>
+
+			<ul class="linkView clearfix linkViewDisplay" id = "jyzglLinkView">
 				<li>
 					<div class="con">
 
-							<a href="JavaScript:;" id = "pyEntry">
-									<i class="appNav iconfont icon-chaxuntiaojian"></i>
-							<p>盘盈录入</p>
+						<a href="JavaScript:;" onclick="zjblrAbtn()">
+							<i class="appNav iconfont icon-navicon-dbd"></i>
+							<p>周检表录入</p>
+						</a>
+					</div>
+				</li> 
+				<li>
+					<div class="con">
+
+						<a href="JavaScript:;" onclick="zjbscAbtn()">
+							<i class="appNav iconfont icon-shangchuan"></i>
+							<p>周检表上传</p>
 						</a>
 					</div>
 				</li> 
 			</ul>
+
+
 		</div>
 		<div class="mytabs tab3">
 				<div class="userTop clearfix">
@@ -462,7 +685,9 @@
 				<li>
 					<div class="con">
 						<i class="appNav iconfont icon-setup"></i>
-						<a href="set/server.html">
+						<!-- <a href="set/server.html"> -->
+						<a href="JavaScript:;" onclick="fwqszAbtn()">
+
 							<p>服务器设置</p>
 						</a>
 					</div>
@@ -471,7 +696,9 @@
 					<div>
 						<div class="con">
 							<i class="appNav iconfont icon-brush"></i>
-							<a href="set/reset.html">
+							<!-- <a href="set/reset.html"> -->
+							<a href="JavaScript:;" onclick="xgmmAbtn()">
+
 								<p>修改密码</p>
 							</a>
 						</div>
@@ -482,8 +709,9 @@
 					<div>
 						<div class="con">
 							<i class="appNav iconfont icon-qiehuanzuzhi"></i>
-							<a href="unit.html">
-								<p>切换单位</p>
+							<!-- <a href="unit.html"> -->
+							<a href="JavaScript:;" onclick="qhdwAbtn()">
+									<p>切换单位</p>
 							</a>
 						</div>
 
@@ -493,7 +721,9 @@
 					<div>
 						<div class="con">
 							<i class="appNav iconfont icon-qiehuan1"></i>
-							<a href="login.html">
+							<!-- <a href="login.html"> -->
+							<a href="JavaScript:;" onclick="cxdlAbtn()">
+
 								<p>重新登陆</p>
 							</a>
 						</div>
@@ -610,7 +840,10 @@
 				</p> 
 				<p>
 					<label for="storePlaceName">存放地点:</label>
-					<input type="text" name="storePlaceName" id="storePlaceName">
+					<!-- <input type="text" name="storePlaceName" id="storePlaceName"> -->
+					<select class="select" name="storePlaceName" id="storePlaceName">
+						<option value=""></option>
+					</select>
 				</p>
 				<!-- <p>
 					<label for="checkResult">盘点状态:</label>
@@ -654,9 +887,17 @@
 					</div>
 				</div>
 			</div>
+			<button class="orange server_save" onclick="deletePDImgs()">删除图片</button>
 			
 
 		</div>
+		<div id="dialog-confirm" class="center" >
+            <p class=""><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>是否进入盘盈?</p>
+            <div class="bottom">
+                <p id="sure">确定</p>
+                <p id="cancle">取消</p>
+            </div>    
+  		</div>
 		<!-- 盘盈 -->
 		<div class="content scrollCon scrollCon2">
 			<p>盘点计划编码：<span id="PLnum"></span></p>
@@ -686,8 +927,18 @@
 								<input type="text" name="assetsStandard" id="assetsStandard">
 						</p>
 						<p>
+								<label for="lossReason" class="editStatus">盘盈原因:</label>
+								<!-- <input type="text" name="lossReason" /> -->
+								<select class="select" name="lossReason" id="lossReason">
+										<option value=""></option>
+								</select>
+							</p>
+						<p>
 							<label for="storePlaceName" class="editStatus">存放地点:</label>
-							<input type="text" name="storePlaceName" id="storePlaceName">
+							<!-- <input type="text" name="storePlaceName" id="storePlaceName"> -->
+							<select class="select" name="storePlaceName" id="storePlaceName">
+								<option value=""></option>
+							</select>
 						</p>
 						<p>
 							<label for="userPerson" class="editStatus">保管人:</label>
@@ -736,27 +987,108 @@
 									<option value="08">已处置</option>
 								</select>
 							</p>
-							<p>
-								<label for="lossReason" class="editStatus">盘盈原因:</label>
-								<input type="text" name="lossReason" />
-							</p>
+							
 							<p>
 								<label for="remark">备注:</label>
 								<input type="text" name="remark" />
 							</p>
-							<div class="zcpdImgBorder">
-									<span>图片区</span>
-									<div class="swiper-container">
-										<div id = "pyImgsDiv" class="swiper-wrapper">
-										</div>
-									</div>
+							
+						</form>
+						<div class="zcpdImgBorder">
+							<span>图片区</span>
+							<div class="swiper-container">
+								<div id = "pyImgsDiv" class="swiper-wrapper">
 								</div>
-					</form>
+							</div>
+						</div>
+						<button class="orange server_save" onclick="deletePYImgs()">删除图片</button>
+
 					
 				</div>
 				
 		</div> 
-		<bottom class=" bottomFixed bottombgNone">
+
+		<div class="content scrollCon scrollCon3">
+			<div class="indexBox" id='Hbox3' style="height: 90% !important;">
+					<form class="formEntry3 " id="formEntry3" > 
+						<div style="border: 0.04267rem solid #aaa" id = "yzglPart1">
+								<p>分公司 <span class='yzglSpan'>*</span></p>
+								<p>
+									<select name="fgsmc" id="fgsmc"></select>
+									<!-- <input type="" name="fgsmc" id = "fgsmc"> -->
+								</p>
+		
+								<p>油站名称（直接填写简称，如金凤站）<span class='yzglSpan'>*</span></p>
+								<p>
+									<select name = "yzbm" id="yzbm"></select>
+									<!-- <input type="hidden" name="yzbm" id = "yzbm"> -->
+								</p>
+								<p>周检日期 <span class='yzglSpan'>*</span></p>
+								<p>
+									<input readonly type="data" id="zjrq" name="zjrq" readonly="readonly"  data-lcalendar="2010-01-11,2025-12-31" /> 
+								</p>
+		
+								<p>
+									周检人员(依次填写参与人员,多人用顿号隔开)<span class='yzglSpan'>*</span>
+								</p>
+								<p>
+									<textarea onpropertychange="MaxMe(this)" name="zjry" id="zjry" oninput="MaxMe(this)" style="overflow:hidden"></textarea>
+								</p>
+		
+								<p style="line-height:50px; font-size: 0.55rem">
+									以下内容为具体检查要求，对照每条内容进行检查。检查没问题的选择“合格”，有问题的选择“其他情况”，随后输入具体情况。
+								</p>
+						</div>
+						<div id = "yzglPart2">
+
+						</div>
+
+						<div style="border: 0.04267rem solid #aaa; margin-top: 6px;" id = "yzglPart3">
+							<p>重点问题图片上传1</p>
+							<p>
+								<div id = yzglImg1 class="box" onclick=yzglCamera1.click()></div>
+								<input type="file" accept="image/*"  id="yzglCamera1" onchange="uploadYzglImg(this, 'yzglImg1')" style="display: none">
+							</p>
+
+							<p>重点问题图片上传2</p>
+							<p>
+								<div id = yzglImg2 class="box" onclick=yzglCamera2.click()></div>
+								<input type="file" accept="image/*" capture="camera" id="yzglCamera2" onchange="uploadYzglImg(this, 'yzglImg2')" style="display: none">
+							</p>
+
+							<p>重点问题图片上传3</p>
+							<p>
+								<div id = yzglImg3 class="box" onclick=yzglCamera3.click()></div>
+								<input type="file" accept="image/*" capture="camera" id="yzglCamera3" onchange="uploadYzglImg(this, 'yzglImg3')" style="display: none">							</p>
+						</div>
+
+						<!-- <div style="border: 0.04267rem solid #aaa; margin-top: 5px;">
+								<p style="text-align:center;color:blue;text-decoration:underline">房站检查情况</p>
+								
+								<p>col1</p>
+								<p>
+									<select name="" value="" id="col1" onchange="openOtherText(this)">
+										<option value="合格">合格</option>
+										<option value="其他情况">其他情况</option>
+									</select>
+									<textarea id="col1textarea" placeholder="请输入其他情况" onpropertychange="MaxMe(this)" oninput="MaxMe(this)" style="overflow:hidden; display: none; margin-top: 3px;"></textarea>
+								</p>
+
+								<p>col2</p>
+								<p>
+									<select name="" value="" id="col2" onchange="openOtherText(this)">
+										<option value="合格">合格</option>
+										<option value="其他情况">其他情况</option>
+									</select>
+									<textarea id="col2textarea" placeholder="请输入其他情况" onpropertychange="MaxMe(this)" oninput="MaxMe(this)" style="overflow:hidden; display: none; margin-top: 3px;"></textarea>
+								</p>
+						</div> -->
+
+					</form>
+			</div>
+		</div> 
+
+		<bottom class=" bottomFixed bottombgNone" id = "pdBottom">
 			<div class="center clearfix">
 
 				<input type="file" accept="image/*" capture="camera" id="zcpdCamera" onchange="changeImg(this)" hidden>
@@ -766,10 +1098,19 @@
 				<!-- <button id="submitBtn" class="bottomBtn">提交</button> -->
 			</div>
 		</bottom>
+		<bottom class="bottomFixed" id = "yzglBottom">
+			<div class="center clearfix" style="position: absolute;"> 
+				<i id="saveBtnYzgl" onclick="saveYzglForm()"> 保存</i>
+			</div>
+		</bottom>
 	</div>
+
+
+	
 	
 	<div class="layBox center">清除成功</div>
 </body>
+
 <script>
 		
 	//char1：
@@ -997,8 +1338,375 @@
 	}); 
 </script>
 
+<script type="template" id="yzglTemp">  
+	{{~it.data :value:index}}
+	{{var textArray = ['col19','col20','col39','col40','col59','col60','col79','col80','col99','col100','col119','col120','col139','col140','col159','col160','col179','col180','col199','col200'];}}
+		<div style="border: 0.04267rem solid #aaa; margin-top: 5px;">
+			<p style="text-align:center;color:blue;text-decoration:underline" id = {{=index}} onclick=hideShowQy(this)>{{= value.qymc}}</p>
+			<div id = {{= "qyDiv_" + index}}>
+				{{? value.qyremark}} 
+					<p style="font-size:0.5rem;color:gray;line-height:56px">{{= value.qyremark}}</p>
+				{{?}}  
+				{{~value.fields :fieldValue:fieldIndex}}
+					<p id={{= fieldValue.columnName + 'titleP'}}>{{= fieldValue.columnTitle}}</p>
+					{{? fieldValue.remark}} 
+						<p style="font-size:0.5rem;color:gray;line-height:56px">{{= fieldValue.remark}}</p>
+					{{?}}  
+
+					{{? textArray.indexOf(fieldValue.columnName) == 0}} 
+						<textarea id={{= fieldValue.columnName}} name={{= fieldValue.columnName}} onpropertychange="MaxMe(this)" oninput="MaxMe(this)" style="overflow:hidden; margin-top: 3px;"></textarea>
+					{{??}}
+						<p>
+							<select value="" id={{= fieldValue.columnName}} name={{= fieldValue.columnName}} onchange="openOtherText(this)">
+								<option value="合格">合格</option>
+								<option value="其他情况">其他情况</option>
+							</select>
+							<textarea id={{= fieldValue.columnName + 'textarea'}} name={{= fieldValue.columnName + 'textarea'}} placeholder="请输入其他情况" onpropertychange="MaxMe(this)" oninput="MaxMe(this)" style="overflow:hidden; display: none; margin-top: 3px;"></textarea>
+						</p>
+					{{?}}  
+				{{~}}
+			</div>
+		</div>
+    {{~}}
+</script>
+
 <!-- chart结束 -->
 <script> 
+
+	var needCheckArra = [];
+
+	var yzglJson = {
+		// departCode: $("#departCodeSelect").val(),
+		departCode: 10779,
+		tableName: "DEV_WEEKLY_CHECK"
+	}
+	var url = getURL() + '/mobile/devWeeklyCheckController.do?getCheckListCols';
+
+	sendPostDownLoad(url, yzglJson, yzglResponseFunc)
+	function yzglResponseFunc(data) {
+		debugger
+		if (data.success == 'true') {
+			var tmpl = doT.template($("#yzglTemp").text());  
+			var res = {};
+			var yzglData = [];
+			var keyNameStore = {};
+			res.data = data.data.colsData;
+			$("#yzglPart2").html(tmpl(res));  
+			var textArray = ['col19','col20','col39','col40','col59','col60','col79','col80','col99','col100','col119','col120','col139','col140','col159','col160','col179','col180','col199','col200'];
+			$.each(data.data.colsData, function() {
+				$.each(this.fields, function() {
+
+					keyNameStore[this.columnName] = this.columnTitle;
+
+					if (window.JsCallback) {  
+
+						if (textArray.indexOf(this.columnName) != 0) {
+							$('#' + this.columnName).fancySelect(); 
+						}
+					}
+					if (this.columnRequire == 1) {
+						var titleName = this.columnTitle + "<span class='yzglSpan'>*</span>";
+						$("#" + this.columnName + "titleP").html('').html(titleName)
+						needCheckArra.push(this.columnName);
+					}
+				})
+			}) 
+
+			var fgsStr = '';
+			$.each(data.data.fgsData, function() {
+				fgsStr+="<option value="+this.departname+">"+this.departname+"</option>"
+
+			})
+			$("#fgsmc").html(fgsStr); 
+
+			var yzStr = '';
+			$.each(data.data.jyzData, function() {
+				yzStr+="<option value="+this.departname+">"+this.departname+"</option>"
+
+			})
+			$("#yzbm").html(yzStr); 
+			
+			keyNameStore.fgsmc = '分公司';
+			keyNameStore.yzbm = '油站名称';
+			keyNameStore.zjrq = '周检日期';
+			keyNameStore.zjry = '周检人员';
+			
+			localStorage.setItem("keyNameStore",JSON.stringify(keyNameStore));
+
+		}
+	}
+
+
+
+	function MaxMe(o) {
+		if (o.scrollHeight < 110) {
+
+		} else {
+			o.style.height = o.scrollTop + o.scrollHeight + "px";
+		}
+	}
+	
+	function openOtherText(v) {
+		if (v.value == '其他情况') {
+			$("#" + v.id + "textarea").show();
+		} else if (v.value == '合格') {
+			$("#" + v.id + "textarea").hide();
+		}
+	}
+
+	function hideShowQy(v) {
+		if ($("#qyDiv_" + v.id).is(':visible')) {
+			$("#qyDiv_" + v.id).hide();
+		} else {
+			$("#qyDiv_" + v.id).show();
+		}
+	}
+
+	var yzglCameraUrl1 = '';
+	var yzglCameraUrl2 = '';
+	var yzglCameraUrl3 = '';
+	function uploadYzglImg(obj, id) {
+		var file = obj.files[0];
+		var mime_type=file.type;
+		var orientation=0;
+		if (file && /^image\//i.test(file.type)) {
+			EXIF.getData(file,function(){
+			orientation=EXIF.getTag(file,'Orientation');
+			});
+			var image=new Image();
+
+			var reader = new FileReader();
+			reader.onloadend = function () {
+				var url = reader.result;//读取到的文件内容.这个属性只在读取操作完成之后才有效,并且数据的格式取决于读取操作是由哪个方法发起的.所以必须使用reader.onload，
+				image.src = url;//reader读取的文件内容是base64,利用这个url就能实现上传前预览图片
+			var width,height;
+			var MAX_WH=800;
+			image.onload=function () {
+				if(image.height > MAX_WH) {
+				// 宽度等比例缩放 *= 
+				image.width *= MAX_WH / image.height;
+				image.height = MAX_WH;
+				}
+				if(image.width > MAX_WH) {
+				// 宽度等比例缩放 *= 
+				image.height *= MAX_WH / image.width;
+				image.width = MAX_WH;
+				}
+				//压缩
+				var quality=80;
+				var cvs = document.createElement('canvas');
+				cvs.width = width = image.width;
+				cvs.height =height = image.height;
+		
+				switch (orientation) {
+				case 6:
+				case 8:
+					cvs.width = height;
+					cvs.height = width;
+					break;
+				}
+		
+				var context=cvs.getContext("2d");
+		
+				//解决ios图片旋转问题 
+				switch(orientation){
+				//iphone横屏拍摄，此时home键在左侧
+				case 3:
+				// 180度向左旋转
+				context.translate(width, height);
+				context.rotate(Math.PI);
+				break;
+				//iphone竖屏拍摄，此时home键在下方(正常拿手机的方向)
+				case 6:
+				context.rotate(0.5 * Math.PI);
+				context.translate(0, -height);
+				break;
+				//iphone竖屏拍摄，此时home键在上方
+				case 8:
+				// 逆时针旋转90度
+				context.rotate(-0.5 * Math.PI);
+				context.translate(-width, 0);
+				break;
+				}
+				context.drawImage(image, 0, 0,image.width, image.height);
+				var base64 = cvs.toDataURL('image/jpeg', quality/100);
+				debugger
+				$("#" + id).css("background-image","url(" + base64 + ")");
+				
+				if (id == 'yzglImg1') {
+					yzglCameraUrl1 = base64;
+				} else if(id == 'yzglImg2') {
+					yzglCameraUrl2 = base64;
+				} else if(id == 'yzglImg3') {
+					yzglCameraUrl3 = base64;
+				}
+				
+				//获取识别结果
+					// zcpdImgs.unshift(base64);
+					// $("#zcpdImgsDiv").html("");
+					// $("#pyImgsDiv").html("");
+					// zcpdImgs.forEach(function(value, index) {
+					// 	if ($('.scrollCon1').css('display') == "block") {
+					// 		$("#zcpdImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+					// 	} else if ($('.scrollCon2').css('display') == "block") {
+					// 		$("#pyImgsDiv").append("<div class=\"swiper-slide\">" + "<img src=\"" + value + "\"/>" + "</div>");
+					// 	}
+					// })
+					// $("#zcpdImgsDiv").html(value);
+					}
+				//   image.src=base64;
+				};
+			reader.readAsDataURL(file);
+		}else{
+			alert("只能识别图片！")
+		}
+	}
+
+	function saveYzglForm() {
+		
+		var formEntry3Data = $("#formEntry3").serializeObject();
+		$.each(formEntry3Data,function(name,value) {
+			if(value == "其他情况") {
+				var textStr = name + "textarea";
+				formEntry3Data[name] = formEntry3Data[textStr];
+			}
+		});
+		
+		debugger
+		var checkResult = true;
+		$.each(needCheckArra, function(index, name) {
+			if (!formEntry3Data[name]) {
+				alert("您有必填项未填写");
+				checkResult = false;
+				return false;
+			}
+		})
+		if (!checkResult) {
+			return false;
+		}
+		// formEntry3Data.yzglCameraUrl1 = yzglCameraUrl1;
+		// formEntry3Data.yzglCameraUrl2 = yzglCameraUrl2;
+		// formEntry3Data.yzglCameraUrl3 = yzglCameraUrl3;
+
+		var img = [];
+		img.push(yzglCameraUrl1);
+		img.push(yzglCameraUrl2);
+		img.push(yzglCameraUrl3);
+		formEntry3Data.uploadFile = img;
+
+		localStorage.setItem("zjbDataStorage",JSON.stringify($("#formEntry3").serializeObject()));
+		
+		formEntry3Data.uploadTableName = 'zjb';
+
+		if (window.JsCallback) {
+			var res = window.JsCallback.saveZjb(formEntry3Data);
+			if (res) {
+				alert("保存成功");
+			}
+		} else {
+			setupWebViewJavascriptBridge(function (bridge) {
+				bridge.callHandler('saveZjb', formEntry3Data, function responseCallback(result) {
+					if (result) {
+						alert("保存成功");
+					}
+
+				})
+			})
+		}
+
+
+	}
+
+
+	var cfddJson;
+	if (window.JsCallback) {
+		var cfddStr = window.JsCallback.onGetCFDD();
+		if (cfddStr) {
+			cfddJson = JSON.parse(cfddStr)
+			var cfddOptionStr = "<option value=''></option>";
+			$.each(cfddJson,function(index,i){  
+				cfddOptionStr+="<option value="+this.complexname+">"+this.complexname+"</option>"
+			})   
+			$('#formEntry').find("#storePlaceName").html(cfddOptionStr);
+			$('#formEntry2').find("#storePlaceName").html(cfddOptionStr);
+
+		}
+	} else {
+		setupWebViewJavascriptBridge(function (bridge) {
+			bridge.callHandler('onGetCFDD', function responseCallback(res) { 
+			if (res) {
+					cfddJson = res;
+					var cfddOptionStr = "<option value=''></option>";
+					$.each(cfddJson,function(index,i){  
+						
+						cfddOptionStr+="<option value="+this.complexname+">"+this.complexname+"</option>"
+					})   
+					
+					$('#formEntry').find("#storePlaceName").html(cfddOptionStr);
+					$('#formEntry2').find("#storePlaceName").html(cfddOptionStr);
+
+				}
+			})
+		});
+	}
+
+	var pyyyJson;
+	if (window.JsCallback) {
+		var pyyyStr = window.JsCallback.onGetPYYY();
+		if (pyyyStr) {
+			pyyyJson = JSON.parse(pyyyStr);
+			var pyyyOptionStr =  "<option value=''></option>";
+			$.each(pyyyJson,function(index,i){  
+				
+				pyyyOptionStr+="<option value="+this.complexname+">"+this.complexname+"</option>"
+			})   
+			
+			$("#lossReason").html(pyyyOptionStr);
+		}
+	} else {
+		setupWebViewJavascriptBridge(function (bridge) {
+			bridge.callHandler('onGetPYYY', function responseCallback(res) { 
+			if (res) {
+				pyyyJson = res;
+				var pyyyOptionStr = "<option value=''></option>";
+				$.each(pyyyJson,function(index,i){  
+					
+					pyyyOptionStr+="<option value="+this.complexname+">"+this.complexname+"</option>"
+				})   
+				
+				$("#lossReason").html(pyyyOptionStr);
+			}
+			})
+		});
+	}
+
+	$('#lossReason').select2({
+		tags: true
+	});
+
+	// debugger
+	$('#formEntry').find("#storePlaceName").select2({
+		tags: true
+	});
+
+	$('#formEntry2').find("#storePlaceName").select2({
+		tags: true
+	});
+
+
+	//-----------------------周检start-----------------------------------------
+	var lcalendarData='1900-1-1'+',2030-12-31'
+    $("#zjrq").attr("data-lcalendar",lcalendarData); 
+    $("#zjrq").val(new Date().Format('yyyy-MM-dd')) 
+    var calendardatetime = new lCalendar();
+    calendardatetime.init({
+        'trigger': '#zjrq ',
+        'type': 'date',
+        'minDate':'1900-1-1',//最小日期 注意：该值会覆盖标签内定义的日期范围
+	}); 
+	
+	
+
 
 //请求数据
 if (window.JsCallback) {
@@ -1051,6 +1759,8 @@ var pany=0;
 				$("#Hbox1").addClass("active");
 				$(".scrollCon1").show(); 
 				$(".scrollCon2").hide();
+				$(".scrollCon3").hide();
+
 			}else {
 				alert("请切换飞行模式");
 				$("#Hbox1").removeClass("active");
@@ -1063,27 +1773,31 @@ var pany=0;
 				$("#Hbox1").addClass("active");
 				$(".scrollCon1").show(); 
 				$(".scrollCon2").hide();
+				$(".scrollCon3").hide();
+
 			}
+			// $("#Hbox1").addClass("active");
+			// 	$(".scrollCon1").show(); 
+			// 	$(".scrollCon2").hide();
 		}
 
 		
 	}) 
 
 	$("#pyEntry").click(function () {
-		if (window.JsCallback) {
-			//判断是否开启了飞行模式
-			if (window.JsCallback.onGetIsAirplaneMode()) {
-
-			}else {
-				alert("请切换飞行模式");
-				return false;
-			}
-		} else {
-			if (window.navigator.onLine == true) {
-				alert("请切换飞行模式");
-				return false;
-			}
-		}
+		// if (window.JsCallback) {
+		// 	//判断是否开启了飞行模式
+		// 	if (window.JsCallback.onGetIsAirplaneMode()) {
+		// 	}else {
+		// 		alert("请切换飞行模式");
+		// 		return false;
+		// 	}
+		// } else {
+		// 	if (window.navigator.onLine == true) {
+		// 		alert("请切换飞行模式");
+		// 		return false;
+		// 	}
+		// }
 
 		pyFrom = 0;
 		zcpdImgs = [];
@@ -1092,6 +1806,8 @@ var pany=0;
 		$("#Hbox1").addClass("active");
 		$(".scrollCon1").hide(); 
 		$(".scrollCon2").show();
+		$(".scrollCon3").hide();
+
 		// alert(123)
 		// $(".scrollCon2").show();
 		// 	$(".scrollCon1").hide();
@@ -1103,6 +1819,14 @@ var pany=0;
 		$(".navFooter li").removeClass("active");
 		$(this).addClass("active");
 		var tabStatus = $(this).attr("tabS");
+		if (tabStatus == $(this).attr("tabS")) {
+			$("#indexGoBack").hide();
+			$("#tjcxLinkView").hide();
+			$("#dbglLinkView").hide();
+			$("#bfglLinkView").hide();
+			$("#zcpdLinkView").hide();
+			$(".linkView2").show();
+		}
 		$(".mytabs").removeClass("active");
 		$("." + tabStatus).addClass("active");
 	}) 
@@ -1152,7 +1876,7 @@ var pany=0;
 		}
 			$("#pyDepartCode").html(str); 
 			if (window.JsCallback) { 
-				$('select').fancySelect(); 
+				$('#pyDepartCode').fancySelect(); 
 			}
 	}
 
@@ -1314,6 +2038,10 @@ var pany=0;
         context.drawImage(image, 0, 0,image.width, image.height);
 		var base64 = cvs.toDataURL('image/jpeg', quality/100);
 		//获取识别结果
+			if(zcpdImgs.length > 2) {
+				alert("最多只能上传3张");
+				return false;
+			}
 			zcpdImgs.unshift(base64);
 			$("#zcpdImgsDiv").html("");
 			$("#pyImgsDiv").html("");
@@ -1407,17 +2135,30 @@ var pany=0;
 		var scanData = JSON.parse(data); 
 		saveData=scanData;
 		if(!data || scanData.QRCodeLPC){
-			pyFrom = 1;
-			$(".navCon").html("盘盈录入");
-			$(".scrollCon2").show();
-			$(".scrollCon1").hide();
-			var PLnum = sessionStorage.getItem("plnum");
-			$("#PLnum").text(PLnum); 
-			$("#Hbox2 input[name=barCode]").val(scanData.QRCodeLPC);
-			// $('select').fancySelect(); 
+			$("#dialog-confirm").show(); 
+            $("#sure").click(function(){
+				$("#dialog-confirm").hide(); 
+				pyFrom = 1;
+				$(".navCon").html("盘盈录入");
+				$(".scrollCon2").show();
+				$(".scrollCon1").hide();
+				$(".scrollCon3").hide();
+
+				var PLnum = sessionStorage.getItem("plnum");
+				$("#PLnum").text(PLnum); 
+				$("#Hbox2 input[name=barCode]").val(scanData.QRCodeLPC);
+				// $('select').fancySelect(); 
+			})
+			$("#cancle").click(function(){
+                $("#dialog-confirm").hide()
+                return false
+            })  
+			
 		}else{
 			$(".scrollCon1").show(); 
 			$(".scrollCon2").hide(); 
+			$(".scrollCon3").hide();
+
 			var keyCode = scanData.keyCode; 
 			$('#keyCode').val(keyCode);
 			$("#lid").val(scanData.barCode)
@@ -1477,7 +2218,7 @@ var pany=0;
 				formData.barCode = guid();
 			}
 			if(!formData.assetsName || !formData.storePlaceName || !formData.technicalCondition ||
-				!formData.userPerson || !formData.assetsStatus || !formData.lossReason) {
+				!formData.userPerson || !formData.assetsStatus || !formData.lossReason || !formData.assetsStandard) {
 				alert("有必传字段未填写");
 				return false;
 			}
@@ -1526,6 +2267,15 @@ var pany=0;
 			// 	alert("有必传字段未填写");
 			// 	return false;
 			// }
+			if (!formData.barCode) {
+				alert("请识别条码");
+				return false;
+			}
+			if (!formData.storePlaceName) {
+				alert("存放地点未填写");
+				return false;
+			}
+			
 			formData.keyCode=$("#keyCode").val();
 				formData.checkResult=1;
 			if (window.JsCallback) {
@@ -1596,6 +2346,8 @@ var pany=0;
 					$(".navCon").html("资产盘点");
 					$(".scrollCon1").show();
 					$(".scrollCon2").hide();
+					$(".scrollCon3").hide();
+
 				}
 			}
 		} else {
@@ -1615,6 +2367,8 @@ var pany=0;
 							$(".navCon").html("资产盘点");
 							$(".scrollCon1").show();
 							$(".scrollCon2").hide();
+							$(".scrollCon3").hide();
+
 						}
 					}
 
@@ -1627,8 +2381,15 @@ var pany=0;
 		$(".navCon").html("应用");
 
 		$(".indexBox").removeClass("active");
+		if (!$("#jyzglLinkView").is(':hidden')) {
+			localStorage.setItem("zjbDataStorage",JSON.stringify($("#formEntry3").serializeObject()));
+		}
 	})
 	var qustString = getURL()+"/mobile/allotController.do?getDeparts";
+
+	var qustPyString = getURL()+"/mobile/dictionariesController.do?getPyyyDic";
+	var qustCfddString = getURL()+"/mobile/dictionariesController.do?getCfddDic";
+
 
 	var departList = localStorage.getItem('departList');
 
@@ -1640,7 +2401,10 @@ var pany=0;
             userCode: userInfo.usercode
             // departCode: userInfo.departcode 
         } ;  
-		sendPost(qustString, jsons, updateDepartCallBack)
+		sendPostDownLoad(qustString, jsons, updateDepartCallBack);
+		sendGet(qustPyString, jsons, updatePyCallBack);
+		sendGet(qustCfddString, jsons, updateCfddCallBack);
+
 	})
 
 	function updateDepartCallBack(data) {
@@ -1666,6 +2430,53 @@ var pany=0;
 		
 	}
 
+	function updatePyCallBack(data) {
+		if (data.data) {
+			var res =JSON.stringify(data.data);
+			if (window.JsCallback) {
+				var result = window.JsCallback.onSavePYYY(res);
+				if(result){
+					// alert("更新成功");
+				}
+			} else {
+				setupWebViewJavascriptBridge(function (bridge) {
+					bridge.callHandler('onSavePYYY',res,function responseCallback(result) {
+						if(result){
+							// alert("更新成功");
+						}
+					})
+				})
+			}
+		} else {
+			// alert("未查询到更新的单位信息")
+		}
+		
+	}
+
+	function updateCfddCallBack(data) {
+		if (data.data) {
+			var res =JSON.stringify(data.data);
+			if (window.JsCallback) {
+				var result = window.JsCallback.onSaveCFDD(res);
+				if(result){
+					// alert("更新成功");
+					history.go(0)
+				}
+			} else {
+				setupWebViewJavascriptBridge(function (bridge) {
+					bridge.callHandler('onSaveCFDD',res,function responseCallback(result) {
+						if(result){
+							// alert("更新成功");
+							history.go(0)
+						}
+					})
+				})
+			}
+		} else {
+			// alert("未查询到更新的单位信息")
+		}
+		
+	}
 
 
 	$(".delateData").click(function () {    
@@ -1691,10 +2502,17 @@ var pany=0;
 		//改成弹窗然后消失
 		$(".layBox").show()
 		setTimeout(function(){ $(".layBox").hide()},1000) ;
-		setTimeout(function(){ history.go(0)},1200) 			 
+		setTimeout(function(){ history.go(0)},1200);
+		localStorage.removeItem('pdjhCount');
+		localStorage.removeItem('plnum');
+		localStorage.removeItem('planName');
+		localStorage.removeItem('planStartDate');
+		localStorage.removeItem('planStopDate');
 	}
 	function pdcxAbtn() {
 		window.location.href="property/localSearch.html";
+		// checkNetwork("property/localSearch.html");
+
 	}
 
 	function sjxzAbtn() {
@@ -1703,6 +2521,8 @@ var pany=0;
 
 	function bdxzcxAbtn() {
 		window.location.href="property/propertySearch.html";
+		// checkNetwork("property/propertySearch.html");
+
 	}
 
 	function sjscAbtn() {
@@ -1748,8 +2568,105 @@ var pany=0;
 	function hzcxAbtn() {
 		checkNetwork("search/hzSearch.html");
 	}
-	
-	
+
+	function fwqszAbtn() {
+		checkNetwork("set/server.html");
+	}
+
+	function xgmmAbtn() {
+		checkNetwork("set/reset.html");
+	}
+
+	function qhdwAbtn() {
+		checkNetwork("unit.html");
+	}
+
+	function cxdlAbtn() {
+		checkNetwork("login.html");
+	}
+
+	function zcpdLinkViewShow() {
+		$(".linkView2").hide();
+		$("#zcpdLinkView").show();
+		$("#indexGoBack").show();
+
+	}
+
+	function bfglLinkViewShow() {
+		$(".linkView2").hide();
+		$("#bfglLinkView").show();
+		$("#indexGoBack").show();
+	}
+
+	function dbglLinkViewShow() {
+		$(".linkView2").hide();
+		$("#dbglLinkView").show();
+		$("#indexGoBack").show();
+	}
+
+	function tjcxLinkViewShow() {
+		$(".linkView2").hide();
+		$("#tjcxLinkView").show();
+		$("#indexGoBack").show();
+	}
+
+	function jyzglLinkViewShow() {
+		$(".linkView2").hide();
+		$("#jyzglLinkView").show();
+		$("#indexGoBack").show();
+	}
+
+	function indexGoBack() {
+		$("#indexGoBack").hide();
+		$("#tjcxLinkView").hide();
+		$("#dbglLinkView").hide();
+		$("#bfglLinkView").hide();
+		$("#zcpdLinkView").hide();
+		$("#jyzglLinkView").hide();
+
+		$(".linkView2").show();
+	}
+
+	function deletePDImgs() {
+		zcpdImgs = [];
+		$("#zcpdImgsDiv").html("");
+	}
+
+	function deletePYImgs() {
+		zcpdImgs = [];
+		$("#pyImgsDiv").html("");
+	}
+
+	function zjblrAbtn() {
+		pyFrom = 0;
+		zcpdImgs = [];
+		$(".navCon").html("周检表录入");
+		$("#pyImgsDiv").html("");
+		$("#Hbox1").addClass("active");
+		$("#Hbox2").addClass("active");
+		$(".scrollCon1").hide(); 
+		$(".scrollCon2").hide();
+		$(".scrollCon3").show();
+
+		$(".pdBottom").hide();
+		$(".yzglBottom").show();
+		var zjbData = localStorage.getItem("zjbDataStorage");
+		zjbData = JSON.parse(zjbData);
+		
+		$.each(zjbData,function(name,value) {
+			$("#" + name).val(value);
+			if (value) {
+				$("#" + name).show();
+			}
+		});
+	};
+
+	function zjbscAbtn() {
+		checkNetwork("property/zjbUpload.html");
+	}
+
+
+
 
 	function checkNetwork(url) {
 		if (window.JsCallback) {
@@ -1797,7 +2714,6 @@ var pany=0;
         })
     }
 	function callbackGetServerConfig(result) { 
-		debugger
         // if (result!= null&&result!= "") {  
 		// 	var urlResultJson = JSON.parse(result);    
         //     var pUrl =  urlResultJson.server1+"://" + urlResultJson.server2 + ":" + urlResultJson.server3;
@@ -1806,7 +2722,6 @@ var pany=0;
 	}
 	
 	function dbFunction() {
-
 		if (window.JsCallback) {
 			//判断是否开启了飞行模式
 			if (window.JsCallback.onGetIsAirplaneMode()) {
@@ -1844,7 +2759,11 @@ var pany=0;
         if (data.success == 'true') {
 			searchWpCount({'checkResult':null,'departCode':$("#pyDepartCode").val()})	
 			if ( localStorage.getItem("pdjhCount")) {
-				$("#wpjhCount").html(data.data[0].PDJH-1)
+				var wpjhCount = data.data[0].PDJH - 1;
+				if (wpjhCount <0) {
+					wpjhCount = 0;
+				}
+				$("#wpjhCount").html(wpjhCount)
 			} else {
 				$("#wpjhCount").html(data.data[0].PDJH)
 			}
@@ -1882,6 +2801,9 @@ function templateWpCount(res, term){
 window.onload=function (){
 
 dbFunction();
+
+
+
 
 }
 // $(function(){

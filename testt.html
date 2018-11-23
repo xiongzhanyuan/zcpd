@@ -1,0 +1,9 @@
+<html>
+
+<textarea onpropertychange="MaxMe(this)" oninput="MaxMe(this)" style="overflow:hidden"></textarea>
+<script type="text/javascript">
+    function MaxMe(o) {
+        o.style.height = o.scrollTop + o.scrollHeight + "px";
+    }
+</script>
+</html>

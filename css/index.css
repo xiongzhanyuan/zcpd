@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, select, option, legend, input, button, textarea, p, blockquote, th, td, label {
   margin: 0;
   padding: 0;
@@ -240,6 +241,50 @@ nav .back {
 }
 
 .linkView li a i {
+  color: #0091d2;
+}
+
+.linkView2 {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-top: -0.46933rem;
+}
+
+.linkView2 li {
+  float: left;
+  width: 50%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.linkView2 li .con {
+  width: 100%;
+  border: 1px solid #dedede;
+  border-top: none;
+  border-left: 0px;
+  padding: 0.32rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+}
+
+.linkView2 li .con p {
+  font-size: 0.512rem;
+}
+
+.linkView2 li .con i {
+  font-size: 1.49333rem;
+}
+
+.linkView2 li a {
+  color: #777;
+  font-size: 0.64rem;
+  display: block;
+  line-height: 1.49333rem;
+}
+
+.linkView2 li a i {
   color: #0091d2;
 }
 
@@ -1110,7 +1155,6 @@ form.loginform div.fancy-select {
 #dataBox p i {
   display: inline-block;
   vertical-align: middle;
-  width: 25%;
 }
 
 .bottomLogin {
@@ -1251,7 +1295,7 @@ form.loginform div.fancy-select {
 
 .destoryC .All p {
   display: inline-block;
-  width: 48%;
+  width: 30%;
 }
 
 div.fancy-select div.trigger, .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -1290,12 +1334,8 @@ div.fancy-select ul.options.open {
   height: 1.5rem;
 }
 
-.select2-container {
-  z-index: 100;
-}
-
 .select2-container--default .select2-results > .select2-results__options {
-  height: 13rem;
+  height: 6rem;
   max-height: 13rem;
 }
 
@@ -1673,5 +1713,161 @@ div.hide {
   border: 0.04267rem solid white;
   overflow-y: auto;
   margin: 0px 20px 0px 20px;
+}
+
+.linkViewDisplay {
+  display: none;
+}
+
+/*
+-----------------------------formEntry3 周检表开始----------------------
+*/
+.formEntry3 p {
+  margin-bottom: 0.55333rem;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.formEntry3 p label {
+  width: 3.41333rem;
+  font-size: 0.64rem;
+}
+
+.formEntry3 label {
+  display: inline-block;
+}
+
+.formEntry3 label.editStatus {
+  color: red;
+}
+
+.formEntry3 select, .formEntry3 input, .formEntry3 textarea {
+  display: inline-block;
+  width: 12.6rem;
+  height: 1.49333rem;
+  padding: 0;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  border-width: 0.04267rem;
+  border-radius: 0.08533rem;
+  margin-left: 40px;
+}
+
+.formEntry3 .Markarea {
+  width: 100%;
+  display: block;
+  padding: 0.32rem;
+  font-size: 0.64rem;
+}
+
+.formEntry3 .radio {
+  width: 0.74667rem;
+  margin-right: 0.32rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.formEntry3 .checkB {
+  width: 4.26667rem;
+  display: inline-block;
+}
+
+.formEntry3 .checkB span {
+  font-size: 0.64rem;
+}
+
+.formEntry3 .tzRadioCheck {
+  display: inline-block;
+}
+
+.formEntry3 .tzRadioCheck span {
+  font-size: 0.64rem;
+}
+
+.formEntry3 .check2 {
+  display: none;
+}
+
+.formEntry3 input {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0.10667rem;
+}
+
+.formEntry3 input[type='file'] {
+  width: 4.26667rem;
+  overflow: visible;
+}
+
+.formEntry3 .checkSear {
+  display: inline-block;
+}
+
+.formEntry3 #search.checkSearch {
+  display: inline-block;
+  padding: 0;
+  margin-left: 0.42667rem;
+  font-size: 1.92rem;
+}
+
+.formEntry3.serverForm p label {
+  width: 4.26667rem;
+}
+
+/* ----------------------------------周检表结束------------------------ */
+#Hbox3 {
+  padding: 0.42667rem;
+  background: #fff;
+  z-index: 101;
+}
+
+#formEntry3 {
+  padding-top: 2.3rem;
+}
+
+.box {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  margin-left: 40px;
+}
+
+.box:hover {
+  border-color: #409EFF;
+}
+
+.box::after, .box::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: #8c939d;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.box::before {
+  width: 30px;
+  height: 2px;
+}
+
+.box::after {
+  width: 2px;
+  height: 30px;
+}
+
+.yzglSpan {
+  color: red;
+}
+
+#saveBtnYzgl {
+  color: #0091d2;
+  font-size: 0.8rem;
 }
 /*# sourceMappingURL=index.css.map */

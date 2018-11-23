@@ -292,7 +292,9 @@
         var uploadFile = "";
         if (data.zcpdImgs.length > 0) {
             uploadType = 2;
-            uploadFile = data.zcpdImgs[0];
+            // uploadFile = data.zcpdImgs[0];
+            uploadFile = data.zcpdImgs;
+
         }
         var uploadUrl = getURL() + "/mobile/cellPhoneController.do?uploadcheckplan"
         var jsonData = [];

@@ -21,10 +21,10 @@
 		<p class="navCon">调入确认</p>
 	</nav>
 	<div class="content destoryC formEntry">  
-        <div class="cardList cadL"> 
+  		<div class="cardList cadL"> 
             <ul id="list">
 
-            </ul>  
+            </ul> 
         </div> 
         <div class="cardList cadI"> 
             <ul id="list2">
@@ -144,8 +144,8 @@
                 </p>
             </form> 
             <bottom class=" bottomFixed BtnCurrent"> 
-                    <button id="submitBtn2" class="bottomBtn center  iconfont icon-tijiao"></button> 
-                </bottom>
+                 <button id="submitBtn2" class="bottomBtn center  iconfont icon-tijiao"></button> 
+            </bottom>
         </div>
 	</div> 
 </body>
@@ -158,20 +158,20 @@
 <script src="../js/main.js"></script>   
 <script type="template" id="listCon1">  
     {{~it.data :value:index}}
-        <li class="clearfix"  data-ph={{= value.phoneInvoiceNumber }} data-index={{=index}} onclick='check(this)'>  
+        <li class="clearfix"  data-ph={{= value.invoiceNumber }} data-index={{=index}} onclick='check(this)'>  
            <span class="listInfo">
-                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
-                <b>申请人 ：<i>{{= value.auditUser}}</i></b>       
-            </span> 
+                <b>单据号 ：<i class="phoneNumber">{{= value.invoiceNumber }}</i></b>
+                <b>申请人 ：<i>{{= value.operateUser}}</i></b>       
+            </span>
             <div class=" chose bottomBtn iconfont icon-tijiao" '></div> 
         </li>
     {{~}}
 </script> 
 <script type="template" id="listCon2">  
     {{~it.data :value:index}}
-        <li class="clearfix" data-ph={{= value.phoneInvoiceNumber }} data-id={{= value.id}} onclick='check2(this)'>  
+        <li class="clearfix" data-ph={{= value.invoiceNumber }} data-id={{= value.id}}  data-index={{=index}} onclick='check2(this)'>  
             <span class="listInfo">
-                <b>单据号 ：<i class="phoneNumber">{{= value.phoneInvoiceNumber }}</i></b>
+                <b>资产编码 ：<i class="phoneNumber">{{= value.assetsCode }}</i></b>
                 {{? !value.userPerson}} 
                 <b>保管人 ：<i>--</i></b>    
                     {{??}}   
@@ -230,13 +230,19 @@ $("#submitBtn2").click(function(){
     var data = Object.assign(datanull,$("#form1").serializeObject()); 
     data.entityName=$("select[name=entityCode]").find("option:selected").text();
     var  arr=[];
-    arr.push(data)
+    arr.push(data);
+    var invoiceDatas=[];
+    var arr2 =$("#list .chose.active").closest("li");
+    $.each(arr2,function(){
+    	invoiceDatas.push(invoiceList[$(this).attr("data-index")]); 
+    })
     var jsons={
-        phoneInvoiceNumber:data.phoneInvoiceNumber+',',
+        phoneInvoiceNumber:arr2.attr("data-ph")+',',
         departCode: userInfo.departcode ,
         userCode:userInfo.departcode,
         userName:userInfo.username,
-        eamAllotDetal:JSON.stringify(arr) 
+        eamAllotDetal:JSON.stringify(arr),
+        invoiceDatas: JSON.stringify(invoiceDatas)
     }
     var Durl =  getURL()+"/mobile/allotController.do?allotIn";
 
@@ -250,9 +256,6 @@ $("#submitBtn2").click(function(){
            alert(data.msg)
        }
     })
-
-
-
 })
 function check(event){
     $(event).siblings().find(".chose").removeClass("active");
@@ -321,7 +324,8 @@ function getDate(){
             return false;
         }
         var resData={};
-        resData.data=data.data; 
+        resData.data=data.data;
+        invoiceList = data.data;
         var tmpl = doT.template($("#listCon1").text());  
         if(data.data.length>0){   
             //userName

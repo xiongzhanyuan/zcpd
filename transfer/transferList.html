@@ -62,7 +62,7 @@
         <li class="clearfix" data-index={{=index}}>  
             <span class="listInfo">
                 <b>单据号 ：<i class="phoneNumber">{{= value.eamInvoiceNumber }}</i></b>
-                <b>申请人 ：<i>{{= value.createuserid}}</i></b>       
+                <b>申请人 ：<i>{{= value.auditUser}}</i></b>       
             </span> 
             <div class=" chose bottomBtn iconfont icon-tijiao" onclick='check(this)'></div> 
         </li>
@@ -71,11 +71,10 @@
   
 <script type="template" id="listCon2">  
     {{~it.data :value:index}}
-        <li class="clearfix"  data-ph={{=value.eamInvoiceNumber}} data-index={{=index}}>   
+        <li class="clearfix"  data-ph={{=value.phoneInvoiceNumber}} data-index={{=index}}>   
             <span class="listInfo">
-                <b>单据号 ：<i class="invoiceNumber">{{= value.eamInvoiceNumber }}</i></b>
-                <b>申请人 ：<i>{{= value.createuserid}}</i></b>      
-                <b>单据类型 ：<i>{{= value.invoiceName}}</i></b>   
+                <b>单据号 ：<i class="invoiceNumber">{{= value.phoneInvoiceNumber }}</i></b>
+                <b>申请人 ：<i>{{= value.auditUser}}</i></b>      
                 <b>明细数量 ：<i>{{= value.allotAmount}}</i></b>   
                 <b>调出单位 ：<i>{{= value.outDepartname}}</i></b>   
                 <b>调入单位 ：<i>{{= value.inDepartname}}</i></b>   
@@ -235,6 +234,9 @@ function getDateTab3(){
         var tmpl = doT.template($("#listCon2").text());  
         if(data.data.length>0){   
             //userName
+            resData.data.forEach(function(value, index) {
+                value.phoneInvoiceNumber = value.eamInvoiceNumber;
+            })
             $("#List3").html(tmpl(resData));   
         }else{
             $("#List3").append("<li class='nodate center'>暂无数据</li>"); 
